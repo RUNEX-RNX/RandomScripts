@@ -11,7 +11,7 @@ Copy the script you like and download any cheat preferably Delta. You can downlo
 After that, look for the features you need and enable them!
 Copy Script!
 ```Roblox Egor
-loadstring(game:HttpGet("https://raw.githubusercontent.com/RUNEX-RNX/LoL-Script/refs/heads/main/LoLSystem"))("t.me/RUNEX_X_SCRIPT")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RUNEX-RNX/MemeScripts/refs/heads/main/RobloxEgor"))("t.me/RUNEX_X_SCRIPT")
 ```
 ```Soon
 loadstring(game:HttpGet("soon"))("t.me/RUNEX_X_SCRIPT")
