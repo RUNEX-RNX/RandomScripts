@@ -34,7 +34,7 @@ local Window = Rayfield:CreateWindow({
       FileName = "Key",
       SaveKey = true, 
       GrabKeyFromSite = false,
-      Key = {"RUNEX","Key_RUNEXscript","RUNEX X SCRIPT"}
+      Key = {"RUNEX","Key_RUNEXscript","RUNEX X SCRIPT","Key_293818501058299"}
    }
 })
 
