@@ -1,0 +1,619 @@
+xpcall(function()
+
+if getgenv().mutagen_loaded then
+    return warn("[Desync] Already loaded")
+end
+getgenv().mutagen_loaded=true
+
+rng=function(len)
+    chars="!@#$%^&*()_+-=[]{}|;:,.<>?"
+    result=""
+    for i=1,len do
+        n=math.random(1,#chars)
+        result=result..chars:sub(n,n)
+    end
+    return result
+end
+
+gh=gethui or get_hidden_gui or function() return game:GetService("CoreGui") end
+plrs=game:GetService("Players")
+
+gui=Instance.new("ScreenGui")
+gui.Name=rng(15)
+gui.ResetOnSpawn=false
+gui.DisplayOrder=999
+gui.Parent=gh()
+
+main=Instance.new("Frame")
+main.Name=rng(8)
+main.Size=UDim2.new(0,195,0,36)
+main.Position=UDim2.new(0,10,0,10)
+main.BackgroundColor3=Color3.fromRGB(0,0,0)
+main.BorderSizePixel=0
+main.Parent=gui
+
+stroke=Instance.new("UIStroke")
+stroke.Name=rng(8)
+stroke.Thickness=2
+stroke.Color=Color3.fromRGB(0,219,40)
+stroke.LineJoinMode=Enum.LineJoinMode.Round
+stroke.Parent=main
+
+header=Instance.new("Frame")
+header.Name=rng(8)
+header.Size=UDim2.new(1,0,0,36)
+header.BackgroundColor3=Color3.fromRGB(0,0,0)
+header.BorderSizePixel=0
+header.Parent=main
+
+content=Instance.new("Frame")
+content.Name=rng(8)
+content.Size=UDim2.new(1,-60,1,0)
+content.Position=UDim2.new(0,10,0,0)
+content.BackgroundTransparency=1
+content.Parent=header
+
+icon=Instance.new("ImageLabel")
+icon.Name=rng(8)
+icon.Size=UDim2.new(0,20,0,20)
+icon.Position=UDim2.new(-0.02,0,0.5,-10)
+icon.BackgroundTransparency=1
+icon.Image="rbxassetid://85517338872295"
+icon.ScaleType=Enum.ScaleType.Fit
+icon.Parent=content
+
+title=Instance.new("TextLabel")
+title.Name=rng(8)
+title.Size=UDim2.new(1,-20,1,0)
+title.Position=UDim2.new(0,20,0.021,0)
+title.BackgroundTransparency=1
+title.Text="MUTAGEN Desync"
+title.TextColor3=Color3.fromRGB(0,219,40)
+title.TextSize=12
+title.Font=Enum.Font.GothamBold
+title.TextXAlignment=Enum.TextXAlignment.Left
+title.TextYAlignment=Enum.TextYAlignment.Center
+title.Parent=content
+
+toggle=Instance.new("TextButton")
+toggle.Name=rng(8)
+toggle.Size=UDim2.new(0,30,0,30)
+toggle.Position=UDim2.new(1,-35,0,3)
+toggle.BackgroundColor3=Color3.fromRGB(0,0,0)
+toggle.BorderSizePixel=0
+toggle.Text="▲"
+toggle.TextColor3=Color3.fromRGB(0,255,0)
+toggle.TextSize=14
+toggle.Font=Enum.Font.SourceSansBold
+toggle.TextXAlignment=Enum.TextXAlignment.Center
+toggle.TextYAlignment=Enum.TextYAlignment.Center
+toggle.Parent=header
+
+dropdown=Instance.new("Frame")
+dropdown.Name=rng(8)
+dropdown.Size=UDim2.new(1,-10,1,-90)
+dropdown.Position=UDim2.new(0,5,0,40)
+dropdown.BackgroundTransparency=1
+dropdown.Visible=false
+dropdown.Parent=main
+
+desyncbtn=Instance.new("TextButton")
+desyncbtn.Name=rng(8)
+desyncbtn.Size=UDim2.new(0.78,0,0,35)
+desyncbtn.Position=UDim2.new(0,0,0,5)
+desyncbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+desyncbtn.BorderSizePixel=0
+desyncbtn.Text="DESYNC: OFF"
+desyncbtn.TextColor3=Color3.fromRGB(255,255,255)
+desyncbtn.TextSize=14
+desyncbtn.Font=Enum.Font.GothamBold
+desyncbtn.TextXAlignment=Enum.TextXAlignment.Center
+desyncbtn.TextYAlignment=Enum.TextYAlignment.Center
+desyncbtn.Parent=dropdown
+
+desyncstroke=Instance.new("UIStroke")
+desyncstroke.Name=rng(8)
+desyncstroke.Thickness=1
+desyncstroke.Color=Color3.fromRGB(0,0,0)
+desyncstroke.LineJoinMode=Enum.LineJoinMode.Round
+desyncstroke.Parent=desyncbtn
+
+voidbtn=Instance.new("TextButton")
+voidbtn.Name=rng(8)
+voidbtn.Size=UDim2.new(0.2,0,0,35)
+voidbtn.Position=UDim2.new(0.8,0,0,5)
+voidbtn.BackgroundColor3=Color3.fromRGB(168,158,0)
+voidbtn.BorderSizePixel=0
+voidbtn.Text="Void"
+voidbtn.TextColor3=Color3.fromRGB(255,255,255)
+voidbtn.TextSize=12
+voidbtn.Font=Enum.Font.GothamBold
+voidbtn.TextXAlignment=Enum.TextXAlignment.Center
+voidbtn.TextYAlignment=Enum.TextYAlignment.Center
+voidbtn.Parent=dropdown
+
+voidstroke=Instance.new("UIStroke")
+voidstroke.Name=rng(8)
+voidstroke.Thickness=1
+voidstroke.Color=Color3.fromRGB(0,0,0)
+voidstroke.LineJoinMode=Enum.LineJoinMode.Round
+voidstroke.Parent=voidbtn
+
+statuslabel=Instance.new("TextLabel")
+statuslabel.Name=rng(8)
+statuslabel.Size=UDim2.new(1,0,0,18)
+statuslabel.Position=UDim2.new(0,0,0,50)
+statuslabel.BackgroundTransparency=1
+statuslabel.Text="Status: Idle"
+statuslabel.TextColor3=Color3.fromRGB(150,150,150)
+statuslabel.TextSize=10
+statuslabel.Font=Enum.Font.Gotham
+statuslabel.TextXAlignment=Enum.TextXAlignment.Left
+statuslabel.TextYAlignment=Enum.TextYAlignment.Center
+statuslabel.Parent=dropdown
+
+sectionlabel=Instance.new("TextLabel")
+sectionlabel.Name=rng(8)
+sectionlabel.Size=UDim2.new(1,0,0,20)
+sectionlabel.Position=UDim2.new(0,0,0,72)
+sectionlabel.BackgroundTransparency=1
+sectionlabel.Text="Section: No Respawn"
+sectionlabel.TextColor3=Color3.fromRGB(150,150,150)
+sectionlabel.TextSize=10
+sectionlabel.Font=Enum.Font.Gotham
+sectionlabel.TextXAlignment=Enum.TextXAlignment.Left
+sectionlabel.TextYAlignment=Enum.TextYAlignment.Center
+sectionlabel.Parent=dropdown
+
+respawnframe=Instance.new("Frame")
+respawnframe.Name=rng(8)
+respawnframe.Size=UDim2.new(1,0,0,32)
+respawnframe.Position=UDim2.new(0,0,0,95)
+respawnframe.BackgroundTransparency=1
+respawnframe.Parent=dropdown
+
+fastbtn=Instance.new("TextButton")
+fastbtn.Name=rng(8)
+fastbtn.Size=UDim2.new(0.48,0,1,0)
+fastbtn.Position=UDim2.new(0,0,0,0)
+fastbtn.BackgroundColor3=Color3.fromRGB(30,30,30)
+fastbtn.BorderSizePixel=0
+fastbtn.Text="Fast Respawn"
+fastbtn.TextColor3=Color3.fromRGB(255,255,255)
+fastbtn.TextSize=10
+fastbtn.Font=Enum.Font.Gotham
+fastbtn.TextXAlignment=Enum.TextXAlignment.Center
+fastbtn.TextYAlignment=Enum.TextYAlignment.Center
+fastbtn.Parent=respawnframe
+
+nobtn=Instance.new("TextButton")
+nobtn.Name=rng(8)
+nobtn.Size=UDim2.new(0.48,0,1,0)
+nobtn.Position=UDim2.new(0.52,0,0,0)
+nobtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+nobtn.BorderSizePixel=0
+nobtn.Text="No Respawn"
+nobtn.TextColor3=Color3.fromRGB(255,255,255)
+nobtn.TextSize=10
+nobtn.Font=Enum.Font.Gotham
+nobtn.TextXAlignment=Enum.TextXAlignment.Center
+nobtn.TextYAlignment=Enum.TextYAlignment.Center
+nobtn.Parent=respawnframe
+
+humlabel=Instance.new("TextLabel")
+humlabel.Name=rng(8)
+humlabel.Size=UDim2.new(1,0,0,18)
+humlabel.Position=UDim2.new(0,0,0,130)
+humlabel.BackgroundTransparency=1
+humlabel.Text="Humanoid: Checking..."
+humlabel.TextColor3=Color3.fromRGB(150,150,150)
+humlabel.TextSize=10
+humlabel.Font=Enum.Font.Gotham
+humlabel.TextXAlignment=Enum.TextXAlignment.Left
+humlabel.TextYAlignment=Enum.TextYAlignment.Center
+humlabel.Parent=dropdown
+
+voidlabel=Instance.new("TextLabel")
+voidlabel.Name=rng(8)
+voidlabel.Size=UDim2.new(1,0,0,16)
+voidlabel.Position=UDim2.new(0.003,0,0,150)
+voidlabel.BackgroundTransparency=1
+voidlabel.Text="Void: OFF"
+voidlabel.TextColor3=Color3.fromRGB(150,150,150)
+voidlabel.TextSize=9
+voidlabel.Font=Enum.Font.Gotham
+voidlabel.TextXAlignment=Enum.TextXAlignment.Left
+voidlabel.TextYAlignment=Enum.TextYAlignment.Center
+voidlabel.Parent=dropdown
+
+creditslabel=Instance.new("TextLabel")
+creditslabel.Name=rng(8)
+creditslabel.Size=UDim2.new(1,0,0,16)
+creditslabel.Position=UDim2.new(0,0,0,165)
+creditslabel.BackgroundTransparency=1
+creditslabel.Text="Credits: Drevanyx and frisemain"
+creditslabel.TextColor3=Color3.fromRGB(150,150,150)
+creditslabel.TextSize=9
+creditslabel.Font=Enum.Font.Gotham
+creditslabel.TextXAlignment=Enum.TextXAlignment.Left
+creditslabel.TextYAlignment=Enum.TextYAlignment.Center
+creditslabel.Parent=dropdown
+
+discordlabel=Instance.new("TextLabel")
+discordlabel.Name=rng(8)
+discordlabel.Size=UDim2.new(1,0,0,16)
+discordlabel.Position=UDim2.new(0,0,0,175)
+discordlabel.BackgroundTransparency=1
+discordlabel.Text="Discord: drevanyx666 and frisemain"
+discordlabel.TextColor3=Color3.fromRGB(150,150,150)
+discordlabel.TextSize=9
+discordlabel.Font=Enum.Font.Gotham
+discordlabel.TextXAlignment=Enum.TextXAlignment.Left
+discordlabel.TextYAlignment=Enum.TextYAlignment.Center
+discordlabel.Parent=dropdown
+
+dragging,draginput,dragstart,startpos=false,nil,nil,nil
+
+updatepos=function(input)
+    delta=input.Position-dragstart
+    main.Position=UDim2.new(startpos.X.Scale,startpos.X.Offset+delta.X,startpos.Y.Scale,startpos.Y.Offset+delta.Y)
+end
+
+header.InputBegan:Connect(function(input)
+    if input.UserInputType==Enum.UserInputType.MouseButton1 or input.UserInputType==Enum.UserInputType.Touch then
+        dragging=true
+        dragstart=input.Position
+        startpos=main.Position
+        input.Changed:Connect(function()
+            if input.UserInputState==Enum.UserInputState.End then
+                dragging=false
+            end
+        end)
+    end
+end)
+
+header.InputChanged:Connect(function(input)
+    if input.UserInputType==Enum.UserInputType.MouseMovement or input.UserInputType==Enum.UserInputType.Touch then
+        draginput=input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input==draginput and dragging then
+        updatepos(input)
+    end
+end)
+
+toggle.MouseButton1Click:Connect(function()
+    dropdown.Visible=not dropdown.Visible
+    if dropdown.Visible then
+        main.Size=UDim2.new(0,195,0,235)
+        toggle.Text="▼"
+    else
+        main.Size=UDim2.new(0,195,0,36)
+        toggle.Text="▲"
+    end
+end)
+
+task.spawn(function()
+    while task.wait(2) do
+        for i=0,1,0.05 do
+            title.TextTransparency=i
+            task.wait(0.05)
+        end
+        title.Text=""
+        task.wait(2)
+        title.Text="MUTAGEN Desync"
+        for i=1,0,-0.05 do
+            title.TextTransparency=i
+            task.wait(0.05)
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait(1) do
+        char=plrs.LocalPlayer.Character
+        if char then
+            hum=char:FindFirstChildOfClass("Humanoid")
+            if hum then
+                if hum.Health>0 then
+                    humlabel.Text="Humanoid: Found (HP: "..math.floor(hum.Health)..")"
+                    humlabel.TextColor3=Color3.fromRGB(0,255,0)
+                else
+                    humlabel.Text="Humanoid: Dead (HP: 0)"
+                    humlabel.TextColor3=Color3.fromRGB(255,0,0)
+                end
+            else
+                humlabel.Text="Humanoid: Not Found"
+                humlabel.TextColor3=Color3.fromRGB(255,150,0)
+            end
+        else
+            humlabel.Text="Humanoid: No Character"
+            humlabel.TextColor3=Color3.fromRGB(150,150,150)
+        end
+    end
+end)
+
+currentnotif=nil
+
+notify=function(emoji,text)
+    if currentnotif then
+        pcall(function() currentnotif:Destroy() end)
+        currentnotif=nil
+    end
+    notif=Instance.new("Frame")
+    notif.Name=rng(8)
+    notif.Size=UDim2.new(0,250,0,70)
+    notif.Position=UDim2.new(1,20,1,-90)
+    notif.BackgroundColor3=Color3.fromRGB(0,0,0)
+    notif.BorderSizePixel=0
+    notif.Parent=gui
+    currentnotif=notif
+    notifstroke=Instance.new("UIStroke")
+    notifstroke.Name=rng(8)
+    notifstroke.Thickness=2
+    notifstroke.Color=Color3.fromRGB(0,219,40)
+    notifstroke.Parent=notif
+    notiflabel=Instance.new("TextLabel")
+    notiflabel.Name=rng(8)
+    notiflabel.Size=UDim2.new(1,-10,0,20)
+    notiflabel.Position=UDim2.new(0,5,0,5)
+    notiflabel.BackgroundTransparency=1
+    notiflabel.Text="MUTAGEN"
+    notiflabel.TextColor3=Color3.fromRGB(0,219,40)
+    notiflabel.TextSize=14
+    notiflabel.Font=Enum.Font.GothamBold
+    notiflabel.TextXAlignment=Enum.TextXAlignment.Left
+    notiflabel.Parent=notif
+    notiftext=Instance.new("TextLabel")
+    notiftext.Name=rng(8)
+    notiftext.Size=UDim2.new(1,-10,0,35)
+    notiftext.Position=UDim2.new(0,5,0,30)
+    notiftext.BackgroundTransparency=1
+    notiftext.Text=emoji.." "..text
+    notiftext.TextColor3=Color3.fromRGB(255,255,255)
+    notiftext.TextSize=12
+    notiftext.Font=Enum.Font.Gotham
+    notiftext.TextXAlignment=Enum.TextXAlignment.Left
+    notiftext.TextWrapped=true
+    notiftext.Parent=notif
+    task.spawn(function()
+        notif:TweenPosition(UDim2.new(1,-270,1,-90),Enum.EasingDirection.Out,Enum.EasingStyle.Quad,0.5,true)
+        task.wait(3)
+        for i=0,1,0.05 do
+            if not notif or not notif.Parent then break end
+            notif.BackgroundTransparency=i
+            notifstroke.Transparency=i
+            notiflabel.TextTransparency=i
+            notiftext.TextTransparency=i
+            task.wait(0.05)
+        end
+        if notif and notif.Parent then notif:Destroy() end
+        if currentnotif==notif then currentnotif=nil end
+    end)
+end
+
+desyncon,voidon,respawnmode,processing,orb,orbpos,lastdeath=false,false,"no",false,nil,nil,nil
+
+makeorb=function(pos)
+    if orb then orb:Destroy() end
+    orb=Instance.new("Part")
+    orb.Name=rng(8)
+    orb.Size=Vector3.new(4,4,4)
+    orb.Shape=Enum.PartType.Ball
+    orb.Material=Enum.Material.Neon
+    orb.Color=Color3.fromRGB(0,219,40)
+    orb.Transparency=0.4
+    orb.CanCollide=false
+    orb.Anchored=true
+    orb.CFrame=pos
+    orb.Parent=workspace
+    light=Instance.new("PointLight")
+    light.Brightness=2
+    light.Range=15
+    light.Color=Color3.fromRGB(0,219,40)
+    light.Parent=orb
+    billboard=Instance.new("BillboardGui")
+    billboard.Size=UDim2.new(0,100,0,40)
+    billboard.StudsOffset=Vector3.new(0,5,0)
+    billboard.AlwaysOnTop=true
+    billboard.Parent=orb
+    label=Instance.new("TextLabel")
+    label.Size=UDim2.new(1,0,1,0)
+    label.BackgroundTransparency=1
+    label.Text="You"
+    label.TextColor3=Color3.fromRGB(0,255,0)
+    label.TextSize=18
+    label.Font=Enum.Font.Code
+    label.TextStrokeTransparency=0.5
+    label.Parent=billboard
+    task.spawn(function()
+        while orb and orb.Parent do
+            for i=3,5,0.1 do
+                if not orb or not orb.Parent then break end
+                orb.Size=Vector3.new(i,i,i)
+                task.wait(0.05)
+            end
+            for i=5,3,-0.1 do
+                if not orb or not orb.Parent then break end
+                orb.Size=Vector3.new(i,i,i)
+                task.wait(0.05)
+            end
+        end
+    end)
+    return orb
+end
+
+plrs.LocalPlayer.CharacterAdded:Connect(function(char)
+    if not desyncon or not orbpos then return end
+    task.spawn(function()
+        root=char:WaitForChild("HumanoidRootPart",5)
+        if not root then return end
+        hum=char:WaitForChild("Humanoid",5)
+        if not hum then return end
+        task.wait(0.1)
+        if lastdeath then
+            root.CFrame=lastdeath
+        end
+        statuslabel.Text="Status: Active"
+    end)
+end)
+
+desyncbtn.MouseButton1Click:Connect(function()
+    if processing then return end
+    if desyncon then
+        desyncon=false
+        voidon=false
+        pcall(function() setfflag("NextGenReplicatorEnabledWrite4","false") end)
+        if orb then orb:Destroy() orb=nil end
+        orbpos=nil
+        lastdeath=nil
+        desyncbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+        desyncbtn.Text="DESYNC: OFF"
+        voidbtn.BackgroundColor3=Color3.fromRGB(168,158,0)
+        voidlabel.Text="Void: OFF"
+        voidlabel.TextColor3=Color3.fromRGB(150,150,150)
+        statuslabel.Text="Status: Idle"
+        notify("❌","Desync Disabled")
+        return
+    end
+    processing=true
+    desyncbtn.BackgroundColor3=Color3.fromRGB(40,40,40)
+    desyncbtn.Text="Please wait..."
+    statuslabel.Text="Status: Processing"
+    task.spawn(function()
+        char=plrs.LocalPlayer.Character
+        if not char then
+            notify("❌","Character Not Found")
+            processing=false
+            desyncbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+            desyncbtn.Text="DESYNC: OFF"
+            statuslabel.Text="Status: Idle"
+            return
+        end
+        root=char:FindFirstChild("HumanoidRootPart")
+        hum=char:FindFirstChildOfClass("Humanoid")
+        if not root or not hum then
+            notify("❌","HumanoidRootPart/Humanoid Not Found")
+            processing=false
+            desyncbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+            desyncbtn.Text="DESYNC: OFF"
+            statuslabel.Text="Status: Idle"
+            return
+        end
+        if hum.Health<=0 then
+            notify("❌","Humanoid is Dead")
+            processing=false
+            desyncbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+            desyncbtn.Text="DESYNC: OFF"
+            statuslabel.Text="Status: Idle"
+            return
+        end
+        orbpos=root.CFrame
+        lastdeath=root.CFrame
+        makeorb(orbpos)
+        if respawnmode=="fast" then
+            if not replicatesignal then
+                notify("❌","Incompatible Executor")
+                processing=false
+                desyncbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+                desyncbtn.Text="DESYNC: OFF"
+                statuslabel.Text="Status: Idle"
+                if orb then orb:Destroy() orb=nil end
+                orbpos=nil
+                return
+            end
+            pcall(function() setfflag("NextGenReplicatorEnabledWrite4","false") end)
+            statuslabel.Text="Status: Respawning"
+            replicatesignal(plrs.LocalPlayer.ConnectDiedSignalBackend)
+            task.wait(plrs.RespawnTime-0.01)
+            replicatesignal(plrs.LocalPlayer.Kill)
+            char=plrs.LocalPlayer.CharacterAdded:Wait()
+            statuslabel.Text="Status: Respawned"
+            root=char:WaitForChild("HumanoidRootPart",5)
+            hum=char:WaitForChild("Humanoid",5)
+            if not root or not hum then
+                notify("❌","Respawn Failed")
+                processing=false
+                desyncbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+                desyncbtn.Text="DESYNC: OFF"
+                statuslabel.Text="Status: Idle"
+                if orb then orb:Destroy() orb=nil end
+                orbpos=nil
+                lastdeath=nil
+                pcall(function() setfflag("NextGenReplicatorEnabledWrite4","false") end)
+                return
+            end
+            if voidon then
+                vheight=math.random(5000,9888)
+                root.CFrame=orbpos+Vector3.new(0,vheight,0)
+                task.wait(0.5)
+                pcall(function() setfflag("NextGenReplicatorEnabledWrite4","true") end)
+                task.wait(0.1)
+                root.CFrame=orbpos
+            else
+                root.CFrame=orbpos
+                task.wait(0.543)
+                pcall(function() setfflag("NextGenReplicatorEnabledWrite4","true") end)
+            end
+        else
+            pcall(function() setfflag("NextGenReplicatorEnabledWrite4","false") end)
+            if voidon then
+                vheight=math.random(5000,9888)
+                root.CFrame=orbpos+Vector3.new(0,vheight,0)
+                task.wait(0.5)
+            else
+                task.wait(0.543)
+            end
+            pcall(function() setfflag("NextGenReplicatorEnabledWrite4","true") end)
+            task.wait(0.1)
+            root.CFrame=orbpos
+        end
+        desyncon=true
+        processing=false
+        desyncbtn.BackgroundColor3=Color3.fromRGB(0,180,0)
+        desyncbtn.Text="DESYNC: ON"
+        statuslabel.Text="Status: Active"
+        notify("✅","Desync Complete")
+    end)
+end)
+
+voidbtn.MouseButton1Click:Connect(function()
+    if processing then return end
+    voidon=not voidon
+    if voidon then
+        voidbtn.BackgroundColor3=Color3.fromRGB(0,168,0)
+        voidlabel.Text="Void: ON ("..(respawnmode=="fast" and "Fast Respawn" or "No Respawn")..")"
+        voidlabel.TextColor3=Color3.fromRGB(0,255,0)
+        notify("✅","Void Enabled")
+    else
+        voidbtn.BackgroundColor3=Color3.fromRGB(168,158,0)
+        voidlabel.Text="Void: OFF"
+        voidlabel.TextColor3=Color3.fromRGB(150,150,150)
+        notify("❌","Void Disabled")
+    end
+end)
+
+fastbtn.MouseButton1Click:Connect(function()
+    if respawnmode=="fast" then return end
+    respawnmode="fast"
+    fastbtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+    nobtn.BackgroundColor3=Color3.fromRGB(30,30,30)
+    sectionlabel.Text="Section: Fast Respawn"
+    notify("✅","Fast Respawn Selected")
+end)
+
+nobtn.MouseButton1Click:Connect(function()
+    if respawnmode=="no" then return end
+    respawnmode="no"
+    nobtn.BackgroundColor3=Color3.fromRGB(40,100,40)
+    fastbtn.BackgroundColor3=Color3.fromRGB(30,30,30)
+    sectionlabel.Text="Section: No Respawn"
+    notify("✅","No Respawn Selected")
+end)
+
+end,function(err)
+    warn("[MUTAGEN FATAL ERROR] "..tostring(err))
+    getgenv().mutagen_loaded=nil
+end)
