@@ -1,11 +1,11 @@
 --[[
      🧑🏻‍💻RUNEX X SCRIPT🧑🏻‍💻 
-     telegram Channel t.me/RUNEX_X_SCRIPT
+     telegram Channel t.me/RUNEX_X_SCRIPT and t.me/ArceusXCommunity
      telegram profile @RUNEXscript
      Join for new script🤑
 ]]
 game.StarterGui:SetCore("SendNotification", {
-    Title = "Chest and fish\nRUNEX X SCRIPT";
+    Title = "Chest and fish\nRUNEX and Arceus";
     Text = "\nESP";
     Duration = 8;
 })
