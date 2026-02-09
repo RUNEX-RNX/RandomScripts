@@ -1,3 +1,17 @@
+--[[
+     🧑🏻‍💻RUNEX X SCRIPT🧑🏻‍💻 
+     telegram Channel t.me/RUNEX_X_SCRIPT
+     telegram profile @RUNEXscript
+     Join for new script🤑
+]]
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Chest and fish\nRUNEX X SCRIPT";
+    Text = "\nESP";
+    Duration = 8;
+})
+
+
+
 local gameWork = game:GetService("Workspace"):FindFirstChild("Game")
 local chests = gameWork and gameWork:FindFirstChild("Chests")
 local fishes = gameWork and gameWork:FindFirstChild("Fish"):FindFirstChild("client")
@@ -106,3 +120,4 @@ if getgenv().toggleFish and fishes then
     end)
     table.insert(getgenv().ESP_Table.FishConnections, remConn)
 end
+
