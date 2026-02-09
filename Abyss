@@ -1,0 +1,3 @@
+getgenv().toggleChests = true -- true/false
+getgenv().toggleFish = true -- true/false
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Bac0nHck/Scripts/refs/heads/main/abyss-esp.lua"))()
