@@ -1,0 +1,709 @@
+-- ts file was generated at discord.gg/25ms
+
+local fenv = getfenv()
+local _call3 = game:GetService('CoreGui')
+
+game:GetService('Players')
+game:GetService('HttpService')
+game:GetService('TeleportService')
+
+local _call11 = game:GetService('TweenService')
+local _call13 = game:GetService('UserInputService')
+local _call15 = game:GetService('RunService')
+local _call17 = Color3.fromRGB(15, 15, 20)
+local _call21 = Color3.fromRGB(28, 28, 36)
+local _call25 = Color3.fromRGB(255, 255, 255)
+local _call27 = Color3.fromRGB(170, 170, 180)
+
+Color3.fromRGB(46, 204, 113)
+Color3.fromRGB(231, 76, 60)
+
+local _ = fenv.syn
+local _ = http.request
+
+_call3:FindFirstChild('UltraServerFinderV4')
+_call3.UltraServerFinderV4:Destroy()
+
+local _call42 = Instance.new('ScreenGui')
+
+_call42.Parent = _call3
+_call42.Name = 'UltraServerFinderV4'
+_call42.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local _call50 = Instance.new('Frame')
+
+_call50.AnchorPoint = Vector2.new(0.5, 0.5)
+_call50.BackgroundTransparency = 1
+_call50.Name = 'MainFrame'
+_call50.Position = UDim2.new(0.5, 0, 0.5, 0)
+_call50.Parent = _call42
+_call50.ClipsDescendants = true
+_call50.Size = UDim2.new(0, 700, 0, 500)
+_call50.BackgroundColor3 = _call17
+
+local _call52 = Instance.new('UICorner')
+
+_call52.CornerRadius = UDim.new(0, 16)
+_call52.Parent = _call50
+
+local _call60 = Instance.new('TextButton')
+
+_call60.ZIndex = 10
+_call60.Position = UDim2.new(1, -20, 1, -20)
+_call60.BackgroundTransparency = 1
+_call60.TextColor3 = _call27
+_call60.Parent = _call50
+_call60.Text = '\u{25e2}'
+_call60.TextSize = 20
+_call60.Size = UDim2.new(0, 20, 0, 20)
+
+_call60.InputBegan:Connect(function(_64)
+    local _ = _64.UserInputType == Enum.UserInputType.MouseButton1
+end)
+_call13.InputEnded:Connect(function(_72, _72_2, _72_3, _72_4)
+    local _ = _72.UserInputType == Enum.UserInputType.MouseButton1
+end)
+_call13.InputChanged:Connect(function(_80, _80_2) end)
+
+local _call82 = Instance.new('UIStroke')
+
+_call82.Color = Color3.fromRGB(255, 255, 255)
+_call82.Thickness = 2
+_call82.Parent = _call50
+
+local _call86 = Instance.new('UIGradient')
+local _call96 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 140, 255)),
+    [2] = ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 255, 140)),
+})
+
+_call86.Color = _call96
+_call86.Parent = _call82
+
+task.spawn(function(_99)
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.29358626714828
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.300243425533374
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.30397235746605
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.30731553938754
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.31102518335594
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.315515387212024
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.31923767515473
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.32304389499737
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.32677479331343
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.330840521012654
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.33438888666409
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.33814067153627
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.342151694005146
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.34606349164676
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.349597161246486
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.353262594278796
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.35700006318639
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.36076574255803
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.36452377696287
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.36903543604034
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.373878413249955
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.377585744589155
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.381604364320445
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.38776456657479
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.3919436247461
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.39544508902155
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.399110356566645
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.40254058774137
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.40593119207318
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.40925024805754
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.4126254075211
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.41598885185824
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.419388467262685
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.422736461689034
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.42610066969375
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.42946113971647
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.43314517944273
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.43656605711192
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.43983549773036
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.44326886544885
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.44669850299161
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.45010444505769
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.45345473891657
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.456961035985564
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.46031583521799
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.46382665830234
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.46700221346069
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.470233919554566
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.47351779285635
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.47684186023282
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.48003830815799
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.4831111091262
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.486264042580174
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.48950911268656
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.492694465791075
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.49590002677176
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.49916577474567
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.502451744492184
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.50571396424816
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.50904039015133
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.51242703702117
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.515649980815276
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.51880116980967
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call86.Parent
+
+    _call86.Rotation = 40.52201256689359
+
+    error('internal 557: <25ms: infinitelooperror>')
+end)
+
+local _call363 = _call11:Create(_call50, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    BackgroundTransparency = 0,
+    Size = UDim2.new(0, 700, 0, 500),
+})
+
+_call363:Play()
+_call50.InputBegan:Connect(function(_369, _369_2, _369_3, _369_4, _369_5, _369_6)
+    local _ = _369.UserInputType == Enum.UserInputType.MouseButton1
+end)
+_call50.InputChanged:Connect(function(_377, _377_2)
+    local _ = _377.UserInputType == Enum.UserInputType.MouseMovement
+end)
+_call13.InputChanged:Connect(function(_385, _385_2, _385_3, _385_4, _385_5, _385_6) end)
+
+local _call389 = Instance.new('Frame')
+
+_call389.Parent = _call50
+_call389.Size = UDim2.new(1, 0, 0, 60)
+_call389.BorderSizePixel = 0
+_call389.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+
+local _call403 = Instance.new('TextLabel')
+
+_call403.FontFace = Font.fromEnum(Enum.Font.GothamBlack)
+_call403.TextColor3 = Color3.new(1, 1, 1)
+_call403.Parent = _call389
+_call403.Text = 'SERVER BROWSER'
+_call403.BackgroundTransparency = 1
+_call403.Position = UDim2.new(0, 20, 0, 0)
+_call403.TextXAlignment = Enum.TextXAlignment.Left
+_call403.TextSize = 24
+_call403.Size = UDim2.new(0, 200, 1, 0)
+
+local _call405 = Instance.new('UIGradient')
+local _call415 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 140, 255)),
+    [2] = ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 255, 140)),
+})
+
+_call405.Color = _call415
+_call405.Parent = _call403
+
+task.spawn(function(_418)
+    local _ = _call405.Parent
+
+    _call405.Rotation = 40.79408284180629
+
+    _call15.RenderStepped:Wait()
+
+    local _ = _call405.Parent
+
+    _call405.Rotation = 40.799107043707906
+
+    _call15.RenderStepped:Wait()
+    error('internal 557: <25ms: infinitelooperror>')
+end)
+
+local _call437 = Instance.new('TextButton')
+
+_call437.Position = UDim2.new(1, -50, 0, 5)
+_call437.FontFace = Font.fromEnum(Enum.Font.Gotham)
+_call437.BackgroundTransparency = 1
+_call437.TextColor3 = _call27
+_call437.Parent = _call389
+_call437.Text = '\u{d7}'
+_call437.TextSize = 32
+_call437.Size = UDim2.new(0, 50, 0, 50)
+
+_call437.MouseButton1Click:Connect(function(_441, _441_2, _441_3)
+    local _call451 = _call11:Create(_call50, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+        BackgroundTransparency = 1,
+        Size = UDim2.new(0, 0, 0, 0),
+    })
+
+    _call451:Play()
+    task.wait(0.4)
+    _call42:Destroy()
+end)
+
+local _call461 = Instance.new('Frame')
+
+_call461.Parent = _call50
+_call461.Position = UDim2.new(0, 0, 0, 60)
+_call461.BackgroundTransparency = 1
+_call461.Size = UDim2.new(1, 0, 1, -60)
+
+local _call465 = Instance.new('Frame')
+
+_call465.Visible = false
+_call465.Parent = _call461
+_call465.Size = UDim2.new(1, 0, 1, 0)
+_call465.BackgroundColor3 = _call17
+
+local _call469 = Instance.new('Frame')
+
+_call469.Visible = true
+_call469.Parent = _call461
+_call469.BackgroundTransparency = 1
+_call469.Size = UDim2.new(1, 0, 1, 0)
+
+local _call479 = Instance.new('TextButton')
+
+_call479.Position = UDim2.new(1, -100, 0, 5)
+_call479.FontFace = Font.fromEnum(Enum.Font.Gotham)
+_call479.BackgroundTransparency = 1
+_call479.TextColor3 = _call27
+_call479.Parent = _call389
+_call479.Text = '\u{2699}'
+_call479.TextSize = 24
+_call479.Size = UDim2.new(0, 50, 0, 50)
+
+_call479.MouseButton1Click:Connect(function(_483, _483_2, _483_3, _483_4, _483_5)
+    local _ = _call469.Visible
+
+    _call469.Visible = false
+
+    local _ = _call465.Visible
+
+    _call465.Visible = false
+end)
+
+local _call493 = Instance.new('TextLabel')
+
+_call493.FontFace = Font.fromEnum(Enum.Font.GothamBold)
+_call493.BackgroundTransparency = 1
+_call493.TextColor3 = _call25
+_call493.Parent = _call465
+_call493.Text = 'GUI Settings'
+_call493.TextSize = 22
+_call493.Position = UDim2.new(0, 20, 0, 20)
+
+local _call503 = Instance.new('TextButton')
+
+_call503.FontFace = Font.fromEnum(Enum.Font.Gotham)
+_call503.Position = UDim2.new(0, 20, 0, 60)
+_call503.TextColor3 = _call27
+_call503.Parent = _call465
+_call503.Text = 'Toggle Gradient: ON'
+_call503.Size = UDim2.new(0, 200, 0, 40)
+_call503.BackgroundColor3 = _call21
+
+local _call505 = Instance.new('UICorner')
+
+_call505.CornerRadius = UDim.new(0, 8)
+_call505.Parent = _call503
+
+_call503.MouseButton1Click:Connect(function(_511, _511_2, _511_3)
+    local _ = _call82.Enabled
+
+    _call82.Enabled = false
+    _call503.Text = 'Toggle Gradient: OFF'
+end)
+
+local _call518 = Instance.new('Frame')
+
+_call518.Parent = _call469
+_call518.Position = UDim2.new(0, 20, 0, 15)
+_call518.BackgroundTransparency = 1
+_call518.Size = UDim2.new(1, -40, 0, 50)
+
+local _call524 = Instance.new('Frame')
+
+_call524.Parent = _call518
+_call524.BackgroundColor3 = _call21
+_call524.Position = UDim2.new(0, 0, 0, 0)
+_call524.Size = UDim2.new(0, 160, 0, 45)
+
+local _call526 = Instance.new('UICorner')
+
+_call526.CornerRadius = UDim.new(0, 8)
+_call526.Parent = _call524
+
+local _call536 = Instance.new('TextButton')
+
+_call536.FontFace = Font.fromEnum(Enum.Font.GothamBold)
+_call536.BackgroundTransparency = 1
+_call536.TextColor3 = _call25
+_call536.Parent = _call524
+_call536.Text = 'FAST HOP \u{26a1}'
+_call536.Size = UDim2.new(1, 0, 1, 0)
+
+_call536.MouseEnter:Connect(function(_540, _540_2)
+    error('internal 557: <25ms: infinitelooperror>')
+end)
+_call536.MouseLeave:Connect(function(_545) end)
+
+local _call551 = Instance.new('Frame')
+
+_call551.Parent = _call518
+_call551.BackgroundColor3 = _call21
+_call551.Position = UDim2.new(0, 175, 0, 0)
+_call551.Size = UDim2.new(0, 140, 0, 45)
+
+local _call553 = Instance.new('UICorner')
+
+_call553.CornerRadius = UDim.new(0, 8)
+_call553.Parent = _call551
+
+local _call563 = Instance.new('TextButton')
+
+_call563.FontFace = Font.fromEnum(Enum.Font.GothamBold)
+_call563.BackgroundTransparency = 1
+_call563.TextColor3 = _call25
+_call563.Parent = _call551
+_call563.Text = 'REFRESH \u{21bb}'
+_call563.Size = UDim2.new(1, 0, 1, 0)
+
+_call563.MouseEnter:Connect(function(_567, _567_2) end)
+_call563.MouseLeave:Connect(function(_571) end)
+
+local _call583 = Instance.new('TextLabel')
+
+_call583.FontFace = Font.fromEnum(Enum.Font.GothamBold)
+_call583.TextColor3 = _call27
+_call583.Parent = _call518
+_call583.Text = 'IDLE'
+_call583.BackgroundTransparency = 1
+_call583.Position = UDim2.new(1, -10, 0, 0)
+_call583.TextXAlignment = Enum.TextXAlignment.Right
+_call583.TextSize = 14
+_call583.Size = UDim2.new(0, 150, 1, 0)
+
+local _call589 = Instance.new('ScrollingFrame')
+
+_call589.ScrollBarImageColor3 = Color3.fromRGB(0, 140, 255)
+_call589.BackgroundTransparency = 1
+_call589.Position = UDim2.new(0, 20, 0, 70)
+_call589.Parent = _call469
+_call589.ScrollBarThickness = 3
+_call589.BorderSizePixel = 0
+_call589.Size = UDim2.new(1, -40, 1, -80)
+
+local _call595 = Instance.new('UIListLayout')
+
+_call595.Parent = _call589
+_call595.Padding = UDim.new(0, 12)
+_call595.SortOrder = Enum.SortOrder.LayoutOrder
+
+_call563.MouseButton1Click:Connect(function(_599, _599_2, _599_3) end)
+_call536.MouseButton1Click:Connect(function(_603, _603_2, _603_3) end)
+task.spawn(function(_606, _606_2, _606_3) end)
