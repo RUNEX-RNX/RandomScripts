@@ -1,0 +1,609 @@
+-- ts file was generated at discord.gg/25ms
+
+local _Players = game:GetService('Players')
+local _Debris = game:GetService('Debris')
+local _TweenService = game:GetService('TweenService')
+local u4 = workspace
+local _LocalPlayer = _Players.LocalPlayer
+local u6 = 'rbxassetid://243663079'
+local u7 = 'rbxassetid://95176780992037'
+local u8 = 'rbxassetid://122951695254282'
+local u9 = 'rbxassetid://91033639799870'
+local u10 = 20
+local u11 = 5
+local u12 = 2
+local u13 = 2.5
+local u14 = 1
+local u15 = 2
+local u16 = 6
+local u17 = true
+local u18 = 0.28
+local u19 = 8
+local u20 = 0.04
+local u21 = 12
+local u22 = 35
+local u23 = 2
+local u24 = 2
+
+local function u26(p25)
+    return p25:FindFirstChild('Torso') or p25:FindFirstChild('UpperTorso') or (p25:FindFirstChild('HumanoidRootPart') or p25:FindFirstChild('Head'))
+end
+local function u33(p27, p28)
+    local v29, v30, v31 = ipairs(p27:GetDescendants())
+
+    while true do
+        local u32
+
+        v31, u32 = v29(v30, v31)
+
+        if v31 == nil then
+            break
+        end
+        if u32:IsA('BasePart') then
+            pcall(function()
+                u32.CanCollide = p28
+            end)
+        end
+    end
+end
+local function u50(p34, p35)
+    if p34 then
+        local _Animation = Instance.new('Animation')
+
+        _Animation.AnimationId = p35
+
+        local u37 = p34:LoadAnimation(_Animation)
+        local v38 = u37
+
+        u37.Play(v38)
+
+        local v39, v40 = pcall(function()
+            return u37.Length
+        end)
+
+        if v39 and (v40 and v40 > 0) then
+            local v41 = math.max(0, v40 - 0.06)
+
+            task.wait(v41)
+
+            local v42 = u37
+
+            u37.AdjustSpeed(v42, 0)
+            task.wait(u13)
+
+            local v43 = 7
+            local v44 = u37
+
+            for v45 = 1, v43 do
+                v44:AdjustSpeed(v45 / v43)
+                task.wait(0.05)
+            end
+
+            v44:Stop()
+        else
+            task.wait(0.8)
+
+            local v46 = u37
+
+            u37.AdjustSpeed(v46, 0)
+            task.wait(u13)
+
+            local v47 = 7
+            local v48 = u37
+
+            for v49 = 1, v47 do
+                v48:AdjustSpeed(v49 / v47)
+                task.wait(0.05)
+            end
+
+            v48:Stop()
+        end
+    end
+end
+local function u58(p51, p52, p53, p54)
+    if not p52 then
+        return nil
+    end
+
+    local _Sound = Instance.new('Sound')
+
+    _Sound.SoundId = p51
+    _Sound.Volume = p54 or 1
+    _Sound.PlayOnRemove = false
+    _Sound.Parent = p52
+
+    pcall(function()
+        _Sound:Play()
+    end)
+
+    local v56, v57 = pcall(function()
+        return _TweenService:Create(_Sound, TweenInfo.new(math.max(0.01, p53), Enum.EasingStyle.Linear), {Volume = 0})
+    end)
+
+    if v56 and v57 then
+        v57:Play()
+        v57.Completed:Connect(function()
+            pcall(function()
+                _Sound:Stop()
+            end)
+            pcall(function()
+                _Sound:Destroy()
+            end)
+        end)
+        _Debris:AddItem(_Sound, p53 + 1)
+    else
+        task.delay(p53, function()
+            pcall(function()
+                _Sound:Stop()
+                _Sound:Destroy()
+            end)
+        end)
+    end
+
+    return _Sound
+end
+local function u71(p59, p60, p61)
+    if not p60 then
+        return nil
+    end
+
+    local v62 = game:GetObjects(p59)
+
+    if #v62 == 0 then
+        return nil
+    end
+
+    local v63 = v62[1]
+
+    if not v63:IsA('BasePart') then
+        local v64, v65, v66 = ipairs(v63:GetDescendants())
+
+        while true do
+            local v67
+
+            v66, v67 = v64(v65, v66)
+
+            if v66 == nil then
+                break
+            end
+            if v67:IsA('BasePart') then
+                v67.CanCollide = false
+                v67.Massless = true
+            end
+        end
+
+        local v68 = not v63.PrimaryPart and v63:FindFirstChildWhichIsA('BasePart')
+
+        if v68 then
+            v63.PrimaryPart = v68
+        end
+
+        v63.Parent = u4
+
+        if v63.PrimaryPart and p60 then
+            v63:SetPrimaryPartCFrame(p60.CFrame)
+
+            local _WeldConstraint = Instance.new('WeldConstraint')
+
+            _WeldConstraint.Part0 = v63.PrimaryPart
+            _WeldConstraint.Part1 = p60
+            _WeldConstraint.Parent = v63.PrimaryPart
+        end
+        if p61 then
+            _Debris:AddItem(v63, p61)
+        end
+
+        return v63
+    end
+
+    v63.Parent = u4
+    v63.CanCollide = false
+    v63.Massless = true
+
+    local _WeldConstraint2 = Instance.new('WeldConstraint')
+
+    _WeldConstraint2.Part0 = v63
+    _WeldConstraint2.Part1 = p60
+    _WeldConstraint2.Parent = v63
+
+    if p61 then
+        _Debris:AddItem(v63, p61)
+    end
+
+    return v63
+end
+local function u79(p72, p73)
+    if not p72 or p73 <= 0 then
+        return
+    end
+
+    local _Health = p72.Health
+
+    if _Health <= 0 then
+        return
+    end
+
+    local v75 = tick()
+    local v76 = v75
+
+    while p72 and (p72.Parent and p72.Health > 0) do
+        local v77 = tick()
+
+        if p73 <= v77 - v75 then
+            pcall(function()
+                p72.Health = 0
+            end)
+
+            break
+        end
+
+        local u78 = _Health * (v77 - v76) / p73
+
+        pcall(function()
+            p72.Health = math.max(0, p72.Health - u78)
+        end)
+        task.wait(0.03)
+
+        v76 = v77
+    end
+end
+local function u82()
+    local v80 = _LocalPlayer.Character or _LocalPlayer.CharacterAdded:Wait()
+    local v81 = v80:WaitForChild('HumanoidRootPart', 5) or v80:FindFirstChild('HumanoidRootPart')
+
+    if v81 then
+        u58('rbxassetid://' .. string.gsub(u9, 'rbxassetid://', ''), v81, u24, 1)
+    end
+end
+
+local u83 = nil
+
+local function u88(p84)
+    local v85, v86 = pcall(function()
+        return p84.AssemblyLinearVelocity
+    end)
+
+    if not (v85 and v86) then
+        local v87
+
+        v87, v86 = pcall(function()
+            return p84.Velocity
+        end)
+    end
+
+    return (not v86 or typeof(v86) ~= 'Vector3') and 0 or v86.Magnitude
+end
+local function v149()
+    local _Tool = Instance.new('Tool')
+
+    _Tool.Name = 'Dismantle'
+    _Tool.RequiresHandle = false
+    _Tool.Parent = _LocalPlayer:WaitForChild('Backpack')
+
+    local u90 = false
+
+    _Tool.Activated:Connect(function()
+        if u83 then
+            return
+        elseif u90 then
+            return
+        else
+            u90 = true
+
+            task.delay(u12, function()
+                u90 = false
+            end)
+
+            local v91 = _LocalPlayer.Character or _LocalPlayer.CharacterAdded:Wait()
+            local _Humanoid = v91:FindFirstChildOfClass('Humanoid')
+            local _HumanoidRootPart = v91:FindFirstChild('HumanoidRootPart')
+
+            if _Humanoid and _HumanoidRootPart then
+                local _Target = _LocalPlayer:GetMouse().Target
+
+                if _Target and _Target.Parent then
+                    local _Model = _Target:FindFirstAncestorOfClass('Model')
+
+                    if _Model then
+                        if _Players:GetPlayerFromCharacter(_Model) then
+                            return
+                        else
+                            local _Humanoid2 = _Model:FindFirstChildOfClass('Humanoid')
+
+                            if _Humanoid2 and _Humanoid2.Health > 0 then
+                                local u97 = u26(_Model)
+
+                                if u97 then
+                                    if u10 >= (_HumanoidRootPart.Position - u97.Position).Magnitude then
+                                        u83 = _Model
+
+                                        local _WalkSpeed = _Humanoid.WalkSpeed
+                                        local _JumpPower = _Humanoid.JumpPower
+
+                                        _Humanoid.WalkSpeed = 0
+                                        _Humanoid.JumpPower = 0
+
+                                        local _BodyPosition = Instance.new('BodyPosition')
+
+                                        _BodyPosition.MaxForce = Vector3.new(500000, 500000, 500000)
+                                        _BodyPosition.P = 50000
+                                        _BodyPosition.D = 2000
+                                        _BodyPosition.Parent = u97
+
+                                        local _BodyGyro = Instance.new('BodyGyro')
+
+                                        _BodyGyro.MaxTorque = Vector3.new(0, 1000000, 0)
+                                        _BodyGyro.P = 50000
+                                        _BodyGyro.D = 2000
+                                        _BodyGyro.Parent = u97
+
+                                        pcall(function()
+                                            _Humanoid2.WalkSpeed = 0
+                                            _Humanoid2.PlatformStand = true
+                                        end)
+                                        u33(_Model, false)
+                                        task.spawn(function()
+                                            u50(_Humanoid, u6)
+                                        end)
+
+                                        local function u107()
+                                            local v102 = _HumanoidRootPart.Position + _HumanoidRootPart.CFrame.LookVector * u11
+                                            local _Y = _HumanoidRootPart.Position.Y
+                                            local v104 = _HumanoidRootPart.Position - v102
+                                            local v105 = Vector3.new(v104.X, 0, v104.Z)
+                                            local v106 = v105.Magnitude <= 0.001 and 0 or math.atan2(v105.X, v105.Z) + math.pi
+
+                                            return CFrame.new(v102.X, _Y, v102.Z) * CFrame.Angles(0, v106, 0)
+                                        end
+
+                                        local u108 = tick()
+                                        local u109 = true
+                                        local u110 = false
+                                        local u111 = false
+                                        local u112 = nil
+                                        local u113 = false
+
+                                        task.spawn(function()
+                                            while u109 and (_Humanoid2 and (_Humanoid2.Parent and (u97 and (u97.Parent and u16 >= tick() - u108)))) do
+                                                if u21 <= u88(u97) then
+                                                    u113 = true
+
+                                                    break
+                                                end
+
+                                                local v114 = u107()
+                                                local u115 = u97.CFrame:Lerp(v114, 0.5)
+
+                                                pcall(function()
+                                                    if not u110 then
+                                                        u97.CFrame = u115
+                                                    end
+                                                    if _BodyPosition then
+                                                        _BodyPosition.Position = u115.Position
+                                                    end
+                                                    if _BodyGyro then
+                                                        local v116 = _HumanoidRootPart.Position - u115.Position
+                                                        local v117 = Vector3.new(v116.X, 0, v116.Z)
+
+                                                        if v117.Magnitude > 0.001 then
+                                                            local v118 = math.atan2(v117.X, v117.Z) + math.pi
+
+                                                            _BodyGyro.CFrame = CFrame.new(u115.Position) * CFrame.Angles(0, v118, 0)
+                                                        end
+                                                    end
+                                                end)
+                                                task.wait(0.03)
+                                            end
+                                        end)
+
+                                        local u119 = nil
+                                        local u120 = nil
+                                        local u121 = nil
+
+                                        task.delay(u14, function()
+                                            if u97 and (u97.Parent and (_Humanoid2 and _Humanoid2.Parent)) then
+                                                u119 = u71(u7, u97, nil)
+
+                                                local _Sound2 = Instance.new('Sound')
+
+                                                _Sound2.SoundId = u8
+                                                _Sound2.Volume = 1
+                                                _Sound2.Parent = u97
+
+                                                pcall(function()
+                                                    _Sound2:Play()
+                                                end)
+
+                                                u120 = _Sound2
+
+                                                _Debris:AddItem(_Sound2, 6)
+
+                                                u121 = math.random(1, 100) <= u22 and u58(u9, u97, u23, 1)
+
+                                                if u121 then
+                                                    _Debris:AddItem(u121, u23 + 1)
+                                                end
+
+                                                task.spawn(function()
+                                                    u79(_Humanoid2, u15)
+                                                end)
+
+                                                if u17 then
+                                                    u110 = true
+                                                    u111 = false
+                                                    u112 = task.spawn(function()
+                                                        while not u111 and (_Humanoid2 and (_Humanoid2.Parent and (u97 and u97.Parent))) do
+                                                            if u21 <= u88(u97) then
+                                                                u113 = true
+
+                                                                break
+                                                            end
+
+                                                            local u123 = u107()
+                                                            local v124 = math.random() * 2 - 1
+                                                            local v125 = math.random() * 2 - 1
+                                                            local v126 = math.random() * 2 - 1
+                                                            local v127 = v124 * u18
+                                                            local v128 = v125 * (u18 * 0.45)
+                                                            local v129 = v126 * u18
+                                                            local v130 = math.rad((math.random() * 2 - 1) * u19)
+                                                            local v131 = math.rad((math.random() * 2 - 1) * u19)
+                                                            local v132 = math.rad((math.random() * 2 - 1) * u19)
+                                                            local u133 = u123 * CFrame.new(v127, v128, v129) * CFrame.Angles(v130, v131, v132)
+
+                                                            pcall(function()
+                                                                u97.CFrame = u133
+
+                                                                if _BodyPosition then
+                                                                    _BodyPosition.Position = u123.Position
+                                                                end
+                                                                if _BodyGyro then
+                                                                    local v134 = _HumanoidRootPart.Position - u123.Position
+                                                                    local v135 = Vector3.new(v134.X, 0, v134.Z)
+
+                                                                    if v135.Magnitude > 0.001 then
+                                                                        local v136 = math.atan2(v135.X, v135.Z) + math.pi
+
+                                                                        _BodyGyro.CFrame = CFrame.new(u123.Position) * CFrame.Angles(0, v136, 0)
+                                                                    end
+                                                                end
+                                                            end)
+                                                            task.wait(u20)
+                                                        end
+
+                                                        u110 = false
+                                                    end)
+                                                end
+                                            end
+                                        end)
+
+                                        local u137 = u119
+                                        local u138 = u120
+                                        local u139 = _BodyGyro
+                                        local v140 = u112
+                                        local u141 = _BodyPosition
+                                        local v142 = u113
+                                        local v143 = u108
+
+                                        repeat
+                                            task.wait(0.05)
+                                        until not _Humanoid2 or (not u97 or (not u97.Parent or _Humanoid2.Health and _Humanoid2.Health <= 0)) or (u16 <= tick() - v143 or v142)
+
+                                        u111 = true
+
+                                        if v140 then
+                                            task.wait(u20 + 0.02)
+                                        end
+                                        if u137 and u137.Parent then
+                                            pcall(function()
+                                                u137:Destroy()
+                                            end)
+                                        end
+                                        if v142 then
+                                            if u141 and u141.Parent then
+                                                pcall(function()
+                                                    u141:Destroy()
+                                                end)
+                                            end
+                                            if u139 and u139.Parent then
+                                                pcall(function()
+                                                    u139:Destroy()
+                                                end)
+                                            end
+                                            if _Model and _Model.Parent then
+                                                u33(_Model, true)
+                                            end
+
+                                            pcall(function()
+                                                if _Humanoid2 and _Humanoid2.Parent then
+                                                    _Humanoid2.PlatformStand = false
+                                                end
+                                            end)
+
+                                            _Humanoid.WalkSpeed = _WalkSpeed or 16
+                                            _Humanoid.JumpPower = _JumpPower or 50
+                                            u83 = nil
+                                        else
+                                            if u97 and u97.Parent then
+                                                local v145, v146 = pcall(function()
+                                                    local v144 = u97.Position - _HumanoidRootPart.Position
+
+                                                    if v144.Magnitude > 0.001 then
+                                                        return v144.Unit
+                                                    else
+                                                        return Vector3.new(0, 0.2, 0)
+                                                    end
+                                                end)
+                                                local v147 = v145 and v146 and v146 or Vector3.new(0, 0.2, 0)
+                                                local _BodyVelocity = Instance.new('BodyVelocity')
+
+                                                _BodyVelocity.MaxForce = Vector3.new(500000, 500000, 500000)
+                                                _BodyVelocity.P = 6000
+                                                _BodyVelocity.Velocity = v147 * 48 + Vector3.new(0, 16, 0)
+                                                _BodyVelocity.Parent = u97
+
+                                                _Debris:AddItem(_BodyVelocity, 0.55)
+                                            end
+                                            if u141 and u141.Parent then
+                                                pcall(function()
+                                                    u141:Destroy()
+                                                end)
+                                            end
+                                            if u139 and u139.Parent then
+                                                pcall(function()
+                                                    u139:Destroy()
+                                                end)
+                                            end
+                                            if _Model and _Model.Parent then
+                                                u33(_Model, true)
+                                            end
+
+                                            pcall(function()
+                                                if _Humanoid2 and _Humanoid2.Parent then
+                                                    _Humanoid2.PlatformStand = false
+                                                end
+                                            end)
+
+                                            if u138 and u138.Parent then
+                                                pcall(function()
+                                                    u138:Stop()
+                                                    u138:Destroy()
+                                                end)
+                                            end
+
+                                            _Humanoid.WalkSpeed = _WalkSpeed or 16
+                                            _Humanoid.JumpPower = _JumpPower or 50
+                                            u83 = nil
+                                        end
+                                    else
+                                        return
+                                    end
+                                else
+                                    return
+                                end
+                            else
+                                return
+                            end
+                        end
+                    else
+                        return
+                    end
+                else
+                    return
+                end
+            else
+                return
+            end
+        end
+    end)
+    _Tool.Unequipped:Connect(function()
+        u83 = nil
+    end)
+
+    return _Tool
+end
+
+task.spawn(function()
+    pcall(u82)
+end)
+v149()
