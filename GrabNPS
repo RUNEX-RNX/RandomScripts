@@ -1,0 +1,839 @@
+local Players = game:GetService("Players")
+local Debris = game:GetService("Debris")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local BLOOD_ASSET = "rbxassetid://5069307706"
+local NECK_SNAP_ID = "rbxassetid://114303647099968"
+local GRAB_ANIM_ID = "rbxassetid://243663079"
+local THROW_ANIM_ID = "rbxassetid://218504594"
+local THROW_START_TIME = 0.5
+local THROW_EARLY_RATIO = 0.7
+
+local CODE_ACTIONS = {
+	dismantle = "https://raw.githubusercontent.com/GUI-Offical/TestFile-Broken/refs/heads/main/Protected_8925751398564838.lua.txt",
+}
+
+local spinnerChars = {"|","/","-","\\"}
+
+local GUI_NAMES = {
+	"Grab_Intro",
+	"Grab_LoadingGui",
+	"Grab_ModalGui",
+	"Grab_Popup",
+	"Grab_ChoiceGui",
+	"Grab_KillNotify",
+	"Grab_CodeGui",
+	"Grab_CodeButton",
+}
+
+local function safeParentGui(gui)
+	local ok, core = pcall(function() return game:GetService("CoreGui") end)
+	if ok and core then
+		local suc, _ = pcall(function() gui.Parent = core end)
+		if suc then return gui end
+	end
+	gui.Parent = playerGui
+	return gui
+end
+
+local function cleanupGuis()
+	for _, name in ipairs(GUI_NAMES) do
+		pcall(function()
+			local core = game:GetService("CoreGui")
+			local g = core:FindFirstChild(name)
+			if g then g:Destroy() end
+		end)
+		pcall(function()
+			local g = playerGui:FindFirstChild(name)
+			if g then g:Destroy() end
+		end)
+	end
+end
+
+local function popupNotification(text, duration, textColor, bgColor)
+	duration = duration or 2
+	textColor = textColor or Color3.fromRGB(255,255,255)
+	bgColor = bgColor or Color3.fromRGB(0,0,0)
+
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "Grab_Popup"
+	gui.ResetOnSpawn = false
+	safeParentGui(gui)
+
+	local frame = Instance.new("Frame")
+	frame.Size = UDim2.new(0, 360, 0, 56)
+	frame.Position = UDim2.new(0.5, -180, 0.16, 0)
+	frame.BackgroundColor3 = bgColor
+	frame.BorderSizePixel = 0
+	frame.Parent = gui
+
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1, -12, 1, -12)
+	label.Position = UDim2.new(0, 6, 0, 6)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.Code
+	label.TextSize = 18
+	label.TextColor3 = textColor
+	label.TextWrapped = true
+	label.TextXAlignment = Enum.TextXAlignment.Center
+	label.TextYAlignment = Enum.TextYAlignment.Center
+	label.Text = text
+	label.Parent = frame
+
+	task.delay(duration, function()
+		if gui and gui.Parent then gui:Destroy() end
+	end)
+end
+
+local function setModelCollisions(model, canCollide)
+	for _, d in ipairs(model:GetDescendants()) do
+		if d:IsA("BasePart") then
+			pcall(function() d.CanCollide = canCollide end)
+		end
+	end
+end
+
+local animFlags = {}
+local function animateWords(label, fullText, wordDelay)
+	if not label or not label.Parent then return end
+	animFlags[label] = (animFlags[label] or 0) + 1
+	local token = animFlags[label]
+
+	local words = {}
+	for w in fullText:gmatch("%S+") do table.insert(words, w) end
+	label.Text = ""
+	task.spawn(function()
+		for i, w in ipairs(words) do
+			if animFlags[label] ~= token then return end
+			if i == 1 then label.Text = w else label.Text = label.Text .. " " .. w end
+			task.wait(wordDelay or 0.12)
+		end
+		if animFlags[label] == token then animFlags[label] = nil end
+	end)
+end
+
+local bloodTemplateType, bloodEmitterTemplate, bloodModelTemplate
+local function preloadBlood()
+	local ok, objects = pcall(function() return game:GetObjects(BLOOD_ASSET) end)
+	if not ok or not objects or #objects == 0 then return end
+	local root = objects[1]
+	local foundEmitter
+	for _, d in ipairs(root:GetDescendants()) do
+		if d:IsA("ParticleEmitter") then foundEmitter = d break end
+	end
+	if foundEmitter then
+		bloodEmitterTemplate = foundEmitter:Clone()
+		bloodTemplateType = "emitter"
+	else
+		for _, p in ipairs(root:GetDescendants()) do
+			if p:IsA("BasePart") then p.CanCollide = false p.Massless = true end
+		end
+		root.Parent = nil
+		bloodModelTemplate = root
+		bloodTemplateType = "model"
+	end
+end
+
+local function makeLoadingGui()
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "Grab_LoadingGui"
+	gui.ResetOnSpawn = false
+
+	local frame = Instance.new("Frame")
+	frame.AnchorPoint = Vector2.new(1, 1)
+	frame.Position = UDim2.new(1, -8, 1, -8)
+	frame.Size = UDim2.new(0, 300, 0, 72)
+	frame.BackgroundTransparency = 0.6
+	frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	frame.BorderSizePixel = 0
+	frame.Parent = gui
+
+	local title = Instance.new("TextLabel")
+	title.Name = "Title"
+	title.Size = UDim2.new(1, -12, 0, 28)
+	title.Position = UDim2.new(0, 6, 0, 6)
+	title.BackgroundTransparency = 1
+	title.Font = Enum.Font.Code
+	title.TextSize = 16
+	title.TextColor3 = Color3.fromRGB(255,255,255)
+	title.Text = "Loading Grab tool..."
+	title.Parent = frame
+
+	local details = Instance.new("TextLabel")
+	details.Name = "Details"
+	details.Size = UDim2.new(1, -12, 0, 32)
+	details.Position = UDim2.new(0, 6, 0, 34)
+	details.BackgroundTransparency = 1
+	details.Font = Enum.Font.Code
+	details.TextSize = 14
+	details.TextColor3 = Color3.fromRGB(200,200,200)
+	details.TextWrapped = true
+	details.Text = ""
+	details.TextXAlignment = Enum.TextXAlignment.Left
+	details.Parent = frame
+
+	return gui, title, details
+end
+
+local function showIntroBanner(duration)
+	duration = duration or 1.6
+	pcall(function() game:GetService("CoreGui"):FindFirstChild("Grab_Intro"):Destroy() end)
+	pcall(function() playerGui:FindFirstChild("Grab_Intro"):Destroy() end)
+
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "Grab_Intro"
+	gui.ResetOnSpawn = false
+
+	local frame = Instance.new("Frame")
+	frame.Size = UDim2.new(0, 420, 0, 44)
+	frame.Position = UDim2.new(0.5, -210, 0, -80)
+	frame.AnchorPoint = Vector2.new(0.5, 0)
+	frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	frame.BorderSizePixel = 0
+	frame.Parent = gui
+
+	local label = Instance.new("TextLabel")
+	label.Name = "IntroLabel"
+	label.Size = UDim2.new(1, -64, 1, 0)
+	label.Position = UDim2.new(0, 8, 0, 0)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.Code
+	label.TextSize = 18
+	label.TextColor3 = Color3.fromRGB(255,255,255)
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.Parent = frame
+
+	local spinLabel = Instance.new("TextLabel")
+	spinLabel.Name = "IntroSpin"
+	spinLabel.Size = UDim2.new(0, 40, 1, 0)
+	spinLabel.Position = UDim2.new(1, -44, 0, 0)
+	spinLabel.BackgroundTransparency = 1
+	spinLabel.Font = Enum.Font.Code
+	spinLabel.TextSize = 18
+	spinLabel.TextColor3 = Color3.fromRGB(255,255,255)
+	spinLabel.Text = "|"
+	spinLabel.Parent = frame
+
+	safeParentGui(gui)
+
+	TweenService:Create(frame, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Position = UDim2.new(0.5, -210, 0, 12)
+	}):Play()
+
+	animateWords(label, "Grab made by GUI (@5w8i)", 0.12)
+
+	local running = true
+	spawn(function()
+		local idx = 1
+		while running do
+			spinLabel.Text = spinnerChars[idx]
+			idx = idx % #spinnerChars + 1
+			task.wait(0.09)
+		end
+	end)
+
+	task.delay(duration, function()
+		running = false
+		local targetPos = UDim2.new(1, -110, 1, -44)
+		local targetSize = UDim2.new(0, 180, 0, 30)
+		TweenService:Create(frame, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+			Position = targetPos,
+			Size = targetSize
+		}):Play()
+		TweenService:Create(label, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+			TextSize = 14
+		}):Play()
+		TweenService:Create(spinLabel, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+			Position = UDim2.new(1, -34, 0, 0)
+		}):Play()
+	end)
+end
+
+local function runPreloadsAndShowLoading()
+	pcall(function() game:GetService("CoreGui"):FindFirstChild("Grab_LoadingGui"):Destroy() end)
+	pcall(function() playerGui:FindFirstChild("Grab_LoadingGui"):Destroy() end)
+
+	local loadingGui, loadingTitle, loadingDetails = makeLoadingGui()
+	safeParentGui(loadingGui)
+
+	local spinnerRunning = true
+	spawn(function()
+		local idx = 1
+		while spinnerRunning do
+			loadingTitle.Text = "Loading Grab tool...  " .. spinnerChars[idx]
+			idx = idx % #spinnerChars + 1
+			task.wait(0.12)
+		end
+	end)
+
+	local steps = {
+		"Loading particles",
+		"Loading GUI",
+		"Loading animations",
+		"Loading sound",
+		"Loading blood asset",
+		"Finalizing..."
+	}
+	for _, step in ipairs(steps) do
+		loadingDetails.Text = ""
+		animateWords(loadingDetails, step, 0.10)
+		if step == "Loading sound" then
+			local s = Instance.new("Sound")
+			s.SoundId = NECK_SNAP_ID
+			s.Parent = loadingGui
+			Debris:AddItem(s, 1.0)
+			task.wait(0.18)
+		elseif step == "Loading blood asset" then
+			preloadBlood()
+			task.wait(0.25)
+		else
+			task.wait(0.16)
+		end
+	end
+
+	spinnerRunning = false
+	loadingTitle.Text = "Ready."
+	loadingDetails.Text = ""
+	task.wait(0.45)
+	if loadingGui and loadingGui.Parent then loadingGui:Destroy() end
+end
+
+local function showKillNotification(killerName, targetName, duration)
+	duration = duration or 2.2
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "Grab_KillNotify"
+	gui.ResetOnSpawn = false
+	safeParentGui(gui)
+
+	local frame = Instance.new("Frame")
+	frame.Name = "KillFrame"
+	frame.Size = UDim2.new(0, 260, 0, 28)
+	frame.Position = UDim2.new(1, 10, 0.5, -14)
+	frame.AnchorPoint = Vector2.new(1, 0.5)
+	frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	frame.BorderSizePixel = 0
+	frame.Parent = gui
+
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1, -12, 1, -6)
+	label.Position = UDim2.new(0, 8, 0, 3)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.Code
+	label.TextSize = 14
+	label.TextColor3 = Color3.fromRGB(255,255,255)
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.TextYAlignment = Enum.TextYAlignment.Center
+	label.Text = string.format("%s killed %s", tostring(killerName or "Unknown"), tostring(targetName or "NPC"))
+	label.Parent = frame
+
+	TweenService:Create(frame, TweenInfo.new(0.38, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		Position = UDim2.new(1, -8, 0.5, -14)
+	}):Play()
+
+	task.delay(duration, function()
+		local outTween = TweenService:Create(frame, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+			Position = UDim2.new(1, 10, 0.5, -14)
+		})
+		outTween:Play()
+		outTween.Completed:Connect(function()
+			if gui and gui.Parent then gui:Destroy() end
+		end)
+	end)
+end
+
+local function sanitizeCode(s)
+	s = tostring(s or "")
+	s = s:match("^%s*(.-)%s*$") or s
+	return s:lower()
+end
+
+local function cleanupCodeGui()
+	pcall(function() local core = game:GetService("CoreGui"); local g = core:FindFirstChild("Grab_CodeGui"); if g then g:Destroy() end end)
+	pcall(function() local core = game:GetService("CoreGui"); local b = core:FindFirstChild("Grab_CodeButton"); if b then b:Destroy() end end)
+	pcall(function() local g = playerGui:FindFirstChild("Grab_CodeGui"); if g then g:Destroy() end end)
+	pcall(function() local b = playerGui:FindFirstChild("Grab_CodeButton"); if b then b:Destroy() end end)
+end
+
+local function createCodeUI(tool)
+	cleanupCodeGui()
+
+	local btnGui = Instance.new("ScreenGui")
+	btnGui.Name = "Grab_CodeButton"
+	btnGui.ResetOnSpawn = false
+	local parentToCore = false
+	local ok, core = pcall(function() return game:GetService("CoreGui") end)
+	if ok and core then
+		local suc, _ = pcall(function() btnGui.Parent = core end)
+		if suc then parentToCore = true end
+	end
+	if not parentToCore then btnGui.Parent = playerGui end
+
+	local btnFrame = Instance.new("Frame")
+	btnFrame.Name = "ButtonFrame"
+	btnFrame.Size = UDim2.new(0, 44, 0, 44)
+	btnFrame.Position = UDim2.new(0, 8, 0.5, 5)
+	btnFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	btnFrame.BorderSizePixel = 0
+	btnFrame.Parent = btnGui
+
+	local openBtn = Instance.new("TextButton")
+	openBtn.Size = UDim2.new(1, 0, 1, 0)
+	openBtn.BackgroundTransparency = 1
+	openBtn.Font = Enum.Font.Code
+	openBtn.TextSize = 18
+	openBtn.Text = "Code"
+	openBtn.TextColor3 = Color3.fromRGB(255,255,255)
+	openBtn.Parent = btnFrame
+
+	local panelGui = Instance.new("ScreenGui")
+	panelGui.Name = "Grab_CodeGui"
+	panelGui.ResetOnSpawn = false
+	if parentToCore then panelGui.Parent = core else panelGui.Parent = playerGui end
+
+	local panelFrame = Instance.new("Frame")
+	panelFrame.Name = "Panel"
+	panelFrame.Size = UDim2.new(0, 360, 0, 180)
+	panelFrame.Position = UDim2.new(0, -380, 0.5, -90)
+	panelFrame.AnchorPoint = Vector2.new(0, 0.5)
+	panelFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	panelFrame.BorderSizePixel = 0
+	panelFrame.Parent = panelGui
+
+	local title = Instance.new("TextLabel")
+	title.Size = UDim2.new(1, -24, 0, 32)
+	title.Position = UDim2.new(0, 12, 0, 10)
+	title.BackgroundTransparency = 1
+	title.Font = Enum.Font.Code
+	title.TextSize = 20
+	title.TextColor3 = Color3.fromRGB(255,255,255)
+	title.Text = "Code"
+	title.TextXAlignment = Enum.TextXAlignment.Left
+	title.Parent = panelFrame
+
+	local desc = Instance.new("TextLabel")
+	desc.Size = UDim2.new(1, -24, 0, 40)
+	desc.Position = UDim2.new(0, 12, 0, 44)
+	desc.BackgroundTransparency = 1
+	desc.Font = Enum.Font.Code
+	desc.TextSize = 14
+	desc.TextColor3 = Color3.fromRGB(200,200,200)
+	desc.TextWrapped = true
+	desc.Text = "Enter a code to be granted different items or run actions. Example: dismantle"
+	desc.TextXAlignment = Enum.TextXAlignment.Left
+	desc.Parent = panelFrame
+
+	local codeBox = Instance.new("TextBox")
+	codeBox.Size = UDim2.new(1, -24, 0, 36)
+	codeBox.Position = UDim2.new(0, 12, 0, 92)
+	codeBox.ClearTextOnFocus = false
+	codeBox.Font = Enum.Font.Code
+	codeBox.PlaceholderText = "Enter code here..."
+	codeBox.Text = ""
+	codeBox.TextSize = 16
+	codeBox.TextColor3 = Color3.fromRGB(255,255,255)
+	codeBox.BackgroundColor3 = Color3.fromRGB(25,25,25)
+	codeBox.BorderSizePixel = 0
+	codeBox.Parent = panelFrame
+
+	local confirmBtn = Instance.new("TextButton")
+	confirmBtn.Size = UDim2.new(0, 120, 0, 36)
+	confirmBtn.Position = UDim2.new(1, -132, 1, -48)
+	confirmBtn.AnchorPoint = Vector2.new(0, 0)
+	confirmBtn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	confirmBtn.Font = Enum.Font.Code
+	confirmBtn.TextSize = 16
+	confirmBtn.TextColor3 = Color3.fromRGB(0,0,0)
+	confirmBtn.Text = "Confirm"
+	confirmBtn.Parent = panelFrame
+
+	local closeBtn = Instance.new("TextButton")
+	closeBtn.Size = UDim2.new(0, 24, 0, 24)
+	closeBtn.Position = UDim2.new(1, -36, 0, 8)
+	closeBtn.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	closeBtn.Font = Enum.Font.Code
+	closeBtn.TextSize = 14
+	closeBtn.TextColor3 = Color3.fromRGB(0,0,0)
+	closeBtn.Text = "X"
+	closeBtn.Parent = panelFrame
+
+	local panelVisible = false
+	local function showPanel()
+		if panelVisible then return end
+		panelVisible = true
+		local target = UDim2.new(0, 8, 0.5, -90)
+		TweenService:Create(panelFrame, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = target}):Play()
+	end
+	local function hidePanel()
+		if not panelVisible then return end
+		panelVisible = false
+		local off = UDim2.new(0, -380, 0.5, -90)
+		TweenService:Create(panelFrame, TweenInfo.new(0.28, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Position = off}):Play()
+	end
+
+	openBtn.MouseButton1Click:Connect(function()
+		if panelVisible then hidePanel() else showPanel() end
+	end)
+	closeBtn.MouseButton1Click:Connect(hidePanel)
+
+	confirmBtn.MouseButton1Click:Connect(function()
+		local raw = sanitizeCode(codeBox.Text)
+		if raw == "" then
+			popupNotification("Please enter a code.", 1.6)
+			return
+		end
+
+		local action = CODE_ACTIONS[raw]
+		if not action then
+			popupNotification("Code not found.", 2, Color3.fromRGB(255,200,120))
+			return
+		end
+
+		confirmBtn.Text = "Running..."
+		confirmBtn.AutoButtonColor = false
+		confirmBtn.Active = false
+
+		if type(action) == "string" then
+			local ok, err = pcall(function()
+				local chunk = game:HttpGet(action)
+				local f = loadstring(chunk)
+				if type(f) == "function" then f() else error("loadstring did not return a function") end
+			end)
+			if ok then popupNotification("Code ran successfully.", 2, Color3.fromRGB(200,255,220))
+			else popupNotification("Code failed: "..tostring(err), 3, Color3.fromRGB(255,180,120)) end
+		elseif type(action) == "function" then
+			local ok, err = pcall(action)
+			if ok then popupNotification("Action completed.", 2, Color3.fromRGB(200,255,220))
+			else popupNotification("Action error: "..tostring(err), 3, Color3.fromRGB(255,180,120)) end
+		else
+			popupNotification("Unsupported action type.", 2, Color3.fromRGB(255,200,120))
+		end
+
+		confirmBtn.Text = "Confirm"
+		confirmBtn.Active = true
+		confirmBtn.AutoButtonColor = true
+		hidePanel()
+	end)
+end
+
+local function createGrabTool(useThrow, useBlood)
+	local tool = Instance.new("Tool")
+	tool.Name = "Grab"
+	tool.RequiresHandle = false
+
+	local grabAnim = Instance.new("Animation"); grabAnim.AnimationId = GRAB_ANIM_ID
+	local throwAnim = Instance.new("Animation"); throwAnim.AnimationId = THROW_ANIM_ID
+
+	local busy = false
+
+	tool.Activated:Connect(function()
+		if busy then return end
+		busy = true
+
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoid = character:FindFirstChildOfClass("Humanoid")
+		if not humanoid then busy = false return end
+
+		local mouse = player:GetMouse()
+		local target = mouse.Target
+		if not target or not target.Parent then busy = false return end
+
+		local model = target:FindFirstAncestorOfClass("Model")
+		if not model then busy = false return end
+		local targetHum = model:FindFirstChildOfClass("Humanoid")
+		local targetHead = model:FindFirstChild("Head")
+		if not targetHum or not targetHead then busy = false return end
+		if targetHum.Health <= 0 then busy = false return end
+
+		local charRoot = character:FindFirstChild("HumanoidRootPart")
+		if not charRoot then busy = false return end
+		if (charRoot.Position - targetHead.Position).Magnitude > 20 then busy = false return end
+
+		local oldWalk, oldJump = humanoid.WalkSpeed, humanoid.JumpPower
+		humanoid.WalkSpeed = 0
+		humanoid.JumpPower = 0
+
+		local grabTrack = humanoid:LoadAnimation(grabAnim)
+		grabTrack:Play()
+		grabTrack:AdjustSpeed(0.8)
+		task.spawn(function()
+			task.wait(math.max(0, grabTrack.Length / 0.8 - 0.3))
+			grabTrack:AdjustSpeed(0)
+		end)
+
+		local bp = Instance.new("BodyPosition")
+		bp.MaxForce = Vector3.new(300000,300000,300000)
+		bp.P = 9000
+		bp.D = 300
+		bp.Parent = targetHead
+
+		local bg = Instance.new("BodyGyro")
+		bg.MaxTorque = Vector3.new(300000,300000,300000)
+		bg.P = 8000
+		bg.D = 200
+		bg.Parent = targetHead
+
+		setModelCollisions(model, false)
+
+		local rightArm = character:FindFirstChild("RightHand") or character:FindFirstChild("Right Arm")
+		local dragging = true
+		task.spawn(function()
+			while dragging and targetHum.Health > 0 do
+				if not rightArm or not targetHead then break end
+				local forwardDir = charRoot.CFrame.LookVector
+				local armTip = rightArm.Position + (forwardDir * 1.05) + Vector3.new(0, 1, 0)
+				bp.Position = armTip
+				bg.CFrame = CFrame.new(targetHead.Position, Vector3.new(charRoot.Position.X, targetHead.Position.Y, charRoot.Position.Z))
+				task.wait(0.05)
+			end
+		end)
+
+		local shakeStart = tick()
+		task.spawn(function()
+			while tick() - shakeStart < 3 and targetHum.Health > 0 do
+				targetHum.Health = math.max(0, targetHum.Health - 2)
+				if targetHead then
+					targetHead.CFrame *= CFrame.Angles(
+						math.rad(math.random(-8,8)),
+						math.rad(math.random(-8,8)),
+						math.rad(math.random(-8,8))
+					)
+				end
+				task.wait(0.05)
+			end
+			if targetHum.Health > 0 then targetHum.Health = 0 end
+		end)
+
+		repeat task.wait() until targetHum.Health <= 0
+
+		if targetHead and targetHead.Parent then
+			local snap = Instance.new("Sound")
+			snap.SoundId = NECK_SNAP_ID
+			snap.Volume = 1
+			snap.Parent = targetHead
+			pcall(function() snap:Play() end)
+			Debris:AddItem(snap, 4)
+		end
+
+		local targetName = (model and model.Name) or "NPC"
+		pcall(function() showKillNotification(player.Name, targetName, 2.4) end)
+
+		if useBlood and targetHead and targetHead.Parent then
+			local existing = targetHead:FindFirstChild("___BloodAttachment")
+			if not existing then
+				local attach = Instance.new("Attachment")
+				attach.Name = "___BloodAttachment"
+				attach.Position = Vector3.new(0, -0.45, 0)
+				attach.Parent = targetHead
+
+				if bloodTemplateType == "emitter" and bloodEmitterTemplate then
+					local e = bloodEmitterTemplate:Clone()
+					e.Name = "BloodEmitter"
+					e.Parent = attach
+				elseif bloodTemplateType == "model" and bloodModelTemplate then
+					local cloneModel = bloodModelTemplate:Clone()
+					for _, p in ipairs(cloneModel:GetDescendants()) do
+						if p:IsA("BasePart") then
+							p.CanCollide = false
+							p.Massless = true
+						end
+					end
+					cloneModel.Parent = model
+					local primary = cloneModel.PrimaryPart or cloneModel:FindFirstChildWhichIsA("BasePart")
+					if primary then
+						primary.CFrame = targetHead.CFrame * CFrame.new(0, -0.45, 0)
+						local weld = Instance.new("WeldConstraint")
+						weld.Part0 = primary
+						weld.Part1 = targetHead
+						weld.Parent = primary
+					end
+				end
+			end
+		end
+
+		dragging = false
+		grabTrack:AdjustSpeed(0.5)
+		task.wait(0.25)
+		grabTrack:Stop()
+
+		if useThrow then
+			local throwTrack = humanoid:LoadAnimation(throwAnim)
+			throwTrack:Play(0.2)
+			throwTrack:AdjustSpeed(1)
+
+			task.wait(0.05)
+			local startTime = THROW_START_TIME
+			if throwTrack.Length and startTime > throwTrack.Length then
+				startTime = math.max(0, throwTrack.Length - 0.01)
+			end
+			throwTrack.TimePosition = startTime
+
+			local remaining = math.max(0, throwTrack.Length - startTime)
+			task.spawn(function()
+				task.wait(remaining * THROW_EARLY_RATIO)
+				if targetHead and targetHead.Parent then
+					if bp and bp.Parent then bp:Destroy() end
+					if bg and bg.Parent then bg:Destroy() end
+
+					local bv = Instance.new("BodyVelocity")
+					bv.Velocity = charRoot.CFrame.RightVector * 100 + Vector3.new(0, 40, 0)
+					bv.MaxForce = Vector3.new(300000,300000,300000)
+					bv.P = 5000
+					bv.Parent = targetHead
+					Debris:AddItem(bv, 0.35)
+
+					task.delay(0.6, function()
+						if model and model.Parent then setModelCollisions(model, true) end
+					end)
+				end
+			end)
+
+			throwTrack.Stopped:Connect(function()
+				humanoid.WalkSpeed = oldWalk
+				humanoid.JumpPower = oldJump
+				busy = false
+			end)
+		else
+			if bp and bp.Parent then bp:Destroy() end
+			if bg and bg.Parent then bg:Destroy() end
+			task.delay(0.2, function() if model and model.Parent then setModelCollisions(model, true) end end)
+			humanoid.WalkSpeed = oldWalk
+			humanoid.JumpPower = oldJump
+			busy = false
+		end
+	end)
+
+	return tool
+end
+
+local function showModalFlowAndGiveTool()
+	local modalGui = Instance.new("ScreenGui")
+	modalGui.Name = "Grab_ModalGui"
+	modalGui.ResetOnSpawn = false
+	safeParentGui(modalGui)
+
+	local modalFrame = Instance.new("Frame")
+	modalFrame.Size = UDim2.new(0,360,0,140)
+	modalFrame.Position = UDim2.new(0.5, -180, 0.5, -70)
+	modalFrame.BackgroundColor3 = Color3.new(0,0,0)
+	modalFrame.BorderSizePixel = 0
+	modalFrame.Parent = modalGui
+
+	local title = Instance.new("TextLabel")
+	title.Size = UDim2.new(1, -20, 0, 40)
+	title.Position = UDim2.new(0,10,0,8)
+	title.BackgroundTransparency = 1
+	title.Font = Enum.Font.Code
+	title.TextSize = 20
+	title.TextColor3 = Color3.new(1,1,1)
+	title.TextXAlignment = Enum.TextXAlignment.Center
+	title.Parent = modalFrame
+
+	animateWords(title, "Do NPCs / Bots use ragdoll?", 0.10)
+
+	local btnYes = Instance.new("TextButton")
+	btnYes.Size = UDim2.new(0,150,0,40)
+	btnYes.Position = UDim2.new(0.5, -155, 0, 64)
+	btnYes.BackgroundColor3 = Color3.new(1,1,1)
+	btnYes.TextColor3 = Color3.new(0,0,0)
+	btnYes.Font = Enum.Font.Code
+	btnYes.TextSize = 18
+	btnYes.Text = "Yes — Ragdoll"
+	btnYes.Parent = modalFrame
+
+	local btnNo = Instance.new("TextButton")
+	btnNo.Size = UDim2.new(0,150,0,40)
+	btnNo.Position = UDim2.new(0.5, 5, 0, 64)
+	btnNo.BackgroundColor3 = Color3.new(1,1,1)
+	btnNo.TextColor3 = Color3.new(0,0,0)
+	btnNo.Font = Enum.Font.Code
+	btnNo.TextSize = 18
+	btnNo.Text = "No — No Ragdoll"
+	btnNo.Parent = modalFrame
+
+	local function askBloodAndGrant(useThrow)
+		if modalGui and modalGui.Parent then modalGui:Destroy() end
+
+		local bloodGui = Instance.new("ScreenGui")
+		bloodGui.Name = "Grab_ChoiceGui"
+		bloodGui.ResetOnSpawn = false
+		safeParentGui(bloodGui)
+
+		local frame = Instance.new("Frame")
+		frame.Size = UDim2.new(0,320,0,120)
+		frame.Position = UDim2.new(0.5, -160, 0.5, -60)
+		frame.BackgroundColor3 = Color3.new(0,0,0)
+		frame.BorderSizePixel = 0
+		frame.Parent = bloodGui
+
+		local label = Instance.new("TextLabel")
+		label.Size = UDim2.new(1, -20, 0, 40)
+		label.Position = UDim2.new(0,10,0,8)
+		label.BackgroundTransparency = 1
+		label.Font = Enum.Font.Code
+		label.TextSize = 18
+		label.TextColor3 = Color3.fromRGB(255,255,255)
+		label.TextWrapped = true
+		label.TextXAlignment = Enum.TextXAlignment.Center
+		label.Parent = frame
+
+		animateWords(label, "Attach blood to NPC on kill?", 0.10)
+
+		local yBtn = Instance.new("TextButton")
+		yBtn.Size = UDim2.new(0,140,0,40)
+		yBtn.Position = UDim2.new(0.5, -150, 0, 56)
+		yBtn.BackgroundColor3 = Color3.fromRGB(0,0,0)
+		yBtn.Font = Enum.Font.Code
+		yBtn.Text = "Yes — Blood"
+		yBtn.TextColor3 = Color3.fromRGB(255,255,255)
+		yBtn.Parent = frame
+
+		local nBtn = Instance.new("TextButton")
+		nBtn.Size = UDim2.new(0,140,0,40)
+		nBtn.Position = UDim2.new(0.5, 10, 0, 56)
+		nBtn.BackgroundColor3 = Color3.fromRGB(0,0,0)
+		nBtn.Font = Enum.Font.Code
+		nBtn.Text = "No — No Blood"
+		nBtn.TextColor3 = Color3.fromRGB(255,255,255)
+		nBtn.Parent = frame
+
+		yBtn.MouseButton1Click:Connect(function()
+			if bloodGui and bloodGui.Parent then bloodGui:Destroy() end
+			local t = createGrabTool(useThrow, true)
+			t.Parent = player:WaitForChild("Backpack")
+			popupNotification("Tool granted: Grab (blood ON)", 2)
+			createCodeUI(t)
+		end)
+		nBtn.MouseButton1Click:Connect(function()
+			if bloodGui and bloodGui.Parent then bloodGui:Destroy() end
+			local t = createGrabTool(useThrow, false)
+			t.Parent = player:WaitForChild("Backpack")
+			popupNotification("Tool granted: Grab (blood OFF)", 2)
+			createCodeUI(t)
+		end)
+	end
+
+	btnYes.MouseButton1Click:Connect(function() askBloodAndGrant(true) end)
+	btnNo.MouseButton1Click:Connect(function() askBloodAndGrant(false) end)
+end
+
+local function startSequence()
+	cleanupGuis()
+	showIntroBanner(1.4)
+	runPreloadsAndShowLoading()
+	showModalFlowAndGiveTool()
+end
+
+startSequence()
+
+player.CharacterAdded:Connect(function()
+	cleanupGuis()
+	task.wait(0.35)
+	startSequence()
+end)
+
+player.AncestryChanged:Connect(function()
+	if not player:IsDescendantOf(game) then cleanupGuis() end
+end)
