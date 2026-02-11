@@ -1,0 +1,1947 @@
+-- ts file was generated at discord.gg/25ms
+
+local genv = getgenv()
+local fenv = getfenv()
+local _8 = loadstring(game:HttpGet('https://jnkie.com/sdk/library.lua'))()
+
+_8.service = 'Draw Me'
+_8.identifier = '1165'
+_8.provider = 'Draw Me'
+genv.SCRIPT_KEY = nil
+genv.UI_CLOSED = false
+
+local _call12 = game:GetService('TweenService')
+local _call14 = game:GetService('UserInputService')
+local _call18 = Color3.fromRGB(13, 17, 23)
+local _call22 = Color3.fromRGB(30, 36, 44)
+local _call24 = Color3.fromRGB(88, 166, 255)
+local _call28 = Color3.fromRGB(120, 180, 255)
+local _call32 = Color3.fromRGB(47, 183, 117)
+local _call40 = Color3.fromRGB(230, 237, 243)
+local _call42 = Color3.fromRGB(139, 148, 158)
+local _call46 = Color3.fromRGB(48, 54, 61)
+
+Color3.fromRGB(63, 71, 79)
+Color3.fromRGB(255, 255, 255)
+
+local _ = fenv.options
+local _ = game:GetService('Players').LocalPlayer
+local _ = game:GetService('RbxAnalyticsService').GetClientId
+
+game:GetService('RbxAnalyticsService').GetClientId()
+
+local _call62 = Instance.new('ScreenGui')
+
+_call62.Name = 'JunkieKeySystemUI'
+_call62.ResetOnSpawn = false
+_call62.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+_call62.IgnoreGuiInset = true
+
+local _call66 = Instance.new('Frame')
+
+_call66.Name = 'Backdrop'
+_call66.Size = UDim2.new(1, 0, 1, 0)
+_call66.Position = UDim2.new(0, 0, 0, 0)
+_call66.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+_call66.BackgroundTransparency = 0.4
+_call66.BorderSizePixel = 0
+_call66.Parent = _call62
+
+local _call74 = Instance.new('BlurEffect')
+
+_call74.Size = 16
+_call74.Name = 'JunkieUIBlur'
+_call74.Parent = game:GetService('Lighting')
+
+local _call76 = Instance.new('Frame')
+
+_call76.Name = 'Container'
+
+local _ = _call14.TouchEnabled
+local _ = _call14.KeyboardEnabled
+local _ = workspace.CurrentCamera.ViewportSize
+
+_call76.Size = UDim2.new(0, 580, 0, 320)
+_call76.Position = UDim2.new(0.5, 0, 0.5, 0)
+_call76.AnchorPoint = Vector2.new(0.5, 0.5)
+_call76.BackgroundColor3 = Color3.fromRGB(22, 27, 34)
+_call76.BorderSizePixel = 0
+_call76.Parent = _call66
+
+_call76:SetAttribute('IsMobile', false)
+
+local _call90 = Instance.new('UICorner')
+
+_call90.CornerRadius = UDim.new(0, 14)
+_call90.Parent = _call76
+
+local _call94 = Instance.new('UIStroke')
+
+_call94.Color = _call46
+_call94.Thickness = 1
+_call94.Transparency = 0.3
+_call94.Parent = _call76
+
+local _call96 = Instance.new('Frame')
+
+_call96.Name = 'Shadow'
+_call96.Size = UDim2.new(1, 40, 1, 40)
+_call96.Position = UDim2.new(0.5, 0, 0.5, 6)
+_call96.AnchorPoint = Vector2.new(0.5, 0.5)
+_call96.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+_call96.BackgroundTransparency = 0.7
+_call96.BorderSizePixel = 0
+_call96.ZIndex = 0
+_call96.Parent = _call66
+
+local _call106 = Instance.new('UICorner')
+
+_call106.CornerRadius = UDim.new(0, 18)
+_call106.Parent = _call96
+
+local _call110 = Instance.new('Frame')
+
+_call110.Name = 'GlowEffect'
+_call110.Size = UDim2.new(1, 60, 1, 60)
+_call110.Position = UDim2.new(0.5, 0, 0.5, 0)
+_call110.AnchorPoint = Vector2.new(0.5, 0.5)
+_call110.BackgroundColor3 = _call24
+_call110.BackgroundTransparency = 0.95
+_call110.BorderSizePixel = 0
+_call110.ZIndex = -1
+_call110.Parent = _call66
+
+local _call118 = Instance.new('UICorner')
+
+_call118.CornerRadius = UDim.new(0, 30)
+_call118.Parent = _call110
+
+local _call130 = _call12:Create(_call110, TweenInfo.new(4, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+    BackgroundTransparency = 0.9,
+    Size = UDim2.new(1, 80, 1, 80),
+})
+
+_call130:Play()
+
+local _call134 = Instance.new('Frame')
+
+_call134.Name = 'GlassOverlay'
+_call134.Size = UDim2.new(1, 0, 1, 0)
+_call134.Position = UDim2.new(0, 0, 0, 0)
+_call134.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+_call134.BackgroundTransparency = 0.98
+_call134.BorderSizePixel = 0
+_call134.ZIndex = 1
+_call134.Parent = _call76
+
+local _call142 = Instance.new('UICorner')
+
+_call142.CornerRadius = UDim.new(0, 14)
+_call142.Parent = _call134
+
+local _call146 = Instance.new('UIGradient')
+local _call160 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+    [2] = ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+    [3] = ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 200, 200)),
+})
+
+_call146.Color = _call160
+_call146.Rotation = 45
+
+local _call168 = NumberSequence.new({
+    [1] = NumberSequenceKeypoint.new(0, 0.96),
+    [2] = NumberSequenceKeypoint.new(0.5, 0.98),
+    [3] = NumberSequenceKeypoint.new(1, 1),
+})
+
+_call146.Transparency = _call168
+_call146.Parent = _call134
+
+local _call170 = Instance.new('Frame')
+
+_call170.Name = 'TopBar'
+_call170.Size = UDim2.new(1, 0, 0, 45)
+_call170.Position = UDim2.new(0, 0, 0, 0)
+_call170.BackgroundColor3 = _call18
+_call170.BorderSizePixel = 0
+_call170.ZIndex = 10
+_call170.Parent = _call76
+
+local _call176 = Instance.new('UICorner')
+
+_call176.CornerRadius = UDim.new(0, 14)
+_call176.Parent = _call170
+
+local _call180 = Instance.new('Frame')
+
+_call180.Size = UDim2.new(1, 0, 0, 10)
+_call180.Position = UDim2.new(0, 0, 1, -10)
+_call180.BackgroundColor3 = _call18
+_call180.BorderSizePixel = 0
+_call180.Parent = _call170
+
+local _call186 = Instance.new('Frame')
+
+_call186.Name = 'BrandLogo'
+_call186.Size = UDim2.new(0, 200, 1, 0)
+_call186.Position = UDim2.new(0, 20, 0, 0)
+_call186.BackgroundTransparency = 1
+_call186.ZIndex = 11
+_call186.Parent = _call170
+
+local _call192 = Instance.new('ImageLabel')
+
+_call192.BackgroundTransparency = 1
+_call192.Size = UDim2.new(0, 20, 0, 20)
+_call192.Image = 'rbxassetid://84528813312016'
+_call192.ImageColor3 = _call24
+_call192.ScaleType = Enum.ScaleType.Fit
+
+_call192:IsA('ImageLabel')
+
+local _ = _call192.ResampleMode
+
+_call192.ResampleMode = Enum.ResamplerMode.Default
+_call192.AnchorPoint = Vector2.new(0, 0.5)
+_call192.Position = UDim2.new(0, 0, 0.5, 0)
+_call192.ZIndex = 11
+_call192.Parent = _call186
+
+local _call207 = Instance.new('TextLabel')
+
+_call207.BackgroundTransparency = 1
+_call207.Size = UDim2.new(1, -30, 1, 0)
+_call207.Position = UDim2.new(0, 28, 0, 0)
+_call207.Text = 'Junkie Key System'
+_call207.TextColor3 = _call40
+_call207.TextSize = 15
+_call207.TextXAlignment = Enum.TextXAlignment.Left
+_call207.Font = Enum.Font.GothamSemibold
+_call207.ZIndex = 11
+_call207.Parent = _call186
+
+local _call217 = Instance.new('TextButton')
+
+_call217.Name = 'CloseButton'
+_call217.Size = UDim2.new(0, 30, 0, 30)
+_call217.Position = UDim2.new(1, -40, 0.5, 0)
+_call217.AnchorPoint = Vector2.new(0, 0.5)
+_call217.BackgroundColor3 = Color3.fromRGB(248, 81, 73)
+_call217.BackgroundTransparency = 0.8
+_call217.BorderSizePixel = 0
+_call217.Text = ''
+_call217.AutoButtonColor = false
+_call217.ZIndex = 11
+_call217.Parent = _call170
+
+local _call225 = Instance.new('UICorner')
+
+_call225.CornerRadius = UDim.new(0, 8)
+_call225.Parent = _call217
+
+local _call229 = Instance.new('ImageLabel')
+
+_call229.BackgroundTransparency = 1
+_call229.Size = UDim2.new(0, 16, 0, 16)
+_call229.Image = 'rbxassetid://73070135088117'
+_call229.ImageColor3 = _call40
+_call229.ScaleType = Enum.ScaleType.Fit
+
+_call229:IsA('ImageLabel')
+
+local _ = _call229.ResampleMode
+
+_call229.ResampleMode = Enum.ResamplerMode.Default
+_call229.AnchorPoint = Vector2.new(0.5, 0.5)
+_call229.Position = UDim2.new(0.5, 0, 0.5, 0)
+_call229.ZIndex = 12
+_call229.Parent = _call217
+
+local _call244 = Instance.new('Frame')
+
+_call244.Name = 'ContentArea'
+_call244.Size = UDim2.new(1, -40, 1, -65)
+_call244.Position = UDim2.new(0, 20, 0, 55)
+_call244.BackgroundTransparency = 1
+_call244.Parent = _call76
+
+local _call250 = Instance.new('Frame')
+
+_call250.Name = 'TitleSection'
+_call250.Size = UDim2.new(1, 0, 0, 85)
+_call250.Position = UDim2.new(0, 0, 0, 5)
+_call250.BackgroundTransparency = 1
+_call250.Parent = _call244
+
+local _call256 = Instance.new('Frame')
+
+_call256.Name = 'IconFrame'
+_call256.Size = UDim2.new(0, 52, 0, 52)
+_call256.Position = UDim2.new(0.5, -26, 0, 0)
+_call256.BackgroundColor3 = _call22
+_call256.BorderSizePixel = 0
+_call256.Parent = _call250
+
+local _call262 = Instance.new('UICorner')
+
+_call262.CornerRadius = UDim.new(0, 12)
+_call262.Parent = _call256
+
+local _call266 = Instance.new('UIGradient')
+local _call274 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, _call24),
+    [2] = ColorSequenceKeypoint.new(0.5, _call28),
+    [3] = ColorSequenceKeypoint.new(1, Color3.fromRGB(136, 87, 224)),
+})
+
+_call266.Color = _call274
+_call266.Rotation = 45
+_call266.Parent = _call256
+
+local _call276 = Instance.new('UIStroke')
+
+_call276.Color = _call24
+_call276.Thickness = 2
+_call276.Transparency = 0.5
+_call276.Parent = _call256
+
+local _call278 = Instance.new('UIGradient')
+local _call286 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 229, 255)),
+    [2] = ColorSequenceKeypoint.new(0.5, _call24),
+    [3] = ColorSequenceKeypoint.new(1, Color3.fromRGB(187, 134, 252)),
+})
+
+_call278.Color = _call286
+_call278.Rotation = 0
+_call278.Parent = _call276
+
+local _call294 = _call12:Create(_call278, TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1), {Rotation = 360})
+
+_call294:Play()
+
+local _call300 = Instance.new('ImageLabel')
+
+_call300.BackgroundTransparency = 1
+_call300.Size = UDim2.new(0, 26, 0, 26)
+_call300.Image = 'rbxassetid://84528813312016'
+_call300.ImageColor3 = Color3.fromRGB(255, 255, 255)
+_call300.ScaleType = Enum.ScaleType.Fit
+
+_call300:IsA('ImageLabel')
+
+local _ = _call300.ResampleMode
+
+_call300.ResampleMode = Enum.ResamplerMode.Default
+_call300.AnchorPoint = Vector2.new(0.5, 0.5)
+_call300.Position = UDim2.new(0.5, 0, 0.5, 0)
+_call300.Parent = _call256
+
+local _call315 = Instance.new('TextLabel')
+
+_call315.Name = 'TitleText'
+_call315.Size = UDim2.new(1, 0, 0, 24)
+_call315.Position = UDim2.new(0, 0, 0, 58)
+_call315.BackgroundTransparency = 1
+_call315.Text = 'Key Verification System'
+_call315.TextColor3 = _call40
+_call315.TextSize = 17
+_call315.TextXAlignment = Enum.TextXAlignment.Center
+_call315.Font = Enum.Font.GothamBold
+_call315.Parent = _call250
+
+local _call325 = Instance.new('TextLabel')
+
+_call325.Name = 'SubtitleText'
+_call325.Size = UDim2.new(1, 0, 0, 18)
+_call325.Position = UDim2.new(0, 0, 0, 82)
+_call325.BackgroundTransparency = 1
+_call325.Text = 'Powered by Junkie Development'
+_call325.TextColor3 = _call42
+_call325.TextSize = 13
+_call325.TextXAlignment = Enum.TextXAlignment.Center
+_call325.Font = Enum.Font.Gotham
+_call325.Parent = _call250
+
+local _call335 = Instance.new('Frame')
+
+_call335.Name = 'InputSection'
+_call335.Size = UDim2.new(1, 0, 0, 46)
+_call335.Position = UDim2.new(0, 0, 0, 115)
+_call335.BackgroundColor3 = _call22
+_call335.BorderSizePixel = 0
+_call335.Parent = _call244
+
+local _call341 = Instance.new('UICorner')
+
+_call341.CornerRadius = UDim.new(0, 10)
+_call341.Parent = _call335
+
+local _call345 = Instance.new('UIStroke')
+
+_call345.Color = _call46
+_call345.Thickness = 1
+_call345.Transparency = 0.5
+_call345.Parent = _call335
+
+local _call347 = Instance.new('ImageLabel')
+
+_call347.BackgroundTransparency = 1
+_call347.Size = UDim2.new(0, 18, 0, 18)
+_call347.Image = 'rbxassetid://128426502701541'
+_call347.ImageColor3 = _call24
+_call347.ScaleType = Enum.ScaleType.Fit
+
+_call347:IsA('ImageLabel')
+
+local _ = _call347.ResampleMode
+
+_call347.ResampleMode = Enum.ResamplerMode.Default
+_call347.AnchorPoint = Vector2.new(0, 0.5)
+_call347.Position = UDim2.new(0, 14, 0.5, 0)
+_call347.Parent = _call335
+
+local _call362 = Instance.new('TextBox')
+
+_call362.Name = 'KeyInput'
+_call362.Size = UDim2.new(1, -50, 1, 0)
+_call362.Position = UDim2.new(0, 40, 0, 0)
+_call362.BackgroundTransparency = 1
+_call362.PlaceholderText = 'Enter your verification key'
+_call362.PlaceholderColor3 = Color3.fromRGB(110, 118, 129)
+_call362.Text = ''
+_call362.TextColor3 = _call40
+_call362.TextSize = 14
+_call362.TextXAlignment = Enum.TextXAlignment.Left
+_call362.TextTruncate = Enum.TextTruncate.AtEnd
+_call362.Font = Enum.Font.Gotham
+_call362.ClearTextOnFocus = false
+_call362.Parent = _call335
+
+local _call374 = Instance.new('Frame')
+
+_call374.Name = 'ButtonSection'
+_call374.Size = UDim2.new(1, 0, 0, 40)
+_call374.Position = UDim2.new(0, 0, 0, 175)
+_call374.BackgroundTransparency = 1
+_call374.Parent = _call244
+
+local _call380 = Instance.new('TextButton')
+
+_call380.Name = 'GetLinkButton'
+_call380.Size = UDim2.new(0.48, 0, 1, 0)
+_call380.Position = UDim2.new(0, 0, 0, 0)
+_call380.BackgroundColor3 = _call24
+_call380.Text = ''
+_call380.Font = Enum.Font.GothamSemibold
+_call380.TextSize = 14
+_call380.BorderSizePixel = 0
+_call380.AutoButtonColor = false
+_call380.Parent = _call374
+
+local _call388 = Instance.new('UICorner')
+
+_call388.CornerRadius = UDim.new(0, 10)
+_call388.Parent = _call380
+
+local _call392 = Instance.new('UIGradient')
+local _call398 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, _call24),
+    [2] = ColorSequenceKeypoint.new(1, Color3.fromRGB(58, 136, 225)),
+})
+
+_call392.Color = _call398
+_call392.Rotation = 90
+_call392.Parent = _call380
+
+local _call400 = Instance.new('UIStroke')
+
+_call400.Color = _call28
+_call400.Thickness = 0
+_call400.Transparency = 0.8
+_call400.Parent = _call380
+
+local _call404 = Instance.new('ImageLabel')
+
+_call404.BackgroundTransparency = 1
+_call404.Size = UDim2.new(0, 16, 0, 16)
+_call404.Image = 'rbxassetid://73034596791310'
+_call404.ImageColor3 = Color3.fromRGB(255, 255, 255)
+_call404.ScaleType = Enum.ScaleType.Fit
+
+_call404:IsA('ImageLabel')
+
+local _ = _call404.ResampleMode
+
+_call404.ResampleMode = Enum.ResamplerMode.Default
+_call404.AnchorPoint = Vector2.new(0, 0.5)
+_call404.Position = UDim2.new(0, 12, 0.5, 0)
+_call404.Parent = _call380
+
+local _call419 = Instance.new('TextLabel')
+
+_call419.Name = 'ButtonText'
+_call419.Size = UDim2.new(1, 0, 1, 0)
+_call419.Position = UDim2.new(0, 0, 0, 0)
+_call419.BackgroundTransparency = 1
+_call419.Text = 'Get Link'
+_call419.TextColor3 = Color3.fromRGB(255, 255, 255)
+_call419.Font = Enum.Font.GothamSemibold
+_call419.TextSize = 14
+_call419.TextXAlignment = Enum.TextXAlignment.Center
+_call419.Parent = _call380
+
+local _call431 = Instance.new('TextButton')
+
+_call431.Name = 'VerifyButton'
+_call431.Size = UDim2.new(0.48, 0, 1, 0)
+_call431.Position = UDim2.new(0.52, 0, 0, 0)
+_call431.BackgroundColor3 = _call32
+_call431.BorderSizePixel = 0
+_call431.Text = ''
+_call431.TextSize = 14
+_call431.Font = Enum.Font.GothamSemibold
+_call431.AutoButtonColor = false
+_call431.Parent = _call374
+
+local _call439 = Instance.new('UICorner')
+
+_call439.CornerRadius = UDim.new(0, 10)
+_call439.Parent = _call431
+
+local _call443 = Instance.new('UIGradient')
+local _call449 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, _call32),
+    [2] = ColorSequenceKeypoint.new(1, Color3.fromRGB(37, 153, 97)),
+})
+
+_call443.Color = _call449
+_call443.Rotation = 90
+_call443.Parent = _call431
+
+local _call451 = Instance.new('UIStroke')
+
+_call451.Color = Color3.fromRGB(67, 203, 137)
+_call451.Thickness = 0
+_call451.Transparency = 0.8
+_call451.Parent = _call431
+
+local _call455 = Instance.new('ImageLabel')
+
+_call455.BackgroundTransparency = 1
+_call455.Size = UDim2.new(0, 16, 0, 16)
+_call455.Image = 'rbxassetid://83827110621355'
+_call455.ImageColor3 = Color3.fromRGB(255, 255, 255)
+_call455.ScaleType = Enum.ScaleType.Fit
+
+_call455:IsA('ImageLabel')
+
+local _ = _call455.ResampleMode
+
+_call455.ResampleMode = Enum.ResamplerMode.Default
+_call455.AnchorPoint = Vector2.new(0, 0.5)
+_call455.Position = UDim2.new(0, 12, 0.5, 0)
+_call455.Parent = _call431
+
+local _call470 = Instance.new('TextLabel')
+
+_call470.Name = 'ButtonText'
+_call470.Size = UDim2.new(1, 0, 1, 0)
+_call470.Position = UDim2.new(0, 0, 0, 0)
+_call470.BackgroundTransparency = 1
+_call470.Text = 'Verify Key'
+_call470.TextColor3 = Color3.fromRGB(255, 255, 255)
+_call470.Font = Enum.Font.GothamSemibold
+_call470.TextSize = 14
+_call470.TextXAlignment = Enum.TextXAlignment.Center
+_call470.Parent = _call431
+
+local _call482 = Instance.new('Frame')
+
+_call482.Name = 'StatusBar'
+_call482.Size = UDim2.new(1, -40, 0, 2)
+_call482.Position = UDim2.new(0.5, 0, 1, -14)
+_call482.AnchorPoint = Vector2.new(0.5, 0)
+_call482.BackgroundColor3 = _call46
+_call482.BorderSizePixel = 0
+_call482.Parent = _call76
+
+local _call490 = Instance.new('TextLabel')
+
+_call490.Name = 'StatusText'
+_call490.BackgroundTransparency = 1
+_call490.Text = ''
+_call490.TextColor3 = _call42
+_call490.Font = Enum.Font.Gotham
+_call490.TextSize = 12
+_call490.TextXAlignment = Enum.TextXAlignment.Center
+_call490.Size = UDim2.new(1, -40, 0, 20)
+_call490.Position = UDim2.new(0.5, 0, 1, -38)
+_call490.AnchorPoint = Vector2.new(0.5, 0)
+_call490.Visible = false
+_call490.Parent = _call76
+
+local _call502 = _call380:FindFirstChild('UIStroke')
+
+_call502.Name = 'GetLinkButtonGlow'
+
+local _call504 = _call431:FindFirstChild('UIStroke')
+
+_call504.Name = 'VerifyButtonGlow'
+_call62.Parent = game:GetService('CoreGui')
+
+_call62.AncestryChanged:Connect(function(_510, _510_2) end)
+_call217.MouseEnter:Connect(function()
+    local _call518 = _call12:Create(_call217, TweenInfo.new(0.2), {BackgroundTransparency = 0.2})
+
+    _call518:Play()
+end)
+_call217.MouseLeave:Connect(function()
+    error('internal 557: <25ms: infinitelooperror>')
+end)
+_call380.MouseEnter:Connect(function() end)
+_call380.MouseLeave:Connect(function() end)
+_call380.MouseButton1Down:Connect(function() end)
+_call380.MouseButton1Up:Connect(function() end)
+_call431.MouseEnter:Connect(function() end)
+_call431.MouseLeave:Connect(function() end)
+_call431.MouseButton1Down:Connect(function() end)
+_call431.MouseButton1Up:Connect(function() end)
+_call362.Focused:Connect(function() end)
+_call362.FocusLost:Connect(function() end)
+
+_call76.BackgroundTransparency = 1
+
+local _call571 = _call12:Create(_call76, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {BackgroundTransparency = 0})
+
+_call571:Play()
+
+_call66.BackgroundTransparency = 1
+
+local _call579 = _call12:Create(_call66, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {BackgroundTransparency = 0.4})
+
+_call579:Play()
+_call217.MouseButton1Click:Connect(function() end)
+_call380.MouseButton1Click:Connect(function() end)
+_call431.MouseButton1Click:Connect(function() end)
+_call362.FocusLost:Connect(function(_597) end)
+
+_call335.Visible = false
+_call431.Visible = false
+_call380.Visible = false
+_call256.Visible = false
+_call315.Visible = false
+_call325.Visible = false
+
+local _call599 = _call76:FindFirstChild('LoadingOverlay')
+
+_call599.Visible = true
+
+local _ = genv.SCRIPT_KEY
+local _check_key602 = _8.check_key
+local _call603 = _check_key602(nil)
+local _ = _call603.valid
+local _ = _call603.message
+local _ = _call603.message
+
+_call335.Visible = true
+_call431.Visible = true
+_call380.Visible = true
+_call256.Visible = true
+_call315.Visible = true
+_call325.Visible = true
+
+_call76:FindFirstChild('LoadingOverlay'):Destroy()
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+task.wait(0.1)
+
+local _ = genv.UI_CLOSED
+
+error('internal 557: <25ms: infinitelooperror>')
