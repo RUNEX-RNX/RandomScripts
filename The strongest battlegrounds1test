@@ -230,7 +230,7 @@ local function u47()
         end
     else
         _StarterGui:SetCore('SendNotification', {
-            Title = 'Kyoto Notification',
+            Title = 'RUNEX Notification',
             Text = 'Flowing Water failed. Try again or check your ping',
             Duration = 2,
         })
