@@ -1,0 +1,581 @@
+-- ts file was generated at discord.gg/25ms
+
+local genv = getgenv()
+local _5 = loadstring(game:HttpGet('https://github.com/Footagesus/WindUI/releases/latest/download/main.lua'))()
+
+_5:AddTheme({
+    Outline = Color3.fromHex('#FFFFFF'),
+    Placeholder = Color3.fromHex('#7a7a7a'),
+    Name = 'My Theme',
+    Text = Color3.fromHex('#FFFFFF'),
+    Button = Color3.fromHex('#52525b'),
+    Background = Color3.fromHex('#101010'),
+    Icon = Color3.fromHex('#a1a1aa'),
+    Accent = Color3.fromHex('#18181b'),
+})
+
+local _call29 = _5:CreateWindow({
+    User = {
+        Anonymous = false,
+        Callback = function(...)
+            print('clicked')
+        end,
+        Enabled = true,
+    },
+    ScrollBarEnabled = false,
+    HideSearchBar = true,
+    SideBarWidth = 200,
+    BackgroundImageTransparency = 0.65,
+    Author = 'by ThanhDuy',
+    Resizable = true,
+    Theme = 'My Theme',
+    Folder = 'MySuperHub',
+    MaxSize = Vector2.new(850, 560),
+    Title = '\u{1f5ff} ThanhDuy HUB | TSB \u{1f5ff}',
+    Transparent = true,
+    MinSize = Vector2.new(560, 350),
+    Background = 'rbxassetid://124984802322746',
+    Icon = 'app-window',
+    Size = UDim2.fromOffset(580, 460),
+})
+
+_call29:EditOpenButton({
+    StrokeThickness = 2,
+    Draggable = true,
+    Title = 'Open ThanhDuy Hub',
+    Enabled = true,
+    Color = ColorSequence.new(Color3.fromHex('FF0F7B'), Color3.fromHex('F89B29')),
+    OnlyMobile = false,
+    Icon = 'monitor',
+    CornerRadius = UDim.new(0, 16),
+})
+
+local _call45 = Instance.new('Sound')
+
+_call45.SoundId = 'rbxassetid://4503761646'
+_call45.Volume = 2
+_call45.Looped = false
+_call45.Parent = game:GetService('SoundService')
+
+_call45:Play()
+
+local _call49 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Tech',
+})
+
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        genv.Requires4M1 = false
+
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/Combos/refs/heads/main/Protected_6711617962776331.lua'))()
+    end,
+    Title = 'Kyoto',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/kietsonphongthanhnghia-a11y/Uhyeah/refs/heads/main/Protected_1425045629292384.lua.txt'))()
+    end,
+    Title = 'Kiba v4 (New)',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/KyotoTechRework/refs/heads/main/Protected_9378660372508532.lua'))()
+    end,
+    Title = 'Kyoto Rework',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/MerebennieOfficial/ExoticJn/refs/heads/main/Merebennie%20Hub%20V2'))()
+    end,
+    Title = 'Merebennie Hub V1.5',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/Surf-Tech/refs/heads/main/ThanhDuySurfTech.lua'))()
+    end,
+    Title = 'Surf Tech',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/Gojo-Tech/refs/heads/main/DuydepzaiGojoTech.lua'))()
+    end,
+    Title = 'Gojo Tech',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://api.junkie-development.de/api/v1/luascripts/public/5e4945144797011e2c6229d2f8a2a41bd771c018109e2eff0d6e119708c38400/download'))()
+    end,
+    Title = 'Side Dash Assist',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/MerebennieOfficial/ExoticJn/refs/heads/main/Protected_83737738.txt'))()
+    end,
+    Title = 'Lix Tech',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://api.getpolsec.com/scripts/hosted/84e2bd29cccc0f5302267e4dc952cff6816db4af36416cbd477daaa26d60863d.lua'))()
+    end,
+    Title = 'LoopDash V2',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://rawscripts.net/raw/Universal-Script-M1-RESET-57657'))()
+    end,
+    Title = 'M1 Reset',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/YQANTG/YQANTG/refs/heads/main/SOBABYIMSOGOOD.txt'))()
+    end,
+    Title = 'Backdash Cancel',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/MinhNhatHUB/MinhNhat/refs/heads/main/Lethal%20Kiba.lua'))()
+    end,
+    Title = 'Lethal Kiba',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://api.getpolsec.com/scripts/hosted/23bcf4264b586dc93b16a9b054eddae259938b7421ac5096353079b2e9d74e24.lua'))()
+    end,
+    Title = 'Side Dash V3',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://api.getpolsec.com/scripts/hosted/2753546c83053761e44664d36ffe5035d6e20fc8aee1d19f0eb7b933974ae537.lua'))()
+    end,
+    Title = 'Supa v2',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/InstantLethal/refs/heads/main/Protected_5983112998592296.lua'))()
+    end,
+    Title = 'Lethal Dash',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://api.getpolsec.com/scripts/hosted/ea0b7cbd8c395e01ec38271794b2559808d26501bd6e6e30c48660759a7db7b3.lua'))()
+    end,
+    Title = 'Supa Tech V3',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/officialakira/Akira-Hub/refs/heads/main/akira%20tech.lua'))()
+    end,
+    Title = 'Akira Tech',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/InstantTwistedRevamp/refs/heads/main/Protected_7455521176683315.lua'))()
+    end,
+    Title = 'Instant Twisted',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/NewAutoTech/refs/heads/main/Protected_6389347658054908.lua'))()
+    end,
+    Title = 'Auto Tech',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/Oreo-Tech-NewGen-/refs/heads/main/ThanhDuyOreotech(New).lua'))()
+    end,
+    Title = 'Oreo Rework',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/letuankiet09812345-cmyk/Testkiba/refs/heads/main/LethalFixLag-obfuscated.lua.txt'))()
+    end,
+    Title = 'Lethal Dash FixLag',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://api.junkie-development.de/api/v1/luascripts/public/2345da4cc975b07b3f250f6a83c45687a70c1999b9c46219cd6893771f9dd542/download'))()
+    end,
+    Title = 'Boomy Lethal Dash',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/letuankiet09812345-cmyk/Testkiba/refs/heads/main/4cbcd9b905ee3e41.lua.txt'))()
+    end,
+    Title = 'Dripz',
+    Desc = '',
+})
+_call49:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/InstantLethalRevamp/refs/heads/main/Protected_6977817281150270.lua'))()
+    end,
+    Title = 'Instant Lethal Revamp',
+    Desc = '',
+})
+
+local _call219 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Script Tsb',
+})
+
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/MinhNhatHUB/MinhNhat/refs/heads/main/Farm%20Kill%20V3.2.lua'))()
+    end,
+    Title = 'Farm Kill V3.2',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://pastefy.app/Lpvb1WSW/raw'))()
+    end,
+    Title = 'Void Kill',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/SaitamaCombo/refs/heads/main/Code.txt'))()
+    end,
+    Title = 'Combo Saitama',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Cyborg883/CombosRemake/refs/heads/main/Script'))()
+    end,
+    Title = 'Combo Garou and Saitma',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://pastefy.app/JYn4De0C/raw'))()
+    end,
+    Title = 'Ultra instinct',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://pastefy.app/UY1oh6PG/raw'))()
+    end,
+    Title = '5 character combo',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/notpaki1/Beerus-gui-by-notpaki/main/obf_24xHkr77wX3zL8yph18nZ0mQDM3B7i0n6CliUS9hY642y0rysz9h7z7040j1m3Dl.lua.txt'))()
+    end,
+    Title = 'Beerus UI',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/notpaki5/Spiderman-gui-script/refs/heads/main/SpidermanGuiByNotpaki.txt'))()
+    end,
+    Title = 'Spiderman GUI',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man', true))()
+    end,
+    Title = 'Trash Can',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ATrainz/Phantasm/refs/heads/main/Games/TSB.lua'))()
+    end,
+    Title = 'Farm Hard',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Viunze/ZeOrbit/refs/heads/main/ZeOrbit.lua'))()
+    end,
+    Title = 'orbit Farm',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://pastefy.app/ZkZzX9WT'))()
+    end,
+    Title = 'Farm Rank',
+    Desc = '',
+})
+_call219:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ATrainz/Phantasm/refs/heads/main/Phantasm.lua'))()
+    end,
+    Title = 'phantasm',
+    Desc = '',
+})
+
+local _call312 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Emote Limited',
+})
+
+_call312:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/IdkRandomUsernameok/PublicAssets/refs/heads/main/Releases/MUI.lua'))()
+    end,
+    Title = 'Divine Form',
+    Desc = '',
+})
+_call312:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://arch-http.vercel.app/files/LIMITED EMOTE HUB (75-100) BY MIYKO'))()
+    end,
+    Title = 'MYKIO Limited Aura',
+    Desc = '',
+})
+_call312:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Mautiku/ehh/main/strong%20guest.lua.txt'))()
+    end,
+    Title = 'Fake animation',
+    Desc = '',
+})
+
+local _call335 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Accessories',
+})
+
+_call335:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Guestly-Scripts/Items-Scripts/refs/heads/main/Oinan-Thickhoof'))()
+    end,
+    Title = 'Oinan-Thickhoof-Axe',
+    Desc = '',
+})
+_call335:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/GuestlyTheGreatestGuest/Scripts/refs/heads/main/Erisyphia-Staff-made-by-Guestly'))()
+    end,
+    Title = 'Erisyphia-Staff-made-by-Guestly',
+    Desc = '',
+})
+_call335:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/GuestlyTheGreatestGuest/Scripts/refs/heads/main/Elemental-Crystal-Golem-made-by-Guestly'))()
+    end,
+    Title = 'Elemental-Crystal-Golem',
+    Desc = '',
+})
+_call335:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://rawscripts.net/raw/Universal-Script-Headless-Korblox-73782'))()
+    end,
+    Title = 'Headless-Korblox',
+    Desc = '',
+})
+
+local _call365 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Aimlock',
+})
+
+_call365:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/Aimlock-by-ThanhDuy-Account234/refs/heads/main/ThanhDuyCamlockOld.lua'))()
+    end,
+    Title = 'Aimlock Old',
+    Desc = 'By ThanhDuy',
+})
+_call365:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/MinhNhatHUB/MinhNhat/refs/heads/main/Silent%20Aim.lua'))()
+    end,
+    Title = 'Silent aim',
+    Desc = '',
+})
+_call365:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://pastefy.app/NVrhJfjA/raw'))()
+    end,
+    Title = 'Aim V1',
+    Desc = '',
+})
+
+local _call388 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Shader',
+})
+
+_call388:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua'))()
+    end,
+    Title = 'Shader-All-Game',
+    Desc = '',
+})
+
+local _call397 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Synthetic',
+})
+
+_call397:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/MinhNhatHUB/MinhNhat/refs/heads/main/MinhNhatHUB%20(New).lua'))()
+    end,
+    Title = 'MinhNhatHUB',
+    Desc = 'Key: MinhNhatHUB On Top',
+})
+_call397:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/kaimm2/TSB/refs/heads/main/Tthanh%20Tong%20Hop%20Tech.txt'))()
+    end,
+    Title = 'TthanhHub',
+    Desc = '',
+})
+_call397:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://gist.githubusercontent.com/ngm2807-sudo/b30689b1cf65651cd287213f40fa0f50/raw/TSBbyBaeMinh.lua'))()
+    end,
+    Title = 'BaeMinhHub',
+    Desc = '',
+})
+
+local _call420 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Fixlag',
+})
+
+_call420:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/qwertyui-is-back/Bloxstrap/main/Initiate.lua'))()
+    end,
+    Title = 'Blox strap',
+    Desc = '',
+})
+_call420:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/TurboLite/Script/main/FixLag.lua'))()
+    end,
+    Title = 'Turbo Lite',
+    Desc = '',
+})
+_call420:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/Flags-Smooth/refs/heads/main/Flags%20by%20ThanhDuy.lua'))()
+    end,
+    Title = 'Flags',
+    Desc = 'By ThanhDuy',
+})
+
+local _call443 = _call29:Tab({
+    Locked = false,
+    Icon = 'zap',
+    Title = 'Visual',
+})
+
+_call443:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/Fist-Blue-And-Red/refs/heads/main/HieuUngVuiNhon.lua'))()
+    end,
+    Title = 'aura attack',
+    Desc = 'By ThanhDuy',
+})
+_call443:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/Ping-All-Game/refs/heads/main/Ping%20Player.lua'))()
+    end,
+    Title = 'Ping and CPU',
+    Desc = 'By ThanhDuy',
+})
+_call443:Button({
+    Locked = false,
+    Callback = function(...)
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ngoclinh02042011-stack/ThongBaoRoiVao/refs/heads/main/ThongBaoNeuMuonDung.lua'))()
+    end,
+    Title = 'Notification',
+    Desc = 'By ThanhDuy',
+})
