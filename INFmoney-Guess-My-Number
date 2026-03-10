@@ -1,0 +1,16 @@
+local fenv = getfenv()
+
+game:GetService('CoreGui'):FindFirstChild('RNXhub')
+game:GetService('CoreGui').ToraScript:Destroy()
+
+local Name = loadstring(game:HttpGet('https://pastebin.com/raw/AajNdCGB', true))()
+local TelegramNTF = Name:CreateWindow('')
+
+flag = 'toggle',
+    text = 'INF money',
+    callback = function() end,
+    state = false,
+})
+
+TelegramNTF:AddLabel({
+    text = 'Telegram RUNEX_X_SCRIPT',
