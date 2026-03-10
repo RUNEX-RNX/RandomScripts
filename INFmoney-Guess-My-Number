@@ -8,7 +8,7 @@ local TelegramNTF = Name:CreateWindow('')
 
 flag = 'toggle',
     text = 'INF money',
-    callback = function() end,
+    callback = function(https://pastebin.com/raw/UZrUw3nn) end,
     state = false,
 })
 
