@@ -1,13 +1,22 @@
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/liebertsx/Tora-Library/main/src/librarynew",true))()
-local tab = library:CreateWindow("Guess My Number")
-flag = 'toggle',
-text = 'INF money',
-   callback = function(https://pastebin.com/raw/UZrUw3nn) end,
-  state = false,
-})
-folder:AddLabel({
-	text = "Join tg RUNEX_X_SCRIPT",
-	type = "label"
-	})
+local fenv = getfenv()
 
-library:Init()
+game:GetService('CoreGui'):FindFirstChild('ToraScript')
+game:GetService('CoreGui').ToraScript:Destroy()
+
+local _14 = loadstring(game:HttpGet('https://raw.githubusercontent.com/liebertsx/Tora-Library/main/src/librarynew', true))()
+local _call16 = _14:CreateWindow('Fly for Brainrots')
+local RNX = while true do
+game:GetService("ReplicatedStorage")["Events"]["Remote"]["Claim"]:FireServer()
+    task.wait() 
+end
+_call16:AddToggle({
+    flag = 'toggle',
+    text = 'INF money',
+    callback = function(RNX) end,
+    state = false,
+})
+
+_call16:AddLabel({
+    text = 'Telegram: RUNEX_X_SCRIPT',
+})
+_14:Init()
