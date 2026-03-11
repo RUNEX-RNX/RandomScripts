@@ -16,6 +16,8 @@ _call16:AddToggle({
     state = false,
 })
 
+fenv.Cash = function(RNX) end
+
 _call16:AddLabel({
     text = 'Telegram: RUNEX_X_SCRIPT',
 })
