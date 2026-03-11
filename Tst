@@ -1,0 +1,89 @@
+local fenv = getfenv()
+
+game:GetService('CoreGui'):FindFirstChild('ToraScript')
+game:GetService('CoreGui').ToraScript:Destroy()
+
+local _14 = loadstring(game:HttpGet('https://raw.githubusercontent.com/liebertsx/Tora-Library/main/src/librarynew', true))()
+local _call16 = _14:CreateWindow('Fly for Brainrots')
+
+task.spawn(function(_19, _19_2, _19_3, _19_4)
+    end)
+_call16:AddToggle({
+    flag = 'toggle',
+    text = 'Auto OG',
+    callback = function(_22, _22_2, _22_3)
+        _G.OG = _22
+
+        print('OG: ', _22)
+
+        local _ = fenv.OG
+
+        error('line 1: attempt to call a nil value')
+    end,
+    state = false,
+})
+
+fenv.OG = function(_25, _25_2, _25_3, _25_4, _25_5)
+    spawn(function()
+        wait()
+
+        for _31, _31_2 in pairs(workspace.Brainrots:GetChildren())do
+            _31_2:GetAttribute('Rarity')
+        end
+
+        wait(0.2)
+        error('internal 557: <25ms: infinitelooperror>')
+    end)
+end
+
+_call16:AddToggle({
+    flag = 'toggle',
+    text = 'Auto Divine',
+    callback = function(_36, _36_2, _36_3) end,
+    state = false,
+})
+
+fenv.Divine = function(_37, _37_2, _37_3) end
+
+_call16:AddToggle({
+    flag = 'toggle',
+    text = 'Collect Cash',
+    callback = function(_40, _40_2, _40_3, _40_4, _40_5, _40_6) end,
+    state = false,
+})
+
+fenv.Cash = function(_41) end
+
+_call16:AddToggle({
+    flag = 'toggle',
+    text = 'Upgrade All',
+    callback = function(_44, _44_2, _44_3, _44_4) end,
+    state = false,
+})
+
+fenv.Upgrade = function(_45) end
+
+_call16:AddToggle({
+    flag = 'toggle',
+    text = 'Buy Speed +10',
+    callback = function(_48, _48_2, _48_3) end,
+    state = false,
+})
+
+fenv.Speed = function(_49, _49_2, _49_3) end
+
+_call16:AddToggle({
+    flag = 'toggle',
+    text = 'Auto Rebirth',
+    callback = function(_52, _52_2, _52_3, _52_4) end,
+    state = false,
+})
+
+fenv.Rebirth = function(_53, _53_2, _53_3) end
+
+_call16:AddLabel({
+    text = 'YouTube: Tora IsMe',
+})
+_14:Init()
+game:GetService('ProximityPromptService').PromptButtonHoldBegan:Connect(function(_63, _63_2, _63_3) end)
+game:GetService('Players').LocalPlayer.PlayerGui.Notifications:Destroy()
