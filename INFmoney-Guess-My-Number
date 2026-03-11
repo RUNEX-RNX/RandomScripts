@@ -1,24 +1,20 @@
-local fenv = getfenv()
-
-game:GetService('CoreGui'):FindFirstChild('ToraScript')
-game:GetService('CoreGui').ToraScript:Destroy()
-
-local _14 = loadstring(game:HttpGet('https://raw.githubusercontent.com/liebertsx/Tora-Library/main/src/librarynew', true))()
-local _call16 = _14:CreateWindow('Fly for Brainrots')
-local RNX = while true do
-game:GetService("ReplicatedStorage")["Events"]["Remote"]["Claim"]:FireServer()
-    task.wait() 
-end
-_call16:AddToggle({
-    flag = 'toggle',
-    text = 'INF money',
-    callback = function(RNX) end,
-    state = false,
+--[[
+     🧑🏻‍💻RUNEX X SCRIPT🧑🏻‍💻 
+     telegram Channel t.me/RUNEX_X_SCRIPT
+     telegram profile @RUNEXscript
+     Join for new script🤑
+]]
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Guess My Number\nRUNEX X SCRIPT";
+    Text = "\nINF money";
+    Duration = 8;
 })
-
-fenv.Cash = function(RNX) end
-
-_call16:AddLabel({
-    text = 'Telegram: RUNEX_X_SCRIPT',
-})
-_14:Init()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))() 
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
+loadstring(game:HttpGet("https://pastebin.com/UZrUw3nn"))()
