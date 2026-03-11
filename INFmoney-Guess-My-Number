@@ -1,16 +1,13 @@
-local fenv = getfenv()
-
-game:GetService('CoreGui'):FindFirstChild('RNXhub')
-game:GetService('CoreGui').RNXhub:Destroy()
-
-local Name = loadstring(game:HttpGet('https://pastebin.com/raw/AajNdCGB', true))()
-local TelegramNTF = Name:CreateWindow('')
-
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/liebertsx/Tora-Library/main/src/librarynew",true))()
+local tab = library:CreateWindow("Guess My Number")
 flag = 'toggle',
-    text = 'INF money',
-    callback = function(https://pastebin.com/raw/UZrUw3nn) end,
-    state = false,
+text = 'INF money',
+   callback = function(https://pastebin.com/raw/UZrUw3nn) end,
+  state = false,
 })
+folder:AddLabel({
+	text = "Join tg RUNEX_X_SCRIPT",
+	type = "label"
+	})
 
-TelegramNTF:AddLabel({
-    text = 'Telegram RUNEX_X_SCRIPT',
+library:Init()
