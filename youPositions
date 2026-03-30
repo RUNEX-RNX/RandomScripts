@@ -1,0 +1,31 @@
+local _0x1a2b3c={}
+_0x1a2b3c._0x4d5e6f=game:GetService("Players")
+_0x1a2b3c._0x7g8h9i=_0x1a2b3c._0x4d5e6f.LocalPlayer
+_0x1a2b3c._0xj0k1l2=_0x1a2b3c._0x7g8h9i:WaitForChild("PlayerGui")
+_0x1a2b3c._0xm3n4o5=Instance.new("ScreenGui")
+_0x1a2b3c._0xm3n4o5.Parent=_0x1a2b3c._0xj0k1l2
+_0x1a2b3c._0xp6q7r8=Instance.new("Frame")
+_0x1a2b3c._0xp6q7r8.Size=UDim2.new(0,200,0,60)
+_0x1a2b3c._0xp6q7r8.Position=UDim2.new(0,10,1,-70)
+_0x1a2b3c._0xp6q7r8.BackgroundColor3=Color3.fromRGB(0,0,0)
+_0x1a2b3c._0xp6q7r8.BackgroundTransparency=0.5
+_0x1a2b3c._0xp6q7r8.Parent=_0x1a2b3c._0xm3n4o5
+_0x1a2b3c._0xs9t0u1=Instance.new("TextLabel")
+_0x1a2b3c._0xs9t0u1.Size=UDim2.new(1,0,1,0)
+_0x1a2b3c._0xs9t0u1.BackgroundTransparency=1
+_0x1a2b3c._0xs9t0u1.TextColor3=Color3.fromRGB(255,255,255)
+_0x1a2b3c._0xs9t0u1.TextSize=14
+_0x1a2b3c._0xs9t0u1.Font=Enum.Font.GothamBold
+_0x1a2b3c._0xs9t0u1.Parent=_0x1a2b3c._0xp6q7r8
+spawn(function()
+    local _0xv2w3x4=true
+    while _0xv2w3x4 do
+        local _0xy5z6a7=_0x1a2b3c._0x7g8h9i.Character
+        local _0xb8c9d0=_0xy5z6a7 and _0xy5z6a7:FindFirstChild("HumanoidRootPart")
+        if _0xb8c9d0 then
+            local _0xe1f2g3=_0xb8c9d0.Position
+            _0x1a2b3c._0xs9t0u1.Text=string.format("%s X: %.0f | Y: %.0f | Z: %.0f",string.char(226,128,141),_0xe1f2g3.X,_0xe1f2g3.Y,_0xe1f2g3.Z)
+        end
+        wait(0.1)
+    end
+end)
