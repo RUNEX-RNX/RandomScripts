@@ -188,10 +188,10 @@ local function createTwerkGUI()
 
     -- Кнопки
     local onButton = Instance.new("TextButton", Frame)
-    styleButton(onButton, "▶ СТАРТ ТВЕРК", 42)
+    styleButton(onButton, "СТАРТ ТВЕРК", 42)
     
     local offButton = Instance.new("TextButton", Frame)
-    styleButton(offButton, "⏹ СТОП ТВЕРК", 82)
+    styleButton(offButton, "СТОП ТВЕРК", 82)
     
     local speedSlider = Instance.new("TextButton", Frame)
     styleButton(speedSlider, "⚡ СКОРОСТЬ: " .. speed, 122)
@@ -200,7 +200,7 @@ local function createTwerkGUI()
     local creditsLabel = Instance.new("TextLabel")
     creditsLabel.Size = UDim2.new(0.9, 0, 0, 22)
     creditsLabel.Position = UDim2.new(0.05, 0, 0, 165)
-    creditsLabel.Text = "🎬 Made By: Krisss"
+    creditsLabel.Text = "🎬 Made By: RNXhub"
     creditsLabel.TextColor3 = Color3.fromRGB(150, 150, 170)
     creditsLabel.BackgroundTransparency = 1
     creditsLabel.TextSize = 10
@@ -211,7 +211,7 @@ local function createTwerkGUI()
     -- Логика скорости
     speedSlider.MouseButton1Click:Connect(function()
         speed = speed + 0.5
-        if speed > 3 then speed = 0.5 end
+        if speed > 5 then speed = 0.5 end
         speedSlider.Text = "⚡ СКОРОСТЬ: " .. string.format("%.1f", speed)
     end)
 
