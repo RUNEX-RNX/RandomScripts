@@ -7,155 +7,257 @@ local playing = false
 local stopLoop = false
 local speed = 1.5
 
--- Función para mostrar la notificación primero
+-- Функция для уведомления (тоже в стиле RNXhub)
 local function showNotification(callback)
-	local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-	gui.Name = "Notification"
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "RNXhub_Notification"
+    gui.ResetOnSpawn = false
+    
+    local success, err = pcall(function()
+        local GUIParent = game:GetService("CoreGui")
+        if gethui then GUIParent = gethui() end
+        gui.Parent = GUIParent
+    end)
+    if not success then
+        gui.Parent = player:WaitForChild("PlayerGui")
+    end
 
-	local frame = Instance.new("Frame", gui)
-	frame.Size = UDim2.new(0, 220, 0, 70)
-	frame.Position = UDim2.new(0.5, -110, 0.4, -35)
-	frame.BackgroundColor3 = Color3.fromRGB(255, 200, 220)
-	frame.BackgroundTransparency = 0.05
-	frame.BorderSizePixel = 0
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 260, 0, 70)
+    frame.Position = UDim2.new(0.5, -130, 0.4, -35)
+    frame.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+    frame.BackgroundTransparency = 0.05
+    frame.BorderSizePixel = 0
+    frame.Parent = gui
 
-	local img = Instance.new("ImageLabel", frame)
-	img.Size = UDim2.new(0, 40, 0, 40)
-	img.Position = UDim2.new(0, 8, 0.5, -20)
-	img.Image = "rbxassetid://16880049648"
-	img.BackgroundTransparency = 1
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = frame
 
-	local txt = Instance.new("TextLabel", frame)
-	txt.Size = UDim2.new(1, -60, 1, 0)
-	txt.Position = UDim2.new(0, 55, 0, 0)
-	txt.Text = "Subscribe to Krisss on YouTube"
-	txt.TextColor3 = Color3.fromRGB(255, 255, 255)
-	txt.BackgroundTransparency = 1
-	txt.TextSize = 14
-	txt.Font = Enum.Font.GothamBold
-	txt.TextWrapped = true
-	txt.TextXAlignment = Enum.TextXAlignment.Left
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(0, 200, 255)
+    stroke.Thickness = 1.5
+    stroke.Transparency = 0.3
+    stroke.Parent = frame
 
-	local sound = Instance.new("Sound", frame)
-	sound.SoundId = "rbxassetid://911342077"
-	sound.Volume = 1
-	sound:Play()
+    local txt = Instance.new("TextLabel")
+    txt.Size = UDim2.new(1, -60, 1, 0)
+    txt.Position = UDim2.new(0, 55, 0, 0)
+    txt.Text = "Subscribe to RUNEX X SCRIPT on YouTube"
+    txt.TextColor3 = Color3.fromRGB(255, 255, 255)
+    txt.BackgroundTransparency = 1
+    txt.TextSize = 13
+    txt.Font = Enum.Font.GothamBold
+    txt.TextWrapped = true
+    txt.TextXAlignment = Enum.TextXAlignment.Left
+    txt.Parent = frame
 
-	task.delay(5, function()
-		gui:Destroy()
-		if callback then callback() end
-	end)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://911342077"
+    sound.Volume = 1
+    sound.Parent = frame
+    sound:Play()
+
+    task.delay(5, function()
+        gui:Destroy()
+        if callback then callback() end
+    end)
 end
 
--- Función para crear el GUI después de la notificación
+-- Основной GUI в стиле RNXhub
 local function createTwerkGUI()
-	local character = player.Character or player.CharacterAdded:Wait()
-	local humanoid = character:WaitForChild("Humanoid")
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
 
-	local ScreenGui = Instance.new("ScreenGui")
-	ScreenGui.Name = "TwerkGUI"
-	ScreenGui.ResetOnSpawn = false
-	ScreenGui.Parent = player:WaitForChild("PlayerGui")
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "RNXhub_Twerk"
+    ScreenGui.ResetOnSpawn = false
+    
+    local success, err = pcall(function()
+        local GUIParent = game:GetService("CoreGui")
+        if gethui then GUIParent = gethui() end
+        ScreenGui.Parent = GUIParent
+    end)
+    if not success then
+        ScreenGui.Parent = player:WaitForChild("PlayerGui")
+    end
 
-	local Frame = Instance.new("Frame")
-	Frame.Position = UDim2.new(0.05, 0, 0.3, 0)
-	Frame.Size = UDim2.new(0, 160, 0, 130)
-	Frame.BackgroundColor3 = Color3.fromRGB(230, 240, 255)
-	Frame.BorderSizePixel = 0
-	Frame.BackgroundTransparency = 0.05
-	Frame.Active = true
-	Frame.Draggable = true
-	Frame.Parent = ScreenGui
+    -- Главное окно
+    local Frame = Instance.new("Frame")
+    Frame.Size = UDim2.new(0, 240, 0, 200)
+    Frame.Position = UDim2.new(0.02, 0, 0.3, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+    Frame.BackgroundTransparency = 0.05
+    Frame.BorderSizePixel = 0
+    Frame.Active = true
+    Frame.Draggable = true
+    Frame.Parent = ScreenGui
 
-	Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 10)
-	Instance.new("UIStroke", Frame).Color = Color3.fromRGB(190, 180, 255)
+    local mainCorner = Instance.new("UICorner")
+    mainCorner.CornerRadius = UDim.new(0, 12)
+    mainCorner.Parent = Frame
 
-	local function styleButton(button, color)
-		button.Size = UDim2.new(1, -10, 0, 25)
-		button.TextColor3 = Color3.fromRGB(255, 255, 255)
-		button.BackgroundColor3 = color
-		Instance.new("UICorner", button).CornerRadius = UDim.new(0, 6)
-		local stroke = Instance.new("UIStroke", button)
-		stroke.Color = Color3.fromRGB(200, 150, 200)
-		stroke.Thickness = 1.3
-	end
+    local mainStroke = Instance.new("UIStroke")
+    mainStroke.Color = Color3.fromRGB(0, 200, 255)
+    mainStroke.Thickness = 1.5
+    mainStroke.Transparency = 0.3
+    mainStroke.Parent = Frame
 
-	local onButton = Instance.new("TextButton", Frame)
-	onButton.Position = UDim2.new(0, 5, 0, 5)
-	onButton.Text = "Start Twerk"
-	styleButton(onButton, Color3.fromRGB(255, 182, 193))
-	onButton.Parent = Frame
+    -- Заголовок
+    local titleBar = Instance.new("Frame")
+    titleBar.Size = UDim2.new(1, 0, 0, 32)
+    titleBar.Position = UDim2.new(0, 0, 0, 0)
+    titleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
+    titleBar.BackgroundTransparency = 0
+    titleBar.BorderSizePixel = 0
+    titleBar.Parent = Frame
 
-	local offButton = Instance.new("TextButton", Frame)
-	offButton.Position = UDim2.new(0, 5, 0, 35)
-	offButton.Text = "Stop Twerk"
-	styleButton(offButton, Color3.fromRGB(255, 160, 122))
-	offButton.Parent = Frame
+    local titleBarCorner = Instance.new("UICorner")
+    titleBarCorner.CornerRadius = UDim.new(0, 12)
+    titleBarCorner.Parent = titleBar
 
-	local speedSlider = Instance.new("TextButton", Frame)
-	speedSlider.Position = UDim2.new(0, 5, 0, 65)
-	speedSlider.Text = "Speed: " .. speed
-	styleButton(speedSlider, Color3.fromRGB(255, 222, 173))
-	speedSlider.Parent = Frame
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, -60, 1, 0)
+    titleLabel.Position = UDim2.new(0, 15, 0, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = "RNXhub | Twerk Anim"
+    titleLabel.Font = Enum.Font.GothamBold
+    titleLabel.TextSize = 12
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    titleLabel.Parent = titleBar
 
-	local creditsLabel = Instance.new("TextLabel", Frame)
-	creditsLabel.Size = UDim2.new(1, -10, 0, 20)
-	creditsLabel.Position = UDim2.new(0, 5, 0, 100)
-	creditsLabel.Text = "Made By: Krisss"
-	creditsLabel.TextColor3 = Color3.fromRGB(100, 100, 100)
-	creditsLabel.BackgroundColor3 = Color3.fromRGB(230, 230, 250)
-	creditsLabel.BackgroundTransparency = 0.2
-	creditsLabel.TextSize = 13
-	creditsLabel.Font = Enum.Font.Cartoon
-	Instance.new("UICorner", creditsLabel).CornerRadius = UDim.new(0, 6)
-	Instance.new("UIStroke", creditsLabel).Color = Color3.fromRGB(200, 200, 255)
-	creditsLabel.Parent = Frame
+    -- Кнопка закрытия
+    local closeBtn = Instance.new("TextButton")
+    closeBtn.Size = UDim2.new(0, 28, 0, 24)
+    closeBtn.Position = UDim2.new(1, -30, 0, 4)
+    closeBtn.Text = "X"
+    closeBtn.Font = Enum.Font.GothamBold
+    closeBtn.TextSize = 14
+    closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    closeBtn.AutoButtonColor = false
+    closeBtn.Parent = titleBar
 
-	speedSlider.MouseButton1Click:Connect(function()
-		speed = speed + 0.5
-		if speed > 3 then speed = 0.5 end
-		speedSlider.Text = "Speed: " .. speed
-	end)
+    local closeCorner = Instance.new("UICorner")
+    closeCorner.CornerRadius = UDim.new(0, 6)
+    closeCorner.Parent = closeBtn
 
-	local function playLoop()
-		stopLoop = false
-		while not stopLoop and humanoid and humanoid.Parent do
-			anim = Instance.new("Animation")
-			anim.AnimationId = animId
-			local track = humanoid:LoadAnimation(anim)
-			track:Play()
-			track.TimePosition = 3.9
-			track:AdjustSpeed(speed)
-			task.wait(0.6)
-			track:Stop()
-		end
-	end
+    closeBtn.MouseEnter:Connect(function()
+        closeBtn.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+    end)
+    closeBtn.MouseLeave:Connect(function()
+        closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    end)
 
-	onButton.MouseButton1Click:Connect(function()
-		if not playing then
-			playing = true
-			coroutine.wrap(playLoop)()
-		end
-	end)
+    closeBtn.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
 
-	offButton.MouseButton1Click:Connect(function()
-		playing = false
-		stopLoop = true
-		if humanoid then
-			for _, tr in ipairs(humanoid:GetPlayingAnimationTracks()) do
-				if tr.Animation.AnimationId == animId then
-					tr:Stop()
-				end
-			end
-		end
-	end)
+    -- Функция стилизации кнопок (RNXhub стиль)
+    local function styleButton(button, text, yPos)
+        button.Size = UDim2.new(0.9, 0, 0, 32)
+        button.Position = UDim2.new(0.05, 0, 0, yPos)
+        button.Text = text
+        button.TextColor3 = Color3.fromRGB(255, 255, 255)
+        button.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+        button.Font = Enum.Font.GothamBold
+        button.TextSize = 12
+        button.AutoButtonColor = false
+        
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 8)
+        corner.Parent = button
+        
+        local stroke = Instance.new("UIStroke")
+        stroke.Color = Color3.fromRGB(0, 200, 255)
+        stroke.Thickness = 1
+        stroke.Transparency = 0.6
+        stroke.Parent = button
+        
+        button.MouseEnter:Connect(function()
+            button.BackgroundColor3 = Color3.fromRGB(45, 45, 60)
+            stroke.Transparency = 0.2
+        end)
+        button.MouseLeave:Connect(function()
+            if button.BackgroundColor3 == Color3.fromRGB(0, 150, 75) then return end
+            button.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+            stroke.Transparency = 0.6
+        end)
+    end
 
-	player.CharacterAdded:Connect(function(newChar)
-		humanoid = newChar:WaitForChild("Humanoid")
-		playing = false
-		stopLoop = true
-	end)
+    -- Кнопки
+    local onButton = Instance.new("TextButton", Frame)
+    styleButton(onButton, "▶ СТАРТ ТВЕРК", 42)
+    
+    local offButton = Instance.new("TextButton", Frame)
+    styleButton(offButton, "⏹ СТОП ТВЕРК", 82)
+    
+    local speedSlider = Instance.new("TextButton", Frame)
+    styleButton(speedSlider, "⚡ СКОРОСТЬ: " .. speed, 122)
+    
+    -- Кредиты (в стиле RNXhub)
+    local creditsLabel = Instance.new("TextLabel")
+    creditsLabel.Size = UDim2.new(0.9, 0, 0, 22)
+    creditsLabel.Position = UDim2.new(0.05, 0, 0, 165)
+    creditsLabel.Text = "🎬 Made By: Krisss"
+    creditsLabel.TextColor3 = Color3.fromRGB(150, 150, 170)
+    creditsLabel.BackgroundTransparency = 1
+    creditsLabel.TextSize = 10
+    creditsLabel.Font = Enum.Font.Gotham
+    creditsLabel.TextXAlignment = Enum.TextXAlignment.Center
+    creditsLabel.Parent = Frame
+
+    -- Логика скорости
+    speedSlider.MouseButton1Click:Connect(function()
+        speed = speed + 0.5
+        if speed > 3 then speed = 0.5 end
+        speedSlider.Text = "⚡ СКОРОСТЬ: " .. string.format("%.1f", speed)
+    end)
+
+    -- Логика анимации
+    local function playLoop()
+        stopLoop = false
+        while not stopLoop and humanoid and humanoid.Parent do
+            anim = Instance.new("Animation")
+            anim.AnimationId = animId
+            local track = humanoid:LoadAnimation(anim)
+            track:Play()
+            track.TimePosition = 3.9
+            track:AdjustSpeed(speed)
+            task.wait(0.6)
+            track:Stop()
+        end
+    end
+
+    onButton.MouseButton1Click:Connect(function()
+        if not playing then
+            playing = true
+            onButton.BackgroundColor3 = Color3.fromRGB(0, 150, 75)
+            spawn(playLoop)
+        end
+    end)
+
+    offButton.MouseButton1Click:Connect(function()
+        playing = false
+        stopLoop = true
+        onButton.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+        if humanoid then
+            for _, tr in ipairs(humanoid:GetPlayingAnimationTracks()) do
+                if tr.Animation and tr.Animation.AnimationId == animId then
+                    tr:Stop()
+                end
+            end
+        end
+    end)
+
+    player.CharacterAdded:Connect(function(newChar)
+        humanoid = newChar:WaitForChild("Humanoid")
+        playing = false
+        stopLoop = true
+        onButton.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+    end)
 end
 
--- Ejecutar
+-- Запуск
 showNotification(createTwerkGUI)
