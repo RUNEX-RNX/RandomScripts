@@ -1,0 +1,2 @@
+local AdminusUI = loadstring(game:HttpGet('https://raw.githubusercontent.com/RUNEX-RNX/RandomScripts/refs/heads/main/BloxFruitHelp'))()
+-- Join Telegram t.me/RUNEX_X_SCRIPT
