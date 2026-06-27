@@ -1,0 +1,448 @@
+-- RNXhub | Developer Products Viewer
+-- Стиль RNXhub + кнопка управления
+
+local MarketplaceService = game:GetService("MarketplaceService")
+local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+
+-- ========== ПЕРЕМЕННЫЕ СОСТОЯНИЯ ==========
+local isScriptActive = false
+local mainGui = nil
+local developerProductsFrame = nil
+
+-- ========== СОЗДАНИЕ GUI ==========
+local function createGUI()
+    mainGui = Instance.new("ScreenGui")
+    mainGui.Name = "RNXhub_DevProducts"
+    mainGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    mainGui.ResetOnSpawn = false
+    mainGui.Parent = CoreGui
+
+    -- ========== ГЛАВНАЯ КНОПКА (ТОГГЛ) ==========
+    local toggleBtn = Instance.new("TextButton")
+    toggleBtn.Name = "ToggleBtn"
+    toggleBtn.Font = Enum.Font.GothamBold
+    toggleBtn.Text = "📦 Dev Products"
+    toggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    toggleBtn.TextSize = 16
+    toggleBtn.AutoButtonColor = false
+    toggleBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- СЕРЫЙ (неактивен)
+    toggleBtn.BorderSizePixel = 0
+    toggleBtn.Position = UDim2.new(0.35, 0, 0.3, 0)
+    toggleBtn.Size = UDim2.new(0, 252, 0, 35)
+    toggleBtn.Parent = mainGui
+
+    local toggleCorner = Instance.new("UICorner")
+    toggleCorner.CornerRadius = UDim.new(0, 8)
+    toggleCorner.Parent = toggleBtn
+
+    local toggleStroke = Instance.new("UIStroke")
+    toggleStroke.Color = Color3.fromRGB(150, 150, 150)
+    toggleStroke.Thickness = 1
+    toggleStroke.Transparency = 0.5
+    toggleStroke.Parent = toggleBtn
+
+    -- ========== ОСНОВНОЕ ОКНО (ПОЯВЛЯЕТСЯ ПОСЛЕ АКТИВАЦИИ) ==========
+    developerProductsFrame = Instance.new("Frame")
+    developerProductsFrame.Name = "MainFrame"
+    developerProductsFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+    developerProductsFrame.BackgroundTransparency = 0.05
+    developerProductsFrame.BorderSizePixel = 0
+    developerProductsFrame.Position = UDim2.new(0.35, 0, 0.3, 40)
+    developerProductsFrame.Size = UDim2.new(0, 252, 0, 441)
+    developerProductsFrame.Visible = false
+    developerProductsFrame.Parent = mainGui
+
+    local frameCorner = Instance.new("UICorner")
+    frameCorner.CornerRadius = UDim.new(0, 10)
+    frameCorner.Parent = developerProductsFrame
+
+    local frameStroke = Instance.new("UIStroke")
+    frameStroke.Color = Color3.fromRGB(0, 200, 255)
+    frameStroke.Thickness = 1.5
+    frameStroke.Transparency = 0.3
+    frameStroke.Parent = developerProductsFrame
+
+    -- Заголовок окна
+    local titleBar = Instance.new("Frame")
+    titleBar.Size = UDim2.new(1, 0, 0, 32)
+    titleBar.Position = UDim2.new(0, 0, 0, 0)
+    titleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
+    titleBar.BackgroundTransparency = 0
+    titleBar.BorderSizePixel = 0
+    titleBar.Parent = developerProductsFrame
+
+    local titleBarCorner = Instance.new("UICorner")
+    titleBarCorner.CornerRadius = UDim.new(0, 10)
+    titleBarCorner.Parent = titleBar
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, -50, 1, 0)
+    titleLabel.Position = UDim2.new(0, 12, 0, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = "RNXhub | Dev Products"
+    titleLabel.Font = Enum.Font.GothamBold
+    titleLabel.TextSize = 12
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    titleLabel.Parent = titleBar
+
+    -- Кнопка закрытия
+    local closeBtn = Instance.new("TextButton")
+    closeBtn.Size = UDim2.new(0, 25, 0, 22)
+    closeBtn.Position = UDim2.new(1, -28, 0, 5)
+    closeBtn.Text = "X"
+    closeBtn.Font = Enum.Font.GothamBold
+    closeBtn.TextSize = 12
+    closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    closeBtn.AutoButtonColor = false
+    closeBtn.Parent = titleBar
+
+    local closeCorner = Instance.new("UICorner")
+    closeCorner.CornerRadius = UDim.new(0, 5)
+    closeCorner.Parent = closeBtn
+
+    closeBtn.MouseEnter:Connect(function()
+        closeBtn.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+    end)
+    closeBtn.MouseLeave:Connect(function()
+        closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    end)
+
+    -- Контейнер для продуктов
+    local containerFrame = Instance.new("Frame")
+    containerFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 30)
+    containerFrame.BackgroundTransparency = 0
+    containerFrame.BorderSizePixel = 0
+    containerFrame.Position = UDim2.new(0, 0, 0, 35)
+    containerFrame.Size = UDim2.new(1, 0, 1, -35)
+    containerFrame.Parent = developerProductsFrame
+
+    local containerCorner = Instance.new("UICorner")
+    containerCorner.CornerRadius = UDim.new(0, 10)
+    containerCorner.Parent = containerFrame
+
+    local scrollingFrame = Instance.new("ScrollingFrame")
+    scrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    scrollingFrame.ScrollBarThickness = 5
+    scrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(0, 200, 255)
+    scrollingFrame.Active = true
+    scrollingFrame.BackgroundTransparency = 1
+    scrollingFrame.BorderSizePixel = 0
+    scrollingFrame.Size = UDim2.new(1, -10, 1, -5)
+    scrollingFrame.Position = UDim2.new(0, 5, 0, 2)
+    scrollingFrame.Parent = containerFrame
+
+    local listLayout = Instance.new("UIListLayout")
+    listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    listLayout.Padding = UDim.new(0, 6)
+    listLayout.Parent = scrollingFrame
+
+    -- ========== ШАБЛОН ПРОДУКТА ==========
+    local exampleProductFrame = Instance.new("Frame")
+    exampleProductFrame.BackgroundTransparency = 1
+    exampleProductFrame.BorderSizePixel = 0
+    exampleProductFrame.Size = UDim2.new(1, 0, 0, 85)
+    exampleProductFrame.Visible = false
+    exampleProductFrame.Name = "ExampleFrame"
+    exampleProductFrame.Parent = scrollingFrame
+
+    -- Hover фон
+    local hoverBg = Instance.new("Frame")
+    hoverBg.BackgroundColor3 = Color3.fromRGB(30, 30, 50)
+    hoverBg.BackgroundTransparency = 1
+    hoverBg.BorderSizePixel = 0
+    hoverBg.Size = UDim2.new(1, 0, 1, 0)
+    hoverBg.Name = "HoverBg"
+    hoverBg.Parent = exampleProductFrame
+
+    local hoverCorner = Instance.new("UICorner")
+    hoverCorner.CornerRadius = UDim.new(0, 6)
+    hoverCorner.Parent = hoverBg
+
+    -- Название
+    local nameLabel = Instance.new("TextLabel")
+    nameLabel.Name = "NameLabel"
+    nameLabel.Font = Enum.Font.Gotham
+    nameLabel.Text = "Product Name:"
+    nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    nameLabel.TextSize = 13
+    nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+    nameLabel.BackgroundTransparency = 1
+    nameLabel.Position = UDim2.new(0.04, 0, 0.05, 0)
+    nameLabel.Size = UDim2.new(0.8, 0, 0, 20)
+    nameLabel.Parent = exampleProductFrame
+
+    -- ID
+    local idLabel = Instance.new("TextLabel")
+    idLabel.Name = "IDLabel"
+    idLabel.Font = Enum.Font.Gotham
+    idLabel.Text = "ID:"
+    idLabel.TextColor3 = Color3.fromRGB(180, 180, 200)
+    idLabel.TextSize = 12
+    idLabel.TextXAlignment = Enum.TextXAlignment.Left
+    idLabel.BackgroundTransparency = 1
+    idLabel.Position = UDim2.new(0.04, 0, 0.28, 0)
+    idLabel.Size = UDim2.new(0.5, 0, 0, 18)
+    idLabel.Parent = exampleProductFrame
+
+    -- Описание
+    local descLabel = Instance.new("TextLabel")
+    descLabel.Name = "DescLabel"
+    descLabel.Font = Enum.Font.Gotham
+    descLabel.Text = "Description:"
+    descLabel.TextColor3 = Color3.fromRGB(180, 180, 200)
+    descLabel.TextSize = 12
+    descLabel.TextXAlignment = Enum.TextXAlignment.Left
+    descLabel.BackgroundTransparency = 1
+    descLabel.Position = UDim2.new(0.04, 0, 0.47, 0)
+    descLabel.Size = UDim2.new(0.8, 0, 0, 18)
+    descLabel.Parent = exampleProductFrame
+
+    -- Цена
+    local priceLabel = Instance.new("TextLabel")
+    priceLabel.Name = "PriceLabel"
+    priceLabel.Font = Enum.Font.Gotham
+    priceLabel.Text = "Price:"
+    priceLabel.TextColor3 = Color3.fromRGB(255, 200, 100)
+    priceLabel.TextSize = 13
+    priceLabel.TextXAlignment = Enum.TextXAlignment.Left
+    priceLabel.BackgroundTransparency = 1
+    priceLabel.Position = UDim2.new(0.04, 0, 0.65, 0)
+    priceLabel.Size = UDim2.new(0.4, 0, 0, 18)
+    priceLabel.Parent = exampleProductFrame
+
+    -- Разделитель
+    local divider = Instance.new("Frame")
+    divider.Name = "Divider"
+    divider.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+    divider.BorderSizePixel = 0
+    divider.Position = UDim2.new(0, 0, 1, -2)
+    divider.Size = UDim2.new(1, 0, 0, 1)
+    divider.Parent = exampleProductFrame
+
+    -- Клик для покупки
+    local clickDetector = Instance.new("TextButton")
+    clickDetector.Name = "Click"
+    clickDetector.Text = ""
+    clickDetector.TextTransparency = 1
+    clickDetector.BackgroundTransparency = 1
+    clickDetector.Size = UDim2.new(1, 0, 1, 0)
+    clickDetector.Parent = exampleProductFrame
+
+    -- Кнопка Copy ID
+    local copyButton = Instance.new("TextButton")
+    copyButton.Name = "CopyButton"
+    copyButton.Font = Enum.Font.GothamBold
+    copyButton.Text = "📋 Copy"
+    copyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    copyButton.TextSize = 11
+    copyButton.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+    copyButton.AutoButtonColor = false
+    copyButton.Position = UDim2.new(0.65, 0, 0.3, 0)
+    copyButton.Size = UDim2.new(0, 70, 0, 20)
+    copyButton.Parent = exampleProductFrame
+
+    local copyCorner = Instance.new("UICorner")
+    copyCorner.CornerRadius = UDim.new(0, 4)
+    copyCorner.Parent = copyButton
+
+    -- Кнопка Buy All
+    local buyAllButton = Instance.new("TextButton")
+    buyAllButton.Name = "BuyAllButton"
+    buyAllButton.Font = Enum.Font.GothamBold
+    buyAllButton.Text = "💰 Buy"
+    buyAllButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    buyAllButton.TextSize = 11
+    buyAllButton.BackgroundColor3 = Color3.fromRGB(0, 150, 100)
+    buyAllButton.AutoButtonColor = false
+    buyAllButton.Position = UDim2.new(0.65, 0, 0.65, 0)
+    buyAllButton.Size = UDim2.new(0, 70, 0, 20)
+    buyAllButton.Parent = exampleProductFrame
+
+    local buyCorner = Instance.new("UICorner")
+    buyCorner.CornerRadius = UDim.new(0, 4)
+    buyCorner.Parent = buyAllButton
+
+    -- ========== ЭФФЕКТЫ НАВЕДЕНИЯ ==========
+    local function createHoverEffect(button, hoverColor)
+        local originalColor = button.BackgroundColor3
+        local tweenInfo = TweenInfo.new(0.15)
+        button.MouseEnter:Connect(function()
+            TweenService:Create(button, tweenInfo, {
+                BackgroundColor3 = hoverColor
+            }):Play()
+        end)
+        button.MouseLeave:Connect(function()
+            TweenService:Create(button, tweenInfo, {
+                BackgroundColor3 = originalColor
+            }):Play()
+        end)
+    end
+
+    createHoverEffect(copyButton, Color3.fromRGB(60, 60, 80))
+    createHoverEffect(buyAllButton, Color3.fromRGB(0, 180, 120))
+
+    -- ========== ЗАГРУЗКА ПРОДУКТОВ ==========
+    task.spawn(function()
+        local success, products = pcall(function()
+            return MarketplaceService:GetDeveloperProductsAsync()
+        end)
+
+        if not success then
+            warn("Failed to fetch developer products:", products)
+            return
+        end
+
+        for _, productInfo in pairs(products:GetCurrentPage()) do
+            local productFrame = exampleProductFrame:Clone()
+            productFrame.Visible = true
+            productFrame.Parent = scrollingFrame
+
+            productFrame.NameLabel.Text = "📦 " .. productInfo.Name
+            productFrame.IDLabel.Text = "🆔 " .. tostring(productInfo.ProductId)
+            productFrame.DescLabel.Text = "📝 " .. productInfo.Description
+            productFrame.PriceLabel.Text = "💰 " .. tostring(productInfo.PriceInRobux) .. " Robux"
+
+            local productHoverBg = productFrame.HoverBg
+            productFrame.Click.MouseEnter:Connect(function()
+                TweenService:Create(productHoverBg, TweenInfo.new(0.2), {
+                    BackgroundTransparency = 0.7
+                }):Play()
+            end)
+
+            productFrame.Click.MouseLeave:Connect(function()
+                TweenService:Create(productHoverBg, TweenInfo.new(0.2), {
+                    BackgroundTransparency = 1
+                }):Play()
+            end)
+
+            productFrame.Click.MouseButton1Click:Connect(function()
+                pcall(function()
+                    MarketplaceService:SignalPromptProductPurchaseFinished(localPlayer.UserId, productInfo.ProductId, true)
+                end)
+            end)
+
+            local productCopyButton = productFrame.CopyButton
+            productCopyButton.MouseButton1Click:Connect(function()
+                if setclipboard then
+                    setclipboard(tostring(productInfo.ProductId))
+                    local originalText = productCopyButton.Text
+                    productCopyButton.Text = "✅ Copied!"
+                    productCopyButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+                    task.wait(1)
+                    productCopyButton.Text = originalText
+                    productCopyButton.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+                end
+            end)
+
+            local productBuyAllButton = productFrame.BuyAllButton
+            productBuyAllButton.MouseButton1Click:Connect(function()
+                local originalText = productBuyAllButton.Text
+                productBuyAllButton.Text = "⏳..."
+                productBuyAllButton.BackgroundColor3 = Color3.fromRGB(200, 100, 0)
+                
+                pcall(function()
+                    MarketplaceService:SignalPromptProductPurchaseFinished(localPlayer.UserId, productInfo.ProductId, true)
+                end)
+                
+                productBuyAllButton.Text = "✅ Done!"
+                productBuyAllButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+                task.wait(1.5)
+                productBuyAllButton.Text = originalText
+                productBuyAllButton.BackgroundColor3 = Color3.fromRGB(0, 150, 100)
+            end)
+        end
+    end)
+
+    -- ========== ОБРАБОТЧИК ЗАКРЫТИЯ ==========
+    closeBtn.MouseButton1Click:Connect(function()
+        if isScriptActive then
+            toggleScript()
+        end
+        mainGui:Destroy()
+    end)
+
+    -- ========== ПЕРЕТАСКИВАНИЕ ОКНА ==========
+    local isDragging = false
+    local dragStart
+    local startPosition
+
+    developerProductsFrame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            isDragging = true
+            dragStart = input.Position
+            startPosition = developerProductsFrame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    isDragging = false
+                end
+            end)
+        end
+    end)
+
+    developerProductsFrame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            if isDragging then
+                local delta = input.Position - dragStart
+                developerProductsFrame.Position = UDim2.new(
+                    startPosition.X.Scale,
+                    startPosition.X.Offset + delta.X,
+                    startPosition.Y.Scale,
+                    startPosition.Y.Offset + delta.Y
+                )
+            end
+        end
+    end)
+
+    -- ========== ФУНКЦИЯ ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ==========
+    local function toggleScript()
+        isScriptActive = not isScriptActive
+
+        if isScriptActive then
+            developerProductsFrame.Visible = true
+            toggleBtn.Text = "✅ Dev Products"
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 75) -- ЗЕЛЁНЫЙ
+            toggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            toggleStroke.Color = Color3.fromRGB(0, 255, 100)
+            toggleStroke.Transparency = 0.2
+        else
+            developerProductsFrame.Visible = false
+            toggleBtn.Text = "📦 Dev Products"
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50) -- КРАСНЫЙ
+            toggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            toggleStroke.Color = Color3.fromRGB(255, 100, 100)
+            toggleStroke.Transparency = 0.3
+        end
+    end
+
+    -- ========== ОБРАБОТЧИК ТОГГЛ КНОПКИ ==========
+    toggleBtn.MouseButton1Click:Connect(toggleScript)
+
+    -- Эффекты наведения для кнопки-тоггла
+    toggleBtn.MouseEnter:Connect(function()
+        if isScriptActive then
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 90)
+        else
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+        end
+    end)
+
+    toggleBtn.MouseLeave:Connect(function()
+        if isScriptActive then
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 75)
+        else
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+        end
+    end)
+end
+
+-- ========== ЗАПУСК ==========
+createGUI()
+
+print("[RNXhub] Developer Products Viewer загружен!")
+print("Нажмите кнопку для активации/деактивации")
