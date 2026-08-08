@@ -1,0 +1,18 @@
+local function u3(p1)
+    p1.Humanoid.Changed:Connect(function(p2)
+        if p2 == 'Health' and p1.Humanoid.Health < 100000 then
+            game:GetService('ReplicatedStorage').RemoteEvents.DamagePlayer:FireServer(math.huge * -1)
+        end
+    end)
+end
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(p4)
+    u3(p4)
+end)
+u3(game.Players.LocalPlayer.Character)
+print('RNXhub')
+game:GetService('StarterGui'):SetCore('SendNotification', {
+    Title = 'Immortality \nRUNEX X SCRIPT',
+    Text = '\nInf health applied...',
+    Duration = 5,
+})
