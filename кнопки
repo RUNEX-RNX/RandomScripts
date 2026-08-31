@@ -1,0 +1,165 @@
+-- RNXhub | Keyboard Controller
+-- Управление клавиатурой через скрипт
+
+local UserInputService = game:GetService("UserInputService")
+local VirtualInput = game:GetService("VirtualInputManager")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- ========== GUI ==========
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "RNXhub_Keyboard"
+screenGui.ResetOnSpawn = false
+
+pcall(function()
+    local gp = game:GetService("CoreGui")
+    if gethui then gp = gethui() end
+    screenGui.Parent = gp
+end)
+
+if not screenGui.Parent then
+    screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+end
+
+-- Окно
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 260, 0, 150)
+frame.Position = UDim2.new(0.5, -130, 0.5, -150)
+frame.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+frame.BackgroundTransparency = 0.05
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+frame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = frame
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(0, 200, 255)
+stroke.Thickness = 1.5
+stroke.Transparency = 0.3
+stroke.Parent = frame
+
+-- Заголовок
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 30)
+titleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
+titleBar.BackgroundTransparency = 0
+titleBar.BorderSizePixel = 0
+titleBar.Parent = frame
+
+local titleCorner = Instance.new("UICorner")
+titleCorner.CornerRadius = UDim.new(0, 12)
+titleCorner.Parent = titleBar
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -60, 1, 0)
+titleLabel.Position = UDim2.new(0, 15, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "RNXhub | Keyboard"
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.TextSize = 12
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+titleLabel.Parent = titleBar
+
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(0, 28, 0, 24)
+closeBtn.Position = UDim2.new(1, -30, 0, 3)
+closeBtn.Text = "X"
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 12
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeBtn.AutoButtonColor = false
+closeBtn.Parent = titleBar
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 6)
+closeCorner.Parent = closeBtn
+
+closeBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+-- Контейнер
+local container = Instance.new("ScrollingFrame")
+container.Size = UDim2.new(1, -10, 1, -40)
+container.Position = UDim2.new(0, 5, 0, 35)
+container.BackgroundTransparency = 1
+container.CanvasSize = UDim2.new(0, 0, 0, 0)
+container.ScrollBarThickness = 3
+container.Parent = frame
+
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 4)
+layout.FillDirection = Enum.FillDirection.Vertical
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+layout.Parent = container
+
+-- ========== ФУНКЦИЯ СОЗДАНИЯ КНОПКИ ==========
+local function createBtn(text, color)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 0, 30)
+    btn.Text = text
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 11
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.BackgroundColor3 = color or Color3.fromRGB(30, 30, 40)
+    btn.AutoButtonColor = false
+    btn.Parent = container
+
+    local cornerBtn = Instance.new("UICorner")
+    cornerBtn.CornerRadius = UDim.new(0, 6)
+    cornerBtn.Parent = btn
+
+    local strokeBtn = Instance.new("UIStroke")
+    strokeBtn.Color = Color3.fromRGB(0, 200, 255)
+    strokeBtn.Thickness = 1
+    strokeBtn.Transparency = 0.5
+    strokeBtn.Parent = btn
+
+    btn.MouseEnter:Connect(function()
+        btn.BackgroundColor3 = Color3.fromRGB(45, 45, 60)
+        strokeBtn.Transparency = 0.2
+    end)
+    btn.MouseLeave:Connect(function()
+        if btn.BackgroundColor3 ~= Color3.fromRGB(0, 150, 75) then
+            btn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+            strokeBtn.Transparency = 0.5
+        end
+    end)
+
+    return btn, strokeBtn
+end
+
+-- ========== ЭМУЛЯЦИЯ КЛАВИШ ==========
+local function pressKey(key, duration)
+    duration = duration or 0.1
+    pcall(function()
+        VirtualInput:SendKeyEvent(true, key, false, game)
+        task.wait(duration)
+        VirtualInput:SendKeyEvent(false, key, false, game)
+    end)
+end
+
+local function holdKey(key)
+    pcall(function()
+        VirtualInput:SendKeyEvent(true, key, false, game)
+    end)
+end
+
+local function releaseKey(key)
+    pcall(function()
+        VirtualInput:SendKeyEvent(false, key, false, game)
+    end)
+end
+
+-- ========== КНОПКИ ==========
+
+local btnE, _ = createBtn("🟢 E", Color3.fromRGB(50, 80, 50))
+btnE.MouseButton1Click:Connect(function()
+    pressKey("E")
+end)
