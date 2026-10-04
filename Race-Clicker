@@ -1,5 +1,6 @@
---// RACE CLICKER FARM | BETA VERSION 0.5
-
+--// RACE CLICKER FARM | BETA 0.5
+--// Оформление: RNXhub
+--// Telegram: @IM_RUNEX | YouTube: @RUNEX_X_SCRIPT
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -10,7 +11,7 @@ local Enabled = false
 local NormalSpeed = 16
 local Minimized = false
 
---// ФУНКЦИЯ КОПИРОВАНИЯ
+--// ФУНКЦИЯ КОПИРОВАНИЯ В БУФЕР
 local function copyText(text)
     if setclipboard then
         setclipboard(text)
@@ -22,7 +23,7 @@ local function copyText(text)
     return false
 end
 
---// INTRO (RNXhub Style)
+--// ЗАСТАВКА (ИНТРО) В СТИЛЕ RNXHUB
 local IntroGui = Instance.new("ScreenGui")
 IntroGui.Name = "RNXhubIntro"
 IntroGui.ResetOnSpawn = false
@@ -38,7 +39,7 @@ if not success then
     IntroGui.Parent = Player:WaitForChild("PlayerGui")
 end
 
--- Фон интро
+-- Фон заставки
 local IntroFrame = Instance.new("Frame")
 IntroFrame.Size = UDim2.new(1, 0, 1, 0)
 IntroFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
@@ -82,7 +83,7 @@ IntroSub.Font = Enum.Font.Gotham
 IntroSub.TextTransparency = 1
 IntroSub.Parent = IntroGui
 
--- Кнопка TGK @IM_RUNEX
+-- Кнопка Telegram @IM_RUNEX
 local TgBtn = Instance.new("TextButton")
 TgBtn.Size = UDim2.new(0, 260, 0, 38)
 TgBtn.Position = UDim2.new(0.5, -130, 0.5, 25)
@@ -106,7 +107,7 @@ TgStroke.Thickness = 1.5
 TgStroke.Transparency = 1
 TgStroke.Parent = TgBtn
 
--- Кнопка YT @RUNEX_X_SCRIPT
+-- Кнопка YouTube @RUNEX_X_SCRIPT
 local YtBtn = Instance.new("TextButton")
 YtBtn.Size = UDim2.new(0, 260, 0, 38)
 YtBtn.Position = UDim2.new(0.5, -130, 0.5, 70)
@@ -142,7 +143,7 @@ HintLabel.Font = Enum.Font.Gotham
 HintLabel.TextTransparency = 1
 HintLabel.Parent = IntroGui
 
---// КОПИРОВАНИЕ ПРИ НАЖАТИИ
+--// КОПИРОВАНИЕ ССЫЛОК ПРИ НАЖАТИИ
 TgBtn.MouseButton1Click:Connect(function()
     copyText("t.me/IM_RUNEX")
     local original = TgBtn.Text
@@ -163,7 +164,7 @@ YtBtn.MouseButton1Click:Connect(function()
     YtBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
 end)
 
---// НАВЕДЕНИЕ
+--// ЭФФЕКТЫ НАВЕДЕНИЯ
 TgBtn.MouseEnter:Connect(function()
     TweenService:Create(TgBtn, TweenInfo.new(0.15), {BackgroundTransparency = 0.3}):Play()
     TweenService:Create(TgStroke, TweenInfo.new(0.15), {Transparency = 0.2}):Play()
@@ -182,7 +183,7 @@ YtBtn.MouseLeave:Connect(function()
     TweenService:Create(YtStroke, TweenInfo.new(0.15), {Transparency = 1}):Play()
 end)
 
---// АНИМАЦИЯ ИНТРО
+--// АНИМАЦИЯ ЗАСТАВКИ
 task.spawn(function()
     task.wait(0.3)
     TweenService:Create(IntroText, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {TextTransparency = 0, Size = UDim2.new(0, 400, 0, 80), Position = UDim2.new(0.5, -200, 0.5, -100)}):Play()
@@ -214,7 +215,7 @@ task.spawn(function()
     IntroGui:Destroy()
 end)
 
---// GUI (RNXhub Style) - УМЕНЬШЕННЫЙ
+--// ОСНОВНОЕ GUI (СТИЛЬ RNXHUB)
 local Gui = Instance.new("ScreenGui")
 Gui.Name = "RNXhub_RaceClicker"
 Gui.ResetOnSpawn = false
@@ -229,7 +230,7 @@ if not success2 then
     Gui.Parent = Player:WaitForChild("PlayerGui")
 end
 
--- Главное окно (УМЕНЬШЕНО)
+-- Главное окно
 local Main = Instance.new("Frame")
 Main.Size = UDim2.new(0, 190, 0, 110)
 Main.Position = UDim2.new(0.5, -95, 0.5, -55)
@@ -250,7 +251,7 @@ MainStroke.Thickness = 1.5
 MainStroke.Transparency = 0.3
 MainStroke.Parent = Main
 
--- Заголовок (компактный)
+-- Заголовок
 local TitleBar = Instance.new("Frame")
 TitleBar.Size = UDim2.new(1, 0, 0, 26)
 TitleBar.Position = UDim2.new(0, 0, 0, 0)
@@ -320,16 +321,7 @@ CloseBtn.MouseLeave:Connect(function()
     CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
 end)
 
-CloseBtn.MouseButton1Click:Connect(function()
-    if Enabled then
-        Enabled = false
-        StopSpeed()
-        GoSafe()
-    end
-    Gui:Destroy()
-end)
-
---// TOGGLE (УМЕНЬШЕН)
+--// КНОПКА ВКЛЮЧЕНИЯ/ВЫКЛЮЧЕНИЯ ФАРМА
 local Toggle = Instance.new("TextButton")
 Toggle.Size = UDim2.new(1, -20, 0, 38)
 Toggle.Position = UDim2.new(0, 10, 0, 35)
@@ -363,7 +355,7 @@ Toggle.MouseLeave:Connect(function()
     TweenService:Create(ToggleStroke, TweenInfo.new(0.1), {Transparency = 0.6}):Play()
 end)
 
---// CREDIT (УМЕНЬШЕН)
+--// КРЕДИТЫ (ВНИЗУ ОКНА)
 local Credit = Instance.new("TextLabel")
 Credit.Size = UDim2.new(1, 0, 0, 18)
 Credit.Position = UDim2.new(0, 0, 1, -22)
@@ -374,26 +366,40 @@ Credit.TextSize = 9
 Credit.Font = Enum.Font.GothamBold
 Credit.Parent = Main
 
---// ФУНКЦИЯ СВОРАЧИВАНИЯ
+--// ФУНКЦИЯ СВОРАЧИВАНИЯ (СКРЫВАЕТ ВСЁ КРОМЕ ЗАГОЛОВКА)
 MinimizeBtn.MouseButton1Click:Connect(function()
     Minimized = not Minimized
     if Minimized then
+        -- Скрываем всё содержимое, оставляем только заголовок
+        Toggle.Visible = false
+        Credit.Visible = false
         Main.Size = UDim2.new(0, 190, 0, 26)
-        MinimizeBtn.Text = "━"
     else
+        -- Показываем всё обратно
+        Toggle.Visible = true
+        Credit.Visible = true
         Main.Size = UDim2.new(0, 190, 0, 110)
-        MinimizeBtn.Text = "━"
     end
 end)
 
---// ROOT
+--// ЗАКРЫТИЕ ОКНА
+CloseBtn.MouseButton1Click:Connect(function()
+    if Enabled then
+        Enabled = false
+        StopSpeed()
+        GoSafe()
+    end
+    Gui:Destroy()
+end)
+
+--// ПОЛУЧЕНИЕ ROOT ПЕРСОНАЖА
 local function GetRoot()
     local Character = Player.Character
     if not Character then return nil end
     return Character:FindFirstChild("HumanoidRootPart")
 end
 
---// SPEED
+--// ПРИМЕНЕНИЕ СКОРОСТИ
 local function ApplySpeed()
     if not Enabled then return end
     local Root = GetRoot()
@@ -415,7 +421,7 @@ local function ApplySpeed()
     end)
 end
 
---// BUSCAR CARRERA
+--// ПОИСК ЧАСТИ ГОНКИ
 local function FindRacePart()
     local Root = GetRoot()
     if not Root then return nil end
@@ -436,7 +442,7 @@ local function FindRacePart()
     return Best
 end
 
---// ENTRAR EN LA CARRERA
+--// ВХОД В ГОНКУ
 local function JoinRace()
     if not Enabled then return end
     local Root = GetRoot()
@@ -449,7 +455,7 @@ local function JoinRace()
     end
 end
 
---// PARAR VELOCIDAD
+--// ОСТАНОВКА СКОРОСТИ
 local function StopSpeed()
     local Root = GetRoot()
     if not Root then return end
@@ -464,7 +470,7 @@ local function StopSpeed()
     end)
 end
 
---// BUSCAR PUNTO SEGURO
+--// ПОИСК БЕЗОПАСНОГО МЕСТА
 local function FindSafePlace()
     local Root = GetRoot()
     if not Root then return nil end
@@ -485,7 +491,7 @@ local function FindSafePlace()
     return Best
 end
 
---// IR AL PUNTO SEGURO AL APAGAR
+--// ПЕРЕХОД В БЕЗОПАСНОЕ МЕСТО ПРИ ВЫКЛЮЧЕНИИ
 local function GoSafe()
     task.wait(0.2)
     local Root = GetRoot()
@@ -499,7 +505,7 @@ local function GoSafe()
     end
 end
 
---// ON / OFF
+--// ОБРАБОТЧИК КНОПКИ ВКЛЮЧЕНИЯ
 Toggle.MouseButton1Click:Connect(function()
     Enabled = not Enabled
     if Enabled then
@@ -521,7 +527,7 @@ Toggle.MouseButton1Click:Connect(function()
     end
 end)
 
---// AUTO FARM LOOP
+--// ОСНОВНОЙ ЦИКЛ АВТО-ФАРМА
 task.spawn(function()
     while Gui.Parent do
         if Enabled then
@@ -533,11 +539,11 @@ task.spawn(function()
     end
 end)
 
---// RESPAWN
+--// ПРИ ПЕРЕРОЖДЕНИИ ПЕРСОНАЖА
 Player.CharacterAdded:Connect(function()
     task.wait(1)
     if Enabled then
         ApplySpeed()
         JoinRace()
     end
-end) 
+end)
