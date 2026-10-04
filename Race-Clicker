@@ -1,0 +1,386 @@
+--// RNXhub | RACE CLICKER FARM
+--// AUTO FARM: ON / OFF | SPEED: 100M
+--// Оформление: RNXhub Style
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Player = Players.LocalPlayer
+local SPEED = 100000000
+local Enabled = false
+local NormalSpeed = 16
+
+--// INTRO (RNXhub Style)
+local IntroGui = Instance.new("ScreenGui")
+IntroGui.Name = "RNXhubIntro"
+IntroGui.ResetOnSpawn = false
+IntroGui.IgnoreGuiInset = true
+IntroGui.DisplayOrder = 999999
+
+local success, err = pcall(function()
+    local GUIParent = game:GetService("CoreGui")
+    if gethui then GUIParent = gethui() end
+    IntroGui.Parent = GUIParent
+end)
+if not success then
+    IntroGui.Parent = Player:WaitForChild("PlayerGui")
+end
+
+-- Фон интро
+local IntroFrame = Instance.new("Frame")
+IntroFrame.Size = UDim2.new(1, 0, 1, 0)
+IntroFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+IntroFrame.BackgroundTransparency = 0
+IntroFrame.BorderSizePixel = 0
+IntroFrame.Parent = IntroGui
+
+-- Обводка интро
+local IntroStroke = Instance.new("UIStroke")
+IntroStroke.Color = Color3.fromRGB(0, 200, 255)
+IntroStroke.Thickness = 3
+IntroStroke.Transparency = 1
+IntroStroke.Parent = IntroFrame
+
+-- Основной текст
+local IntroText = Instance.new("TextLabel")
+IntroText.Size = UDim2.new(0, 350, 0, 70)
+IntroText.Position = UDim2.new(0.5, -175, 0.5, -45)
+IntroText.BackgroundTransparency = 1
+IntroText.Text = "RNXhub"
+IntroText.TextColor3 = Color3.fromRGB(255, 255, 255)
+IntroText.TextSize = 42
+IntroText.Font = Enum.Font.GothamBold
+IntroText.TextTransparency = 1
+IntroText.Parent = IntroGui
+
+local IntroTextStroke = Instance.new("UIStroke")
+IntroTextStroke.Color = Color3.fromRGB(0, 200, 255)
+IntroTextStroke.Thickness = 2
+IntroTextStroke.Transparency = 1
+IntroTextStroke.Parent = IntroText
+
+-- Подзаголовок
+local IntroSub = Instance.new("TextLabel")
+IntroSub.Size = UDim2.new(0, 300, 0, 30)
+IntroSub.Position = UDim2.new(0.5, -150, 0.5, 30)
+IntroSub.BackgroundTransparency = 1
+IntroSub.Text = "Race Clicker Farm"
+IntroSub.TextColor3 = Color3.fromRGB(0, 200, 255)
+IntroSub.TextSize = 16
+IntroSub.Font = Enum.Font.Gotham
+IntroSub.TextTransparency = 1
+IntroSub.Parent = IntroGui
+
+-- Анимация интро
+local TweenService = game:GetService("TweenService")
+
+task.spawn(function()
+    task.wait(0.3)
+    TweenService:Create(IntroText, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {TextTransparency = 0, Size = UDim2.new(0, 400, 0, 80), Position = UDim2.new(0.5, -200, 0.5, -50)}):Play()
+    TweenService:Create(IntroSub, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+    TweenService:Create(IntroTextStroke, TweenInfo.new(0.8), {Transparency = 0.3}):Play()
+    TweenService:Create(IntroStroke, TweenInfo.new(0.8), {Transparency = 0.5}):Play()
+    task.wait(1.7)
+    TweenService:Create(IntroText, TweenInfo.new(0.6), {TextTransparency = 1}):Play()
+    TweenService:Create(IntroSub, TweenInfo.new(0.6), {TextTransparency = 1}):Play()
+    TweenService:Create(IntroTextStroke, TweenInfo.new(0.6), {Transparency = 1}):Play()
+    TweenService:Create(IntroFrame, TweenInfo.new(0.6), {BackgroundTransparency = 1}):Play()
+    TweenService:Create(IntroStroke, TweenInfo.new(0.6), {Transparency = 1}):Play()
+    task.wait(0.7)
+    IntroGui:Destroy()
+end)
+
+--// GUI (RNXhub Style)
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "RNXhub_RaceClicker"
+Gui.ResetOnSpawn = false
+Gui.DisplayOrder = 99999
+
+local success2, err2 = pcall(function()
+    local GUIParent = game:GetService("CoreGui")
+    if gethui then GUIParent = gethui() end
+    Gui.Parent = GUIParent
+end)
+if not success2 then
+    Gui.Parent = Player:WaitForChild("PlayerGui")
+end
+
+-- Главное окно
+local Main = Instance.new("Frame")
+Main.Size = UDim2.new(0, 240, 0, 150)
+Main.Position = UDim2.new(0.5, -120, 0.5, -75)
+Main.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
+Main.BackgroundTransparency = 0.05
+Main.BorderSizePixel = 0
+Main.Active = true
+Main.Draggable = true
+Main.Parent = Gui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.Parent = Main
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Color = Color3.fromRGB(0, 200, 255)
+MainStroke.Thickness = 1.5
+MainStroke.Transparency = 0.3
+MainStroke.Parent = Main
+
+-- Заголовок
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(1, 0, 0, 32)
+TitleBar.Position = UDim2.new(0, 0, 0, 0)
+TitleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
+TitleBar.BackgroundTransparency = 0
+TitleBar.BorderSizePixel = 0
+TitleBar.Parent = Main
+
+local TitleBarCorner = Instance.new("UICorner")
+TitleBarCorner.CornerRadius = UDim.new(0, 12)
+TitleBarCorner.Parent = TitleBar
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, -60, 1, 0)
+Title.Position = UDim2.new(0, 15, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "RNXhub | Race Clicker"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 12
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = TitleBar
+
+-- Кнопка закрытия
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 25, 0, 22)
+CloseBtn.Position = UDim2.new(1, -30, 0, 5)
+CloseBtn.Text = "X"
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.TextSize = 12
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.AutoButtonColor = false
+CloseBtn.Parent = TitleBar
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.Parent = CloseBtn
+
+CloseBtn.MouseEnter:Connect(function()
+    CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+end)
+CloseBtn.MouseLeave:Connect(function()
+    CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    if Enabled then
+        Enabled = false
+        StopSpeed()
+        GoSafe()
+    end
+    Gui:Destroy()
+end)
+
+--// TOGGLE
+local Toggle = Instance.new("TextButton")
+Toggle.Size = UDim2.new(1, -24, 0, 42)
+Toggle.Position = UDim2.new(0, 12, 0, 45)
+Toggle.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+Toggle.Text = "AUTO FARM: OFF"
+Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+Toggle.TextSize = 13
+Toggle.Font = Enum.Font.GothamBold
+Toggle.AutoButtonColor = false
+Toggle.BorderSizePixel = 0
+Toggle.Parent = Main
+
+local ToggleCorner = Instance.new("UICorner")
+ToggleCorner.CornerRadius = UDim.new(0, 8)
+ToggleCorner.Parent = Toggle
+
+local ToggleStroke = Instance.new("UIStroke")
+ToggleStroke.Color = Color3.fromRGB(0, 200, 255)
+ToggleStroke.Thickness = 1
+ToggleStroke.Transparency = 0.6
+ToggleStroke.Parent = Toggle
+
+Toggle.MouseEnter:Connect(function()
+    TweenService:Create(Toggle, TweenInfo.new(0.1), {BackgroundColor3 = Color3.fromRGB(45, 45, 60)}):Play()
+    TweenService:Create(ToggleStroke, TweenInfo.new(0.1), {Transparency = 0.2}):Play()
+end)
+
+Toggle.MouseLeave:Connect(function()
+    if Enabled then return end
+    TweenService:Create(Toggle, TweenInfo.new(0.1), {BackgroundColor3 = Color3.fromRGB(30, 30, 40)}):Play()
+    TweenService:Create(ToggleStroke, TweenInfo.new(0.1), {Transparency = 0.6}):Play()
+end)
+
+--// CREDIT
+local Credit = Instance.new("TextLabel")
+Credit.Size = UDim2.new(1, 0, 0, 20)
+Credit.Position = UDim2.new(0, 0, 1, -25)
+Credit.BackgroundTransparency = 1
+Credit.Text = "📱 @RUNEX_X_SCRIPT"
+Credit.TextColor3 = Color3.fromRGB(150, 150, 200)
+Credit.TextSize = 10
+Credit.Font = Enum.Font.GothamBold
+Credit.Parent = Main
+
+--// ROOT
+local function GetRoot()
+    local Character = Player.Character
+    if not Character then return nil end
+    return Character:FindFirstChild("HumanoidRootPart")
+end
+
+--// SPEED
+local function ApplySpeed()
+    if not Enabled then return end
+    local Root = GetRoot()
+    if not Root then return end
+    local Character = Root.Parent
+    local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+    if Humanoid then
+        pcall(function()
+            Humanoid.WalkSpeed = SPEED
+        end)
+    end
+    pcall(function()
+        local Look = Root.CFrame.LookVector
+        Root.AssemblyLinearVelocity = Vector3.new(
+            Look.X * SPEED,
+            Root.AssemblyLinearVelocity.Y,
+            Look.Z * SPEED
+        )
+    end)
+end
+
+--// BUSCAR CARRERA
+local function FindRacePart()
+    local Root = GetRoot()
+    if not Root then return nil end
+    local Best = nil
+    local BestDistance = math.huge
+    for _, Object in ipairs(workspace:GetDescendants()) do
+        if Object:IsA("BasePart") then
+            local Name = Object.Name:lower()
+            if Name:find("race") or Name:find("start") or Name:find("begin") or Name:find("join") then
+                local Distance = (Object.Position - Root.Position).Magnitude
+                if Distance < BestDistance then
+                    BestDistance = Distance
+                    Best = Object
+                end
+            end
+        end
+    end
+    return Best
+end
+
+--// ENTRAR EN LA CARRERA
+local function JoinRace()
+    if not Enabled then return end
+    local Root = GetRoot()
+    if not Root then return end
+    local RacePart = FindRacePart()
+    if RacePart then
+        pcall(function()
+            Root.CFrame = RacePart.CFrame + Vector3.new(0, 4, 0)
+        end)
+    end
+end
+
+--// PARAR VELOCIDAD
+local function StopSpeed()
+    local Root = GetRoot()
+    if not Root then return end
+    local Humanoid = Root.Parent:FindFirstChildOfClass("Humanoid")
+    if Humanoid then
+        pcall(function()
+            Humanoid.WalkSpeed = NormalSpeed
+        end)
+    end
+    pcall(function()
+        Root.AssemblyLinearVelocity = Vector3.zero
+    end)
+end
+
+--// BUSCAR PUNTO SEGURO
+local function FindSafePlace()
+    local Root = GetRoot()
+    if not Root then return nil end
+    local Best = nil
+    local BestDistance = math.huge
+    for _, Object in ipairs(workspace:GetDescendants()) do
+        if Object:IsA("BasePart") then
+            local Name = Object.Name:lower()
+            if Name:find("safe") or Name:find("spawn") or Name:find("lobby") or Name:find("finish") or Name:find("home") then
+                local Distance = (Object.Position - Root.Position).Magnitude
+                if Distance < BestDistance then
+                    BestDistance = Distance
+                    Best = Object
+                end
+            end
+        end
+    end
+    return Best
+end
+
+--// IR AL PUNTO SEGURO AL APAGAR
+local function GoSafe()
+    task.wait(0.2)
+    local Root = GetRoot()
+    if not Root then return end
+    local Safe = FindSafePlace()
+    if Safe then
+        pcall(function()
+            Root.AssemblyLinearVelocity = Vector3.zero
+            Root.CFrame = Safe.CFrame + Vector3.new(0, 4, 0)
+        end)
+    end
+end
+
+--// ON / OFF
+Toggle.MouseButton1Click:Connect(function()
+    Enabled = not Enabled
+    if Enabled then
+        Toggle.Text = "AUTO FARM: ON"
+        Toggle.BackgroundColor3 = Color3.fromRGB(0, 150, 75)
+        ToggleStroke.Color = Color3.fromRGB(0, 150, 75)
+        local Humanoid = Player.Character and Player.Character:FindFirstChildOfClass("Humanoid")
+        if Humanoid then
+            NormalSpeed = Humanoid.WalkSpeed
+        end
+        ApplySpeed()
+        JoinRace()
+    else
+        Toggle.Text = "AUTO FARM: OFF"
+        Toggle.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+        ToggleStroke.Color = Color3.fromRGB(0, 200, 255)
+        StopSpeed()
+        GoSafe()
+    end
+end)
+
+--// AUTO FARM LOOP
+task.spawn(function()
+    while Gui.Parent do
+        if Enabled then
+            ApplySpeed()
+            task.wait(0.15)
+            JoinRace()
+        end
+        task.wait(0.15)
+    end
+end)
+
+--// RESPAWN
+Player.CharacterAdded:Connect(function()
+    task.wait(1)
+    if Enabled then
+        ApplySpeed()
+        JoinRace()
+    end
+end)
+
+print("[RNXhub] Race Clicker Farm загружен!")
+print("📱 Telegram: @RUNEX_X_SCRIPT")
