@@ -1,11 +1,15 @@
 --// RNXhub | RACE CLICKER FARM
---// AUTO FARM: ON / OFF | SPEED: 100M
+--// AUTO FARM: ON / OFF
 --// Оформление: RNXhub Style
+--// Скорость можно задать снаружи: getgenv().RNXhub_Speed = 999
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
 local Player = Players.LocalPlayer
-local SPEED = 100000000
+
+--// SPEED (можно задать снаружи через: getgenv().RNXhub_Speed = 999)
+local SPEED = (getgenv and getgenv().RNXhub_Speed) or 100000000
 local Enabled = false
 local NormalSpeed = 16
 
@@ -33,7 +37,6 @@ IntroFrame.BackgroundTransparency = 0
 IntroFrame.BorderSizePixel = 0
 IntroFrame.Parent = IntroGui
 
--- Обводка интро
 local IntroStroke = Instance.new("UIStroke")
 IntroStroke.Color = Color3.fromRGB(0, 200, 255)
 IntroStroke.Thickness = 3
@@ -63,16 +66,14 @@ local IntroSub = Instance.new("TextLabel")
 IntroSub.Size = UDim2.new(0, 300, 0, 30)
 IntroSub.Position = UDim2.new(0.5, -150, 0.5, 30)
 IntroSub.BackgroundTransparency = 1
-IntroSub.Text = "Race Clicker Farm"
+IntroSub.Text = "Race Clicker Farm | Speed: " .. tostring(SPEED)
 IntroSub.TextColor3 = Color3.fromRGB(0, 200, 255)
-IntroSub.TextSize = 16
+IntroSub.TextSize = 14
 IntroSub.Font = Enum.Font.Gotham
 IntroSub.TextTransparency = 1
 IntroSub.Parent = IntroGui
 
 -- Анимация интро
-local TweenService = game:GetService("TweenService")
-
 task.spawn(function()
     task.wait(0.3)
     TweenService:Create(IntroText, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {TextTransparency = 0, Size = UDim2.new(0, 400, 0, 80), Position = UDim2.new(0.5, -200, 0.5, -50)}):Play()
@@ -106,8 +107,8 @@ end
 
 -- Главное окно
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 240, 0, 150)
-Main.Position = UDim2.new(0.5, -120, 0.5, -75)
+Main.Size = UDim2.new(0, 240, 0, 180)
+Main.Position = UDim2.new(0.5, -120, 0.5, -90)
 Main.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
 Main.BackgroundTransparency = 0.05
 Main.BorderSizePixel = 0
@@ -181,10 +182,22 @@ CloseBtn.MouseButton1Click:Connect(function()
     Gui:Destroy()
 end)
 
+--// SPEED INFO
+local SpeedInfo = Instance.new("TextLabel")
+SpeedInfo.Size = UDim2.new(1, -20, 0, 18)
+SpeedInfo.Position = UDim2.new(0, 10, 0, 38)
+SpeedInfo.BackgroundTransparency = 1
+SpeedInfo.Text = "⚡ Speed: " .. tostring(SPEED)
+SpeedInfo.TextColor3 = Color3.fromRGB(0, 200, 255)
+SpeedInfo.TextSize = 11
+SpeedInfo.Font = Enum.Font.GothamBold
+SpeedInfo.TextXAlignment = Enum.TextXAlignment.Left
+SpeedInfo.Parent = Main
+
 --// TOGGLE
 local Toggle = Instance.new("TextButton")
 Toggle.Size = UDim2.new(1, -24, 0, 42)
-Toggle.Position = UDim2.new(0, 12, 0, 45)
+Toggle.Position = UDim2.new(0, 12, 0, 62)
 Toggle.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 Toggle.Text = "AUTO FARM: OFF"
 Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -381,6 +394,3 @@ Player.CharacterAdded:Connect(function()
         JoinRace()
     end
 end)
-
-print("[RNXhub] Race Clicker Farm загружен!")
-print("📱 Telegram: @RUNEX_X_SCRIPT")
