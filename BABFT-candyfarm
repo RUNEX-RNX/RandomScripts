@@ -683,7 +683,7 @@ autoBtn.MouseButton1Click:Connect(function()
     if Runtime.Reconnecting then return end
     gs.CandyFarmAutoStart = true
     gs.CandyFarmUnload()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Fantom233/BABFT/refs/heads/main/LoopCandyFarm.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/RUNEX-RNX/RandomScripts/refs/heads/main/BABFT-Loop-CandyFarm"))()
 end)
 
 closeBtn.MouseButton1Click:Connect(function() gs.CandyFarmUnload() end)
