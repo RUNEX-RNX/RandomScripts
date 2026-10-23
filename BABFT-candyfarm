@@ -94,7 +94,7 @@ GuiService.ErrorMessageChanged:Connect(function()
     Runtime.Reconnecting = true
     Runtime.Farming = false
 
-    queue_on_teleport("if not game:IsLoaded() then game.Loaded:Wait() end getgenv().CandyFarmFromHop = true loadstring(game:HttpGet('https://raw.githubusercontent.com/Fantom233/BABFT/refs/heads/main/CandyFarm.lua'))()")
+    queue_on_teleport("if not game:IsLoaded() then game.Loaded:Wait() end getgenv().CandyFarmFromHop = true loadstring(game:HttpGet('https://raw.githubusercontent.com/RUNEX-RNX/RandomScripts/refs/heads/main/BABFT-candyfarm'))()")
 
     task.spawn(function()
         while Runtime.Reconnecting do
