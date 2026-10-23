@@ -1,0 +1,403 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+-- SETTINGS
+local speed = 50
+local MIN_SPEED = 1
+local MAX_SPEED = 10000
+local STEP = 10
+
+local speedEnabled = false
+local shiftLockEnabled = false
+
+local HOLD_DELAY = 1
+local HOLD_INTERVAL = 0.05
+local HOLD_STEP = 5
+
+local plusHeld = false
+local minusHeld = false
+
+-- GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "MovementUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- OPEN BUTTON
+local openButton = Instance.new("TextButton")
+openButton.Size = UDim2.fromOffset(55, 55)
+openButton.Position = UDim2.new(0, 15, 0.5, -27)
+openButton.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+openButton.Text = "вљ™"
+openButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+openButton.TextSize = 27
+openButton.Font = Enum.Font.GothamBold
+openButton.Parent = gui
+
+local openCorner = Instance.new("UICorner")
+openCorner.CornerRadius = UDim.new(1, 0)
+openCorner.Parent = openButton
+
+local openStroke = Instance.new("UIStroke")
+openStroke.Thickness = 2
+openStroke.Color = Color3.fromRGB(75, 75, 85)
+openStroke.Parent = openButton
+
+-- MAIN MENU
+local main = Instance.new("Frame")
+main.Size = UDim2.fromOffset(250, 205)
+main.Position = UDim2.new(0, 80, 0.5, -102)
+main.BackgroundColor3 = Color3.fromRGB(22, 22, 27)
+main.Visible = false
+main.Parent = gui
+
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 18)
+mainCorner.Parent = main
+
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Thickness = 1.5
+mainStroke.Color = Color3.fromRGB(65, 65, 75)
+mainStroke.Parent = main
+
+-- TITLE
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -20, 0, 28)
+title.Position = UDim2.fromOffset(10, 8)
+title.BackgroundTransparency = 1
+title.Text = "MOVEMENT"
+title.TextColor3 = Color3.fromRGB(235, 235, 240)
+title.TextSize = 15
+title.Font = Enum.Font.GothamBold
+title.Parent = main
+
+-- SPEED DISPLAY
+local speedLabel = Instance.new("TextLabel")
+speedLabel.Size = UDim2.new(1, -20, 0, 35)
+speedLabel.Position = UDim2.fromOffset(10, 35)
+speedLabel.BackgroundTransparency = 1
+speedLabel.Text = "16"
+speedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedLabel.TextSize = 26
+speedLabel.Font = Enum.Font.GothamBold
+speedLabel.Parent = main
+
+-- MINUS
+local minus = Instance.new("TextButton")
+minus.Size = UDim2.fromOffset(55, 48)
+minus.Position = UDim2.fromOffset(10, 83)
+minus.Text = "в€’"
+minus.TextSize = 25
+minus.Font = Enum.Font.GothamBold
+minus.TextColor3 = Color3.fromRGB(255, 255, 255)
+minus.BackgroundColor3 = Color3.fromRGB(42, 42, 50)
+minus.Parent = main
+
+-- SPEED TOGGLE
+local speedToggle = Instance.new("TextButton")
+speedToggle.Size = UDim2.fromOffset(110, 48)
+speedToggle.Position = UDim2.fromOffset(70, 83)
+speedToggle.Text = "SPEED: OFF"
+speedToggle.TextSize = 14
+speedToggle.Font = Enum.Font.GothamBold
+speedToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+speedToggle.BackgroundColor3 = Color3.fromRGB(42, 42, 50)
+speedToggle.Parent = main
+
+-- PLUS
+local plus = Instance.new("TextButton")
+plus.Size = UDim2.fromOffset(55, 48)
+plus.Position = UDim2.fromOffset(185, 83)
+plus.Text = "+"
+plus.TextSize = 25
+plus.Font = Enum.Font.GothamBold
+plus.TextColor3 = Color3.fromRGB(255, 255, 255)
+plus.BackgroundColor3 = Color3.fromRGB(42, 42, 50)
+plus.Parent = main
+
+-- SHIFT LOCK
+local shiftLock = Instance.new("TextButton")
+shiftLock.Size = UDim2.fromOffset(230, 48)
+shiftLock.Position = UDim2.fromOffset(10, 145)
+shiftLock.Text = "SHIFT LOCK: OFF"
+shiftLock.TextSize = 15
+shiftLock.Font = Enum.Font.GothamBold
+shiftLock.TextColor3 = Color3.fromRGB(255, 255, 255)
+shiftLock.BackgroundColor3 = Color3.fromRGB(42, 42, 50)
+shiftLock.Parent = main
+
+for _, button in ipairs({
+	minus,
+	speedToggle,
+	plus,
+	shiftLock
+}) do
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 12)
+	corner.Parent = button
+end
+
+-- OPEN/CLOSE
+openButton.Activated:Connect(function()
+	main.Visible = not main.Visible
+end)
+
+-- CHARACTER
+local function getCharacter()
+	local character = player.Character
+
+	if not character then
+		return nil, nil, nil
+	end
+
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	local root = character:FindFirstChild("HumanoidRootPart")
+
+	return character, humanoid, root
+end
+
+-- UI
+local function updateUI()
+	speedLabel.Text = tostring(speed)
+
+	if speedEnabled then
+		speedToggle.Text = "SPEED: ON"
+		speedToggle.BackgroundColor3 = Color3.fromRGB(35, 170, 85)
+	else
+		speedToggle.Text = "SPEED: OFF"
+		speedToggle.BackgroundColor3 = Color3.fromRGB(42, 42, 50)
+	end
+
+	if shiftLockEnabled then
+		shiftLock.Text = "SHIFT LOCK: ON"
+		shiftLock.BackgroundColor3 = Color3.fromRGB(35, 170, 85)
+	else
+		shiftLock.Text = "SHIFT LOCK: OFF"
+		shiftLock.BackgroundColor3 = Color3.fromRGB(42, 42, 50)
+	end
+end
+
+-- CHANGE SPEED
+local function changeSpeed(amount)
+	speed = math.clamp(
+		speed + amount,
+		MIN_SPEED,
+		MAX_SPEED
+	)
+
+	updateUI()
+end
+
+-- TAP + / -
+plus.Activated:Connect(function()
+	changeSpeed(STEP)
+end)
+
+minus.Activated:Connect(function()
+	changeSpeed(-STEP)
+end)
+
+-- HOLD +
+plus.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.Touch
+		or input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		plusHeld = true
+
+		task.spawn(function()
+			local heldTime = 0
+
+			while plusHeld do
+				task.wait(HOLD_INTERVAL)
+
+				if not plusHeld then
+					break
+				end
+
+				heldTime += HOLD_INTERVAL
+
+				if heldTime >= HOLD_DELAY then
+					changeSpeed(HOLD_STEP)
+				end
+			end
+		end)
+	end
+end)
+
+plus.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.Touch
+		or input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		plusHeld = false
+	end
+end)
+
+-- HOLD -
+minus.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.Touch
+		or input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		minusHeld = true
+
+		task.spawn(function()
+			local heldTime = 0
+
+			while minusHeld do
+				task.wait(HOLD_INTERVAL)
+
+				if not minusHeld then
+					break
+				end
+
+				heldTime += HOLD_INTERVAL
+
+				if heldTime >= HOLD_DELAY then
+					changeSpeed(-HOLD_STEP)
+				end
+			end
+		end)
+	end
+end)
+
+minus.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.Touch
+		or input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		minusHeld = false
+	end
+end)
+
+-- TOGGLES
+speedToggle.Activated:Connect(function()
+	speedEnabled = not speedEnabled
+	updateUI()
+end)
+
+shiftLock.Activated:Connect(function()
+	shiftLockEnabled = not shiftLockEnabled
+	updateUI()
+end)
+
+-- MOVEMENT
+RunService.Heartbeat:Connect(function()
+	local character, humanoid, root = getCharacter()
+
+	if not humanoid or not root then
+		return
+	end
+
+	-- SPEED
+	if speedEnabled then
+		humanoid.WalkSpeed = speed
+	else
+		humanoid.WalkSpeed = 16
+	end
+
+	-- SHIFT LOCK
+	if shiftLockEnabled then
+		humanoid.AutoRotate = false
+
+		local camera = workspace.CurrentCamera
+
+		if camera then
+			local look = camera.CFrame.LookVector
+			local flatLook = Vector3.new(look.X, 0, look.Z)
+
+			if flatLook.Magnitude > 0 then
+				root.CFrame = CFrame.lookAt(
+					root.Position,
+					root.Position + flatLook.Unit
+				)
+			end
+		end
+	else
+		humanoid.AutoRotate = true
+	end
+
+	-- RAMP-STABLE MOVEMENT
+	if speedEnabled then
+		local direction = humanoid.MoveDirection
+
+		if direction.Magnitude > 0 then
+
+			local rayParams = RaycastParams.new()
+			rayParams.FilterType = Enum.RaycastFilterType.Exclude
+			rayParams.FilterDescendantsInstances = {character}
+
+			local rayOrigin = root.Position + Vector3.new(0, 2, 0)
+			local rayDirection = Vector3.new(0, -7, 0)
+
+			local result = workspace:Raycast(
+				rayOrigin,
+				rayDirection,
+				rayParams
+			)
+
+			local moveVelocity
+
+			if result then
+				-- Follow the surface of the ramp
+				local normal = result.Normal
+
+				local projected =
+					direction.Unit
+					- normal * direction.Unit:Dot(normal)
+
+				if projected.Magnitude > 0 then
+					projected = projected.Unit * speed
+				else
+					projected = direction.Unit * speed
+				end
+
+				moveVelocity = projected
+			else
+				moveVelocity = direction.Unit * speed
+			end
+
+			-- Limit vertical physics so ramps don't launch you
+			local verticalVelocity =
+				math.clamp(root.AssemblyLinearVelocity.Y, -50, 35)
+
+			root.AssemblyLinearVelocity = Vector3.new(
+				moveVelocity.X,
+				verticalVelocity,
+				moveVelocity.Z
+			)
+
+		else
+
+			root.AssemblyLinearVelocity = Vector3.new(
+				0,
+				math.clamp(root.AssemblyLinearVelocity.Y, -50, 35),
+				0
+			)
+
+		end
+
+		-- Stop unwanted spinning
+		root.AssemblyAngularVelocity = Vector3.zero
+	end
+end)
+
+-- RESPAWN
+player.CharacterAdded:Connect(function(character)
+
+	local humanoid = character:WaitForChild("Humanoid")
+	character:WaitForChild("HumanoidRootPart")
+
+	task.wait(0.1)
+
+	if speedEnabled then
+		humanoid.WalkSpeed = speed
+	else
+		humanoid.WalkSpeed = 20
+	end
+
+	humanoid.AutoRotate = not shiftLockEnabled
+
+	updateUI()
+end)
+
+updateUI()
